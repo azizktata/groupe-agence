@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="bg-[var(--brand-dark)] text-white">
       {/* Main Footer */}
-      <div className="max-w-7xl 2xl:max-w-8xl mx-auto px-6 py-16">
+      <div className="max-w-7xl 2xl:max-w-8xl mx-auto px-6 xl:px-16 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand Column */}
           <div className="lg:col-span-1">
@@ -139,7 +139,7 @@ export function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto 2xl:max-w-8xl px-6 py-6">
+        <div className="max-w-7xl mx-auto 2xl:max-w-8xl  px-6 xl:px-16 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-white/50 text-sm">
               &copy; {new Date().getFullYear()} Groupe Agence. Tous droits réservés.

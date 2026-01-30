@@ -15,8 +15,8 @@ export function Hero() {
       {/* Overlay */}
       <div className="absolute inset-0 bg-[var(--brand-dark)]/30" />
 
-      <div className="max-w-7xl mx-auto 2xl:max-w-8xl px-6 relative z-10 mt-12 sm:mt-0 pb-12 sm:pb-0">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto 2xl:max-w-8xl px-6 2xl:px-10 relative z-10 mt-12 sm:mt-0 pb-12 sm:pb-0">
+        <div className="grid lg:grid-cols-2 gap-12 items-start lg:items-center">
           {/* Left Side - Content */}
           <div className="text-white">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
@@ -49,7 +49,7 @@ export function Hero() {
           </div>
 
           {/* Right Side - Search Card */}
-          <div className="flex justify-center lg:justify-end">
+          <div className="flex justify-start lg:justify-end pb-6 lg:pb-0">
             <div className="w-full max-w-md bg-white/15 backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl">
              
               <form className="space-y-3">

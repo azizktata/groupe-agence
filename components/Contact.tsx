@@ -12,7 +12,7 @@ export function Contact() {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#2D91E0]/40 rounded-full blur-3xl" />
       </div>
 
-      <div className="max-w-7xl 2xl:max-w-8xl mx-auto px-6 relative z-10">
+      <div className="max-w-7xl 2xl:max-w-8xl mx-auto px-6 xl:px-16 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Side - Content */}
           <div className="text-white">
