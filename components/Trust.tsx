@@ -13,17 +13,17 @@ import { Button } from "@/components/ui/button";
 
 const tickets = [
   {
-    from: "Paris",
-    fromCode: "CDG",
-    to: "New York",
-    toCode: "JFK",
+    from: "Morocco",
+    fromCode: "CMN",
+    to: "Emirates",
+    toCode: "DXB",
     duration: "8h:15M",
     departureTime: "09:12 AM",
     date: "Mar 15, 2025",
   },
   {
-    from: "Lyon",
-    fromCode: "LYS",
+    from: "Qatar",
+    fromCode: "DOH",
     to: "Dubai",
     toCode: "DXB",
     duration: "6h:30M",
@@ -47,9 +47,13 @@ const trustPoints = [
   "Réservations rapides et sécurisées",
 ];
 
-function TicketCard({ ticket }: { ticket: (typeof tickets)[0] }) {
+function TicketCard({ ticket, animationClass = "" }: { ticket: (typeof tickets)[0]; animationClass?: string }) {
   return (
-    <div className="max-w-sm relative bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 overflow-hidden group">
+    <div className={`max-w-sm relative bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 overflow-hidden group ${animationClass}`}>
+      {/* Shimmer overlay */}
+      <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
+        <div className="animate-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full" />
+      </div>
       {/* Background Wave Pattern */}
       {/* <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
         <svg className="w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
@@ -89,11 +93,11 @@ function TicketCard({ ticket }: { ticket: (typeof tickets)[0] }) {
                   stroke="var(--brand-primary)"
                   strokeWidth="2"
                   strokeDasharray="4 4"
-                  className="opacity-40"
+                  className="opacity-40 animate-dash-flow"
                 />
               </svg>
               {/* Plane Icon */}
-              <div className="w-10 h-10 rounded-full bg-[var(--brand-primary)]/10 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-[var(--brand-primary)]/10 flex items-center justify-center group-hover:bg-[var(--brand-primary)]/20 transition-colors duration-300">
                 <Plane className="w-5 h-5 text-[var(--brand-primary)] rotate-90" />
               </div>
             </div>
@@ -123,7 +127,7 @@ function TicketCard({ ticket }: { ticket: (typeof tickets)[0] }) {
         {/* Bottom Section - Time & Date Capsules */}
         <div className="flex items-center justify-between gap-4">
           {/* Departure Time */}
-          <div className="flex items-center gap-2 bg-[var(--brand-primary)]/10 px-4 py-2 rounded-full">
+          <div className="flex items-center gap-2 bg-[var(--brand-primary)]/10 px-4 py-2 rounded-full animate-badge-pulse hover:bg-[var(--brand-primary)]/20 transition-colors duration-300">
             <Send className="w-3 h-3 text-[var(--brand-primary)]" />
             <span className="text-xs font-medium text-[var(--brand-dark)]">
               {ticket.departureTime}
@@ -131,7 +135,7 @@ function TicketCard({ ticket }: { ticket: (typeof tickets)[0] }) {
           </div>
 
           {/* Date */}
-          <div className="flex items-center gap-2 bg-[var(--brand-primary)]/10 px-4 py-2 rounded-full">
+          <div className="flex items-center gap-2 bg-[var(--brand-primary)]/10 px-4 py-2 rounded-full animate-badge-pulse hover:bg-[var(--brand-primary)]/20 transition-colors duration-300" style={{ animationDelay: "1.5s" }}>
             <Calendar className="w-3 h-3 text-[var(--brand-primary)]" />
             <span className="text-xs font-medium text-[var(--brand-dark)]">
               {ticket.date}
@@ -291,7 +295,7 @@ export function Trust() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Side - Ticket Cards */}
           <div className="gap-2 order-2 lg:order-1 flex flex-col items-center">
-            <TicketCard ticket={tickets[1]} />
+            <TicketCard ticket={tickets[1]} animationClass="animate-ticket-float" />
             <div className="grid grid-cols-2 gap-2 hidden md:grid">
               {tickets.map((ticket, index) => (
                 <div
@@ -299,7 +303,10 @@ export function Trust() {
                   style={{ animationDelay: `${index * 150}ms` }}
                   className="animate-fade-in"
                 >
-                  <TicketCard ticket={ticket} />
+                  <TicketCard
+                    ticket={ticket}
+                    animationClass={index === 0 ? "animate-ticket-float-delayed" : "animate-ticket-float-delayed-2"}
+                  />
                 </div>
               ))}
             </div>
@@ -312,10 +319,10 @@ export function Trust() {
 
           {/* Right Side - Content */}
           <div className="order-1 lg:order-2">
-            <div className="inline-flex items-center gap-2 mb-3 text-sm font-medium text-white/90 ">
+             <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white/90 mb-4">
               <Medal className="w-4 h-4 text-[var(--brand-accent)]" />
               Certifié IATA
-            </div>
+            </span>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
               Accédez aux meilleures offres de{" "}

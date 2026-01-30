@@ -1,23 +1,26 @@
 "use client";
 
 import Image from "next/image";
-import { Plane, Hotel, Headphones, Globe, Shield } from "lucide-react";
+import { Hotel, Globe, Shield, TicketsPlane, HandHeart } from "lucide-react";
 
 const services = [
   {
-    icon: Plane,
+    icon: TicketsPlane,
     title: "Billetterie aérienne internationale",
-    description: "Comparez tous les vols au même endroit et gagnez du temps.",
+    description: "Économisez du temps en comparant tous les vols au même endroit.",
+    color: "#8ECBDB"
   },
   {
     icon: Hotel,
     title: "Réservations hôtelières 3 & 4 étoiles",
-    description: "Des séjours confortables au meilleur rapport qualité-prix.",
+    description: "Profitez de séjours confortables au meilleur prix.",
+    color: "#42A8C3"
   },
   {
-    icon: Headphones,
+    icon: HandHeart,
     title: "Assistance voyage personnalisée",
-    description: "Un accompagnement sur mesure à chaque étape.",
+    description: "Simplifiez votre préparation de voyage.",
+    color: "#006380"
   },
 ];
 
@@ -58,7 +61,7 @@ export function About() {
             <span className="text-[var(--brand-primary)] text-sm font-black  tracking-wider">
               Votre voyage commence ici
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--brand-dark)] mt-3 mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-[var(--brand-dark)] mt-3 mb-6">
               Groupe L&apos;Agence
             </h2>
             <p className="text-gray-600 text-md sm:text-lg max-w-lg leading-relaxed mb-10">
@@ -71,14 +74,14 @@ export function About() {
             <div className="space-y-6">
               {services.map((service, index) => (
                 <div key={index} className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[var(--brand-primary)]/10 flex items-center justify-center">
-                    <service.icon className="w-6 h-6 text-[var(--brand-primary)]" />
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: service.color }}>
+                    <service.icon className="w-6 h-6 text-white" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-[var(--brand-dark)] mb-1">
                       {service.title}
                     </h3>
-                    <p className="text-gray-500 text-sm max-w-xs">{service.description}</p>
+                    <p className="text-gray-600 text-sm max-w-xs">{service.description}</p>
                   </div>
                 </div>
               ))}
@@ -88,7 +91,7 @@ export function About() {
           {/* Right Side - Layered Images */}
           <div className="relative flex items-center justify-center">
             {/* Circle Background */}
-            <div className="relative w-[320px] h-[320px] md:w-[420px] md:h-[420px]">
+            <div className="relative w-[320px] h-[320px] md:w-[420px] md:h-[420px] lg:w-[500px] lg:h-[500px]">
               <Image
                 src="/circle-bg.png"
                 alt="Background circle"
@@ -98,7 +101,7 @@ export function About() {
 
               {/* Circle Image - Centered */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-[200px] h-[200px] md:w-[260px] md:h-[260px]">
+                <div className="relative w-[200px] h-[200px] md:w-[260px] md:h-[260px] lg:w-[300px] lg:h-[300px]">
                   <Image
                     src="/circle-img.png"
                     alt="Travel image"
@@ -109,7 +112,7 @@ export function About() {
               </div>
 
               {/* Airplane Clipart - Floating on top */}
-              <div className="absolute inset-0  w-[250px] h-[250px] md:w-[450px] md:h-[450px] animate-float">
+              <div className="absolute inset-0  w-[250px] h-[250px] md:w-[450px] md:h-[450px] lg:w-[500px] lg:h-[500px] animate-float">
                 <Image
                   src="/airplane-clipart.png"
                   alt="Airplane"

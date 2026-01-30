@@ -19,7 +19,7 @@ export function Hero() {
         <div className="grid lg:grid-cols-2 gap-12 items-start lg:items-center">
           {/* Left Side - Content */}
           <div className="text-white">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+            <h1 className="text-5xl lg:text-6xl font-bold leading-tight tracking-wide mb-6">
               Voyagez, Réservez{" "}
               <span className="text-[var(--brand-accent)]">Économisez.</span>
             </h1>
@@ -34,15 +34,15 @@ export function Hero() {
                 Une seule recherche
               </span>
               <span className="text-xs sm:text-sm flex items-center gap-2 uppercase font-medium">
-                <span className="hidden sm:flex w-1.5 h-1.5 rounded-full bg-[var(--brand-primary)]" />
+                <span className="hidden sm:flex w-1.5 h-1.5 rounded-full bg-[var(--brand-accent)] animate-pulse" />
                 560 000+ vols
               </span>
               <span className="text-xs sm:text-sm flex items-center gap-2 uppercase font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-primary)]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-accent)] animate-pulse" />
                 21 000+ hôtels
               </span>
               <span className="text-xs sm:text-sm flex items-center gap-2 uppercase font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-primary)]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-accent)] animate-pulse" />
                 120 pays
               </span>
             </div>

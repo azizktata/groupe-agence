@@ -11,7 +11,7 @@ export function Footer() {
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-6">
              
-              <span className="text-xl font-bold">Groupe Agence</span>
+              <span className="text-xl font-bold">Groupe L&apos;Agence</span>
             </Link>
             <p className="text-white/60 text-sm leading-relaxed mb-6">
               Votre partenaire de confiance pour tous vos voyages.
@@ -128,8 +128,8 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[var(--brand-accent)] flex-shrink-0" />
-                <a href="mailto:contact@groupe-agence.com" className="text-white/60 hover:text-white transition-colors text-sm">
-                  contact@groupe-agence.com
+                <a href="mailto:contact@groupelagence.com" className="text-white/60 hover:text-white transition-colors text-sm">
+                  contact@groupelagence.com
                 </a>
               </li>
             </ul>
@@ -142,7 +142,7 @@ export function Footer() {
         <div className="max-w-7xl mx-auto 2xl:max-w-8xl  px-6 xl:px-16 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-white/50 text-sm">
-              &copy; {new Date().getFullYear()} Groupe Agence. Tous droits réservés.
+              &copy; {new Date().getFullYear()} Groupe L&apos;Agence. Tous droits réservés.
             </p>
             <div className="flex items-center gap-1 text-white/50 text-sm">
               Développé par <a href="https://asis.tn" target="_blank" rel="noopener noreferrer" className="text-[var(--brand-accent)] ">Asis.tn</a>

@@ -100,10 +100,10 @@ export function ServicesExtra() {
             Nos meilleurs services
           </span> */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-            Services{" "}
-            <span className="text-[var(--brand-primary)]">complémentaires</span>
+           Nos meilleurs {' '}
+            <span className="text-[var(--brand-primary)]">services</span>
           </h2>
-          <p className="text-white/70 text-md sm:text-lg max-w-xl mx-auto">
+          <p className="text-white/70 text-md sm:text-lg max-w-lg mx-auto">
             Des solutions additionnelles pour simplifier chaque aspect de votre voyage.
           </p>
         </div>

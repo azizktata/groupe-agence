@@ -186,12 +186,12 @@ export function CTAFinal() {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
               Prêt à organiser votre{" "}
               <span className="text-[var(--brand-accent)]">
-                prochain voyage
+                prochain voyage  ?
               </span>{" "}
-              ?
+             
             </h2>
 
-            <p className="text-white/70 text-md sm:text-lg leading-relaxed mb-8 max-w-lg">
+            <p className="text-white/90 text-md sm:text-lg leading-relaxed mb-8 max-w-lg">
               Billets, hôtels et services complémentaires réunis pour que vous
               profitiez pleinement de chaque étape.
             </p>

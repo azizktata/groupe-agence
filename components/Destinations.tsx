@@ -97,9 +97,9 @@ function DestinationCard({
       </div>
 
       {/* Top corner accent */}
-      <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-[var(--brand-primary)]/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      {/* <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-[var(--brand-primary)]/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <MapPin className="w-5 h-5 text-white" />
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -120,10 +120,10 @@ export function Destinations() {
               <span className="text-[var(--brand-primary)]">destinations</span>
             </h2>
           </div>
-          <Button variant="primary" rounded="lg" className="w-fit">
+          {/* <Button variant="primary" rounded="lg" className="w-fit">
             Toutes les destinations
             <ArrowRight className="w-5 h-5" />
-          </Button>
+          </Button> */}
         </div>
       </div>
 
@@ -153,8 +153,8 @@ export function Destinations() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden sm:block left-2 bg-white/90 hover:bg-white border-none shadow-lg" />
-          <CarouselNext className="hidden sm:block right-2 bg-white/90 hover:bg-white border-none shadow-lg" />
+          <CarouselPrevious className="hidden sm:flex left-2 bg-white/90 hover:bg-white border-none shadow-lg" />
+          <CarouselNext className="hidden sm:flex right-2 bg-white/90 hover:bg-white border-none shadow-lg" />
         </Carousel>
       </div>
 
