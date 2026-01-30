@@ -336,7 +336,7 @@ export function Trust() {
               {trustPoints.map((point, index) => (
                 <div key={index} className="flex items-center gap-3 group">
                   <BadgeCheck className="w-5 h-5 text-[var(--brand-primary)]" />
-                  <span className="text-white/90 text-sm sm:text-base group-hover:text-white transition-colors">
+                  <span className="text-white/90 text-base group-hover:text-white transition-colors">
                     {point}
                   </span>
                 </div>

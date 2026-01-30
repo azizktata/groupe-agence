@@ -30,18 +30,18 @@ export function Hero() {
 
             {/* Proof Text */}
             <div className="flex flex-wrap items-center gap-4 text-sm text-white/90">
-              <span className="flex hidden sm:flex items-center gap-2 uppercase font-medium">
+              <span className=" hidden sm:flex items-center gap-2 uppercase font-medium">
                 Une seule recherche
               </span>
-              <span className="flex items-center gap-2 uppercase font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-primary)]" />
+              <span className="text-xs sm:text-sm flex items-center gap-2 uppercase font-medium">
+                <span className="hidden sm:flex w-1.5 h-1.5 rounded-full bg-[var(--brand-primary)]" />
                 560 000+ vols
               </span>
-              <span className="flex items-center gap-2 uppercase font-medium">
+              <span className="text-xs sm:text-sm flex items-center gap-2 uppercase font-medium">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-primary)]" />
                 21 000+ hôtels
               </span>
-              <span className="flex items-center gap-2 uppercase font-medium">
+              <span className="text-xs sm:text-sm flex items-center gap-2 uppercase font-medium">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-primary)]" />
                 120 pays
               </span>
@@ -106,7 +106,7 @@ export function Hero() {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 bg-[var(--brand-primary)] hover:brightness-110 text-white font-semibold py-4 rounded-xl transition-all mt-2"
+                className="w-full text-sm sm:text-base flex items-center justify-center gap-2 bg-[var(--brand-primary)] hover:brightness-110 text-white font-semibold py-4 rounded-xl transition-all mt-2"
               >
                 <Search className="w-5 h-5" />
                 Rechercher un voyage

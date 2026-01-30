@@ -147,7 +147,7 @@ const Business = () => {
             Vous souhaitez en savoir plus sur nos services ?
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="gold" size="lg" asChild>
+            <Button variant="default" size="lg" asChild>
               <a href="#contact" className="flex items-center gap-2">
                 <Phone className="h-5 w-5" />
                 Nous contacter
