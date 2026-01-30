@@ -23,8 +23,35 @@ const services = [
 
 export function About() {
   return (
-    <section id="about" className="sm:pt-16 pb-26  overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="about" className="sm:pt-16 pb-26 overflow-hidden relative">
+      {/* SVG Pattern Background - Curved wind lines */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Top right - accent color curves */}
+        <svg
+          className="absolute top-20 right-0 w-80 h-80 text-[var(--brand-accent)]/15"
+          viewBox="0 0 200 200"
+          fill="none"
+        >
+          <path
+            d="M200 0C200 110.457 110.457 200 0 200"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+          <path
+            d="M200 40C200 128.366 128.366 200 40 200"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+          <path
+            d="M200 80C200 146.274 146.274 200 80 200"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+        </svg>
+       
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left Side - Content */}
           <div>
@@ -34,7 +61,7 @@ export function About() {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--brand-dark)] mt-3 mb-6">
               Groupe L&apos;Agence
             </h2>
-            <p className="text-gray-600 text-md sm:text-lg leading-relaxed mb-10">
+            <p className="text-gray-600 text-md sm:text-lg max-w-lg leading-relaxed mb-10">
               Groupe L&apos;Agence vous accompagne avec des solutions complètes
               en tourisme et billetterie, réunissant billets, hôtels et services
               essentiels pour des voyages sereins.
@@ -51,7 +78,7 @@ export function About() {
                     <h3 className="font-semibold text-[var(--brand-dark)] mb-1">
                       {service.title}
                     </h3>
-                    <p className="text-gray-500 text-sm">{service.description}</p>
+                    <p className="text-gray-500 text-sm max-w-xs">{service.description}</p>
                   </div>
                 </div>
               ))}

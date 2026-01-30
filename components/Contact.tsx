@@ -1,6 +1,6 @@
 "use client";
 
-import { User, Mail, Phone, MessageSquare, Send } from "lucide-react";
+import { User, Mail, Phone, MessageSquare, Send, Clock } from "lucide-react";
 import Image from "next/image";
 
 export function Contact() {
@@ -12,18 +12,18 @@ export function Contact() {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#2D91E0]/40 rounded-full blur-3xl" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-7xl 2xl:max-w-8xl mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Side - Content */}
           <div className="text-white">
             <span className="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white/90 mb-6">
               Contactez-nous
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6 max-w-lg">
               Planifions ensemble{" "}
               <span className="text-[var(--brand-accent)]">votre voyage</span>
             </h2>
-            <p className="text-md sm:text-lg text-white/80 mb-8 max-w-lg">
+            <p className="text-md sm:text-lg text-white/90 mb-8 max-w-lg">
               Notre équipe d&apos;experts est à votre disposition pour répondre à toutes vos questions et vous aider à organiser le voyage de vos rêves.
             </p>
 
@@ -35,7 +35,7 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="text-white/60 text-sm">Téléphone</p>
-                  <p className="text-white font-medium">+33 1 23 45 67 89</p>
+                  <p className="text-white font-medium">0702845719</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -45,6 +45,15 @@ export function Contact() {
                 <div>
                   <p className="text-white/60 text-sm">Email</p>
                   <p className="text-white font-medium">contact@groupe-agence.com</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-[var(--brand-accent)]" />
+                </div>
+                <div>
+                  <p className="text-white/60 text-sm">Temps de travail</p>
+                  <p className="text-white font-medium">Lun - Ven, 9h - 18h</p>
                 </div>
               </div>
             </div>

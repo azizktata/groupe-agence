@@ -1,6 +1,14 @@
 "use client";
 
-import { Check, Plane, ArrowRight, Send, Calendar, Medal, BadgeCheck } from "lucide-react";
+import {
+  Check,
+  Plane,
+  ArrowRight,
+  Send,
+  Calendar,
+  Medal,
+  BadgeCheck,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const tickets = [
@@ -39,7 +47,7 @@ const trustPoints = [
   "Réservations rapides et sécurisées",
 ];
 
-function TicketCard({ ticket }: { ticket: typeof tickets[0] }) {
+function TicketCard({ ticket }: { ticket: (typeof tickets)[0] }) {
   return (
     <div className="max-w-sm relative bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 overflow-hidden group">
       {/* Background Wave Pattern */}
@@ -104,9 +112,8 @@ function TicketCard({ ticket }: { ticket: typeof tickets[0] }) {
         </div>
 
         {/* Decorative Side Dots */}
-          {/* <div className="absolute -left-6 w-4 h-4 bg-[var(--brand-dark)] rounded-full" />
+        {/* <div className="absolute -left-6 w-4 h-4 bg-[var(--brand-dark)] rounded-full" />
           <div className="absolute -right-6 w-4 h-4 bg-[var(--brand-dark)] rounded-full" /> */}
-
 
         {/* Dotted Separator Line */}
         <div className="relative flex items-center my-4">
@@ -158,7 +165,14 @@ export function Trust() {
             </pattern> */}
 
             {/* Flight path pattern with planes */}
-            <pattern id="flight-paths" x="0" y="0" width="300" height="300" patternUnits="userSpaceOnUse">
+            <pattern
+              id="flight-paths"
+              x="0"
+              y="0"
+              width="300"
+              height="300"
+              patternUnits="userSpaceOnUse"
+            >
               {/* Curved flight path 1 */}
               <path
                 d="M30 250 Q150 100 270 150"
@@ -190,7 +204,14 @@ export function Trust() {
             </pattern>
 
             {/* Scattered small planes pattern */}
-            <pattern id="planes-scatter" x="0" y="0" width="400" height="400" patternUnits="userSpaceOnUse">
+            <pattern
+              id="planes-scatter"
+              x="0"
+              y="0"
+              width="400"
+              height="400"
+              patternUnits="userSpaceOnUse"
+            >
               {/* Plane 1 */}
               <g transform="translate(50, 80) rotate(45) scale(1.5)">
                 <path d="M0 4 L12 4 L12 5 L0 5 Z" fill="white" />
@@ -216,15 +237,48 @@ export function Trust() {
               </g>
 
               {/* Cloud shapes */}
-              <ellipse cx="280" cy="60" rx="20" ry="10" fill="white" opacity="0.3" />
-              <ellipse cx="290" cy="55" rx="15" ry="8" fill="white" opacity="0.3" />
-              <ellipse cx="100" cy="280" rx="25" ry="12" fill="white" opacity="0.3" />
-              <ellipse cx="115" cy="275" rx="18" ry="9" fill="white" opacity="0.3" />
+              <ellipse
+                cx="280"
+                cy="60"
+                rx="20"
+                ry="10"
+                fill="white"
+                opacity="0.3"
+              />
+              <ellipse
+                cx="290"
+                cy="55"
+                rx="15"
+                ry="8"
+                fill="white"
+                opacity="0.3"
+              />
+              <ellipse
+                cx="100"
+                cy="280"
+                rx="25"
+                ry="12"
+                fill="white"
+                opacity="0.3"
+              />
+              <ellipse
+                cx="115"
+                cy="275"
+                rx="18"
+                ry="9"
+                fill="white"
+                opacity="0.3"
+              />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#globe-grid)" />
           <rect width="100%" height="100%" fill="url(#flight-paths)" />
-          <rect width="100%" height="100%" fill="url(#planes-scatter)" opacity="0.6" />
+          <rect
+            width="100%"
+            height="100%"
+            fill="url(#planes-scatter)"
+            opacity="0.6"
+          />
         </svg>
       </div>
 
@@ -233,23 +287,21 @@ export function Trust() {
       <div className="absolute bottom-20 right-10 w-40 h-30 bg-[var(--brand-accent)]/10 rounded-full blur-3xl" />
       <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-white/5 rounded-full blur-2xl" />
 
-      <div className="relative z-10 max-w-7xl mx-auto">
+      <div className="relative z-10 max-w-7xl mx-auto 2xl:max-w-8xl">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Side - Ticket Cards */}
           <div className="gap-2 order-2 lg:order-1 flex flex-col items-center">
-          <TicketCard ticket={tickets[1]} />
+            <TicketCard ticket={tickets[1]} />
             <div className="grid grid-cols-2 gap-2 hidden md:grid">
-
-            {tickets.map((ticket, index) => (
-              <div
-              key={index}
-              style={{ animationDelay: `${index * 150}ms` }}
-              className="animate-fade-in"
-              >
-                <TicketCard ticket={ticket} />
-              </div>
-            ))}
-
+              {tickets.map((ticket, index) => (
+                <div
+                  key={index}
+                  style={{ animationDelay: `${index * 150}ms` }}
+                  className="animate-fade-in"
+                >
+                  <TicketCard ticket={ticket} />
+                </div>
+              ))}
             </div>
             {/* CTA Button - Primary Color */}
             <Button variant="primary" size="lg" rounded="sm" className="mt-8">
@@ -266,22 +318,27 @@ export function Trust() {
             </div>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-              Accédez aux meilleures offres de <span className="text-[var(--brand-accent)]">
-                 vols et d&apos;hôtels
-                </span>
+              Accédez aux meilleures offres de{" "}
+              <span className="text-[var(--brand-accent)]">
+                vols et d&apos;hôtels
+              </span>
             </h2>
 
-            <p className="text-white/90 text-md sm:text-lg leading-relaxed mb-8">
-              Nous vous donnons accès à des milliers de vols et
-              d&apos;hébergements aux meilleurs tarifs, en toute transparence.
+            <p className="text-white/90 text-md sm:text-lg leading-relaxed mb-8 max-w-xl">
+              Nous vous donnons accès à des milliers de vols et d’hébergements
+              aux meilleurs tarifs, en toute transparence. Billets d’avion et
+              hôtels réunis pour gagner du temps, économiser de l’argent et
+              profiter d’une expérience fluide.
             </p>
 
             {/* Trust Points */}
             <div className="space-y-4 mb-8">
               {trustPoints.map((point, index) => (
                 <div key={index} className="flex items-center gap-3 group">
-                    <BadgeCheck className="w-4 h-4 text-[var(--brand-primary)]" />
-                  <span className="text-white/90 text-sm group-hover:text-white transition-colors">{point}</span>
+                  <BadgeCheck className="w-5 h-5 text-[var(--brand-primary)]" />
+                  <span className="text-white/90 text-sm sm:text-base group-hover:text-white transition-colors">
+                    {point}
+                  </span>
                 </div>
               ))}
             </div>

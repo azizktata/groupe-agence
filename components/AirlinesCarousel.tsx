@@ -20,7 +20,7 @@ export function AirlinesCarousel() {
 
   return (
     <section className="py-4 bg-white overflow-hidden">
-      <div className="relative max-w-7xl mx-auto">
+      <div className="relative max-w-7xl 2xl:max-w-8xl mx-auto">
         {/* Gradient Masks for smooth fade edges */}
         <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />

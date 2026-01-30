@@ -13,13 +13,13 @@ const extraServices = [
     icon: ShieldCheck,
     title: "Assurance voyage",
     description:
-      "Protection adaptée grâce à un partenaire de confiance pour voyager sereinement.",
+      "En collaboration avec un partenaire d'assurance de confiance, profitez d’une protection adaptée à vos besoins.",
   },
   {
     icon: FileText,
     title: "Visas & documents",
     description:
-      "Assistance dédiée pour simplifier vos démarches administratives.",
+      "Accédez à une assistance dédiée pour toutes les démarches de visa, simplifiant ainsi la préparation de votre voyage.",
   },
 ];
 
@@ -93,7 +93,7 @@ export function ServicesExtra() {
       <div className="absolute top-20 right-20 w-64 h-64 bg-[var(--brand-primary)]/10 rounded-full blur-3xl" />
       <div className="absolute bottom-20 left-20 w-48 h-48 bg-[var(--brand-accent)]/10 rounded-full blur-3xl" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="relative z-10 max-w-7xl mx-auto 2xl:max-w-8xl px-6">
         {/* Section Header */}
         <div className="text-center mb-16">
           {/* <span className="inline-block text-[var(--brand-primary)] text-sm font-semibold uppercase tracking-wider mb-4">
@@ -103,7 +103,7 @@ export function ServicesExtra() {
             Services{" "}
             <span className="text-[var(--brand-primary)]">complémentaires</span>
           </h2>
-          <p className="text-white/70 text-md sm:text-lg max-w-2xl mx-auto">
+          <p className="text-white/70 text-md sm:text-lg max-w-xl mx-auto">
             Des solutions additionnelles pour simplifier chaque aspect de votre voyage.
           </p>
         </div>

@@ -179,20 +179,21 @@ export function CTAFinal() {
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-[var(--brand-primary)]/10 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[var(--brand-accent)]/10 rounded-full blur-3xl" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="relative z-10 max-w-7xl mx-auto 2xl:max-w-8xl px-6">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Side - Content */}
           <div>
-           
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
               Prêt à organiser votre{" "}
-              <span className="text-[var(--brand-accent)]">prochain voyage</span> ?
+              <span className="text-[var(--brand-accent)]">
+                prochain voyage
+              </span>{" "}
+              ?
             </h2>
 
-            <p className="text-white/70 text-md sm:text-lg leading-relaxed mb-8">
-              Billets, hôtels et services complémentaires réunis pour une
-              expérience fluide. Commencez dès maintenant et voyagez l&apos;esprit
-              tranquille.
+            <p className="text-white/70 text-md sm:text-lg leading-relaxed mb-8 max-w-lg">
+              Billets, hôtels et services complémentaires réunis pour que vous
+              profitiez pleinement de chaque étape.
             </p>
 
             {/* CTA Buttons */}
@@ -260,7 +261,6 @@ export function CTAFinal() {
                   </div>
                 </div>
               </div> */}
-
             </div>
           </div>
         </div>

@@ -15,7 +15,7 @@ export function Hero() {
       {/* Overlay */}
       <div className="absolute inset-0 bg-[var(--brand-dark)]/30" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 mt-12 sm:mt-0 pb-12 sm:pb-0">
+      <div className="max-w-7xl mx-auto 2xl:max-w-8xl px-6 relative z-10 mt-12 sm:mt-0 pb-12 sm:pb-0">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Side - Content */}
           <div className="text-white">

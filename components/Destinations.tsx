@@ -13,79 +13,40 @@ import Autoplay from "embla-carousel-autoplay";
 
 const destinationsRow1 = [
   {
-    name: "Paris",
-    country: "France",
-    price: "À partir de 89€",
-    image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80",
-  },
-  {
-    name: "Dubaï",
-    country: "Émirats Arabes",
-    price: "À partir de 399€",
-    image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80",
-  },
-  {
-    name: "New York",
-    country: "États-Unis",
-    price: "À partir de 449€",
-    image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=600&q=80",
-  },
-  {
     name: "Marrakech",
     country: "Maroc",
     price: "À partir de 149€",
-    image: "https://images.unsplash.com/photo-1597212618440-806262de4f6b?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=600&q=80",
   },
   {
-    name: "Tokyo",
-    country: "Japon",
-    price: "À partir de 699€",
-    image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600&q=80",
+    name: "Dubaï",
+    country: "Émirats Arabes Unis",
+    price: "À partir de 399€",
+    image: "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80",
   },
   {
-    name: "Londres",
-    country: "Royaume-Uni",
-    price: "À partir de 129€",
-    image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80",
-  },
-];
-
-const destinationsRow2 = [
-  {
-    name: "Istanbul",
-    country: "Turquie",
-    price: "À partir de 199€",
-    image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&q=80",
-  },
-  {
-    name: "Bangkok",
-    country: "Thaïlande",
-    price: "À partir de 549€",
-    image: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=600&q=80",
-  },
-  {
-    name: "Rome",
-    country: "Italie",
-    price: "À partir de 119€",
-    image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80",
+    name: "Abidjan",
+    country: "Côte d'Ivoire",
+    price: "À partir de 299€",
+    image: "https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=600&q=80",
   },
   {
     name: "Le Caire",
     country: "Égypte",
-    price: "À partir de 299€",
-    image: "https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=600&q=80",
+    price: "À partir de 249€",
+    image: "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?w=600&q=80",
   },
   {
-    name: "Barcelone",
-    country: "Espagne",
-    price: "À partir de 99€",
-    image: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600&q=80",
+    name: "Doha",
+    country: "Qatar",
+    price: "À partir de 349€",
+    image: "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80",
   },
   {
-    name: "Sydney",
-    country: "Australie",
-    price: "À partir de 899€",
-    image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600&q=80",
+    name: "Casablanca",
+    country: "Maroc",
+    price: "À partir de 129€",
+    image: "https://images.unsplash.com/photo-1569383746724-6f1b882b8f46?w=600&q=80",
   },
 ];
 
@@ -147,7 +108,7 @@ export function Destinations() {
   return (
     <section className="py-20 md:py-28 bg-gray-50 overflow-hidden">
       {/* Section Header */}
-      <div className="max-w-7xl mx-auto px-6 mb-12">
+      <div className="max-w-7xl mx-auto 2xl:max-w-8xl px-6 mb-12">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
             <span className="inline-flex items-center gap-2 text-[var(--brand-primary)] text-sm font-semibold uppercase tracking-wider mb-4">
@@ -186,7 +147,7 @@ export function Destinations() {
             {destinationsRow1.map((destination, index) => (
               <CarouselItem
                 key={`row1-${index}`}
-                className="pl-4 basis-[85%] sm:basis-[45%] md:basis-[35%] lg:basis-[28%] xl:basis-[22%]"
+                className="pl-4 basis-[85%] sm:basis-[45%] md:basis-[35%] lg:basis-[28%] xl:basis-[22%] 2xl:basis-[18%]"
               >
                 <DestinationCard destination={destination} />
               </CarouselItem>
