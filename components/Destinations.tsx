@@ -56,7 +56,7 @@ function DestinationCard({
   destination: (typeof destinationsRow1)[0];
 }) {
   return (
-    <div className="group relative h-[380px] rounded-3xl overflow-hidden cursor-pointer">
+    <div id="destinations" className="group relative h-[380px] rounded-3xl overflow-hidden cursor-pointer">
       {/* Background Image */}
       <img
         src={destination.image}

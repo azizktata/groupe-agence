@@ -9,7 +9,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand Column */}
           <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-6">
+            <Link href="#" className="flex items-center gap-2 mb-6">
              
               <span className="text-xl font-bold">Groupe L&apos;Agence</span>
             </Link>
@@ -82,27 +82,22 @@ export function Footer() {
             <h4 className="text-lg font-semibold mb-6">Nos services</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="#" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                <Link href="#services" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
                   Réservation de vols
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                <Link href="#services" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
                   Hôtels & Hébergements
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  Location de voitures
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                <Link href="#services-extra" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
                   Assurance voyage
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                <Link href="#services-extra" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
                   Visa & Formalités
                 </Link>
               </li>

@@ -33,7 +33,7 @@ function ServiceCard({
   const Icon = service.icon;
 
   return (
-    <div className="group relative bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/15 hover:border-white/30 transition-all duration-500 hover:-translate-y-2">
+    <div id="services-extra" className="group relative bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/15 hover:border-white/30 transition-all duration-500 hover:-translate-y-2">
       {/* Glow effect on hover */}
       <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[var(--brand-primary)]/0 to-[var(--brand-accent)]/0 group-hover:from-[var(--brand-primary)]/10 group-hover:to-[var(--brand-accent)]/10 transition-all duration-500" />
 
