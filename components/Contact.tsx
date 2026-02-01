@@ -44,7 +44,7 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="text-white/60 text-sm">Email</p>
-                  <p className="text-white font-medium">contact@groupe-agence.com</p>
+                  <p className="text-white font-medium">contact@groupelagence.com</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">

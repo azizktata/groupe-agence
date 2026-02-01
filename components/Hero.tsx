@@ -105,11 +105,11 @@ export function Hero() {
 
               {/* Submit Button */}
               <button
-                type="submit"
+                type="button"
                 className="w-full text-sm sm:text-base flex items-center justify-center gap-2 bg-[var(--brand-primary)] hover:brightness-110 text-white font-semibold py-4 rounded-xl transition-all mt-2"
               >
                 <Search className="w-5 h-5" />
-                Rechercher un voyage
+                Rechercher
               </button>
             </form>
             </div>
