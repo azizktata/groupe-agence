@@ -24,11 +24,34 @@ npm run lint     # Run ESLint
 
 ### Sabre GDS Integration
 
-The app integrates with the Sabre travel platform API for flight search:
+The app integrates with Sabre travel platform APIs for flights and hotels. See `sabre-air-booking.md` and `sabre-hotel-booking.md` for detailed API documentation.
 
-- `app/api/token/route.ts` - OAuth token endpoint that authenticates with Sabre API using credentials from env vars
-- `mappers/mapSabreBfmToUi.ts` - Transforms Sabre BFM (Bargain Finder Max) responses into `UiFlightOffer` types for the UI
-- `mocks/` - Contains mock Sabre API responses for development without live API calls
+#### Flight Booking Flow
+
+1. **BFM (Bargain Finder Max)** - Search for flights via `POST /v5/offers/shop/`
+2. **Revalidate** - Verify price/availability before booking via `POST /v5/shop/flights/revalidate/`
+3. **Create Booking** - Reserve the flight and generate PNR
+
+#### Mappers (`mappers/`)
+
+Transform Sabre API responses into UI-friendly types:
+
+- `mapSabreBfmToUi.ts` - BFM responses → `UiFlightOffer[]` with `RevalidationKey` for step 2
+- `mapSabreRevalidateToUi.ts` - Revalidation responses → `UiReviewData` (verified pricing, baggage, taxes)
+- `mapSabreHotelsToUi.ts` - Hotel list responses → UI hotel objects
+
+#### Key Types
+
+- `UiFlightOffer` - Normalized flight offer with outbound/inbound legs and pricing
+- `RevalidationKey` - Data needed to construct a revalidation request (extracted from BFM)
+- `UiReviewData` - Verified flight details with status: `CONFIRMED | PRICE_CHANGED | SOLD_OUT`
+- `BfmFilterOptions` / `FlightFiltersState` - Flight filtering (stops, airlines, price, cabins, times)
+
+#### Mocks (`mocks/`)
+
+Mock Sabre responses for development:
+- `mocks/air/` - Flight mocks (BFM, revalidation)
+- `mocks/hotel/` - Hotel mocks
 
 ### Environment Variables
 
@@ -40,14 +63,16 @@ Copy `.env.local.example` to `.env.local` and configure:
 ### Page Structure
 
 - `/` - Landing page with marketing sections (Hero, Services, Destinations, etc.)
-- `/vols` - Flight search results using mapped Sabre data
-- `/vols/[slug]` - Individual flight review/booking page
+- `/vols` - Flight search results with filtering
+- `/vols/[slug]` - Flight review page (revalidated pricing)
+- `/hotels` - Hotel search (in development)
 
 ### Components
 
-- `components/` - Page-level marketing components (Header, Hero, Footer, etc.)
+- `components/` - Page-level components (Header, Hero, Footer, etc.)
 - `components/ui/` - shadcn/ui base components
-- `components/extra/` - Feature-specific components
+- `components/extra/` - Feature-specific marketing components
+- `components/filters/` - Flight filter components (stops, price, airlines, cabins, departure times)
 
 ## Path Aliases
 
@@ -55,5 +80,5 @@ Use `@/*` for imports from project root:
 ```typescript
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { mapSabreBfmToUi } from "@/mappers/mapSabreBfmToUi"
+import { mapSabreBfmToUi, UiFlightOffer } from "@/mappers/mapSabreBfmToUi"
 ```

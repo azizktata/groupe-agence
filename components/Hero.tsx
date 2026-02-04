@@ -4,14 +4,9 @@ import {
   PlaneTakeoff,
   PlaneLanding,
   Calendar,
-  Users,
   ShieldCheck,
   Search,
-  ListOrdered,
-  Ban,
   Briefcase,
-  DollarSign,
-  MoveHorizontal,
 } from "lucide-react";
 import Link from "next/link";
 export function Hero() {

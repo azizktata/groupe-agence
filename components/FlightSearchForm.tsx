@@ -12,6 +12,7 @@ import {
   ArrowLeftRight,
   Plane,
   Edit3,
+  SearchIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -325,15 +326,15 @@ export function FlightSearchForm({
                 rounded="full"
                 className="ml-auto"
               >
-                <Edit3 className="w-4 h-4" />
-                Modifier
+                <Search className="w-12 h-12" />
+                {/* Modifier */}
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-2 text-xl">
                   <Search className="w-5 h-5 text-[var(--brand-primary)]" />
-                  Modifier votre recherche
+                  Faire une nouvelle recherche
                 </DialogTitle>
               </DialogHeader>
               <SearchFormContent

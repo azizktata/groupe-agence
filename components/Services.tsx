@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ArrowRight, Users, Plane, Hotel } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const services = [
   {
@@ -11,10 +12,12 @@ const services = [
     title: "Partenaires de confiance",
     description:
       "Nous collaborons avec compagnies aériennes et groupes hôteliers pour garantir les meilleures offres et un voyage sans souci.",
-    description2: "Grâce à nos partenaires, trouvez facilement les options idéales pour votre voyage.",
+    description2:
+      "Grâce à nos partenaires, trouvez facilement les options idéales pour votre voyage.",
     cta: "Découvrir nos partenaires",
     icon: Users,
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
+    image:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
   },
   {
     id: 2,
@@ -22,10 +25,13 @@ const services = [
     title: "Réservations aériennes",
     description:
       "Accédez à un large choix de vols nationaux et internationaux aux meilleurs tarifs du marché.",
-    description2: "Comparez tous les vols disponibles et choisissez celui qui vous convient le mieux.",
+    description2:
+      "Comparez tous les vols disponibles et choisissez celui qui vous convient le mieux.",
+    href: "/vols",
     cta: "Réserver un vol",
     icon: Plane,
-    image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80",
+    image:
+      "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80",
   },
   {
     id: 3,
@@ -33,10 +39,13 @@ const services = [
     title: "Réservations d'hôtels",
     description:
       "Profitez des hôtels 3 et 4 étoiles sélectionnés pour le confort, emplacement et rapport qualité-prix.",
-    description2: "Chaque lieu offre le juste équilibre entre qualité, emplacement idéal et prix.",
+    description2:
+      "Chaque lieu offre le juste équilibre entre qualité, emplacement idéal et prix.",
+    href: "/hotels",
     cta: "Trouver un hôtel",
     icon: Hotel,
-    image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80",
+    image:
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80",
   },
 ];
 
@@ -74,20 +83,21 @@ function ServiceItem({
 
         {/* Description */}
         <div className="mb-8 space-y-2 max-w-[50ch]">
-
-        <p className="text-black/90 font-base text-base leading-relaxed">
-          {service.description}
-        </p>
-        <p className="text-black/90 font-base text-base leading-relaxed">
-          {service.description2}
-        </p>
+          <p className="text-black/90 font-base text-base leading-relaxed">
+            {service.description}
+          </p>
+          <p className="text-black/90 font-base text-base leading-relaxed">
+            {service.description2}
+          </p>
         </div>
 
         {/* CTA Button */}
-        <Button variant="primary" rounded="lg">
-          {service.cta}
-          <ArrowRight className="w-4 h-4" />
-        </Button>
+        <Link href={service.href || "#"}>
+          <Button variant="primary" rounded="lg">
+            {service.cta}
+            <ArrowRight className="w-4 h-4" />
+          </Button>
+        </Link>
       </div>
 
       {/* Image Side */}

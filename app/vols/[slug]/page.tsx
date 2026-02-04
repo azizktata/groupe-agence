@@ -17,8 +17,8 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { mapSabreRevalidateToUi } from "@/mappers/mapSabreRevalidateToUi";
-import { MOCK_SABRE_REVALIDATE_RESPONSE } from "@/mocks/sabre-revalidate-original.mock";
-import { MOCK_SABRE_REVALIDATE_V2_RESPONSE } from "@/mocks/sabre-revalidate-v2.mock";
+import { MOCK_SABRE_REVALIDATE_RESPONSE } from "@/mocks/air/sabre-revalidate-original.mock";
+import { MOCK_SABRE_REVALIDATE_V2_RESPONSE } from "@/mocks/air/sabre-revalidate-v2.mock";
 
 // Mock selector based on flight ID
 function getMockRevalidateResponse(flightId: string) {

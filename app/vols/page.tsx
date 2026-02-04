@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { FlightSearchForm } from "@/components/FlightSearchForm";
 import Link from "next/link";
 import { extractBfmFilterOptions, FlightFiltersState, mapSabreBfmToUi } from "@/mappers/mapSabreBfmToUi";
-import { MOCK_SABRE_BFM_RESPONSE } from "@/mocks/sabre-bfm-original.mock";
+import { MOCK_SABRE_BFM_RESPONSE } from "@/mocks/air/sabre-bfm-original.mock";
 import { applyFlightFilters, minutesToReadable } from "@/lib/utils";
 import { FiltersBar } from "@/components/FilterBar";
 
@@ -83,7 +83,7 @@ export default function Index() {
           {/* Dark Overlay for text readability */}
           <div className="absolute inset-0 bg-slate-900/50"></div>
 
-          <div className="relative max-w-6xl mx-auto px-6 py-24 md:py-32">
+          <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-16">
             {/* Breadcrumbs */}
             <nav className="flex items-center gap-2 text-white/80 text-sm mb-6">
               <Link href="/" className="hover:text-white transition-colors">

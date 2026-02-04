@@ -10,6 +10,7 @@ import {
   BadgeCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const tickets = [
   {
@@ -311,10 +312,12 @@ export function Trust() {
               ))}
             </div>
             {/* CTA Button - Primary Color */}
+            <Link href="/vols">
             <Button variant="primary" size="lg" rounded="sm" className="mt-8">
               Découvrir nos offres
               <ArrowRight className="w-5 h-5" />
             </Button>
+            </Link>
           </div>
 
           {/* Right Side - Content */}

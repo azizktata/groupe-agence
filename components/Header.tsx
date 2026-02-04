@@ -7,10 +7,12 @@ import { useState, useEffect } from "react";
 
 const navItems = [
   { label: "Accueil", href: "/" },
-  { label: "À propos", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Destinations", href: "#destinations" },
-  { label: "Contact", href: "#contact" },
+  { label: "Vols", href: "/vols" },
+  { label: "Hotels", href: "/hotels" },
+  // { label: "À propos", href: "#about" },
+  // { label: "Services", href: "#services" },
+  // { label: "Destinations", href: "#destinations" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export function Header() {
