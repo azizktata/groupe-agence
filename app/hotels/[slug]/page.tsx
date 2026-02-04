@@ -33,7 +33,10 @@ import {
   mapSabreHotelContentToUi,
   getFeaturedAmenities,
 } from "@/mappers/mabSabreHotelSampleToUi";
+import { mapSabreHotelsToUi } from "@/mappers/mapSabreHotelsToUi";
 import { MOCK_SABRE_HOTEL_SAMPLE } from "@/mocks/hotel/sabre-hotel-sample";
+import { MOCK_SABRE_HOTELS_LIST } from "@/mocks/hotel/sabre-hotel-list";
+import { getHotelImage } from "@/lib/hotelImages";
 
 // Icon mapping for amenities
 const AMENITY_ICON_MAP: Record<number, React.ComponentType<{ className?: string }>> = {
@@ -80,6 +83,27 @@ const CATEGORY_STYLES: Record<string, string> = {
   Standard: "bg-slate-500 text-white",
 };
 
+// Hero images pool (hotel exteriors/interiors without people)
+// const HERO_IMAGES = [
+//   "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1600&q=80", // Hotel exterior
+//   "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1600&q=80", // Beach resort
+//   "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=1600&q=80", // Hotel room view
+//   "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1600&q=80", // Hotel bedroom
+//   "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1600&q=80", // Resort exterior
+//   "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1600&q=80", // Hotel lobby
+// ];
+
+// // Get consistent random image based on hotel code
+// function getHeroImage(hotelCode: string): string {
+//   let hash = 0;
+//   for (let i = 0; i < hotelCode.length; i++) {
+//     hash = (hash << 5) - hash + hotelCode.charCodeAt(i);
+//     hash |= 0;
+//   }
+//   const index = Math.abs(hash) % HERO_IMAGES.length;
+//   return HERO_IMAGES[index];
+// }
+
 export default async function HotelDetailPage({
   params,
 }: {
@@ -87,16 +111,20 @@ export default async function HotelDetailPage({
 }) {
   const { slug } = await params;
 
-  // TODO: In production, fetch hotel content using slug (HotelCode)
-  // Example: const response = await fetch(`/api/hotels/content/${slug}`);
-  // For now, use mock data
-  console.log("Hotel code:", slug);
+  // Get basic hotel info from the hotel list using HotelCode (slug)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const hotelsList = mapSabreHotelsToUi(MOCK_SABRE_HOTELS_LIST as any);
+  const hotelBasicInfo = hotelsList.find((h) => h.id === slug);
+
+  // Get detailed content (in production, fetch by HotelCode)
   const hotelDetails = mapSabreHotelContentToUi(MOCK_SABRE_HOTEL_SAMPLE);
 
+  // Use basic info from list if found, otherwise fallback to details
+  const name = hotelBasicInfo?.name || hotelDetails.name;
+  const chain = hotelBasicInfo?.chain || hotelDetails.chain;
+  const rating = hotelBasicInfo?.rating || hotelDetails.rating;
+
   const {
-    name,
-    chain,
-    rating,
     propertyInfo,
     images,
     amenities,
@@ -108,8 +136,8 @@ export default async function HotelDetailPage({
   const featuredAmenities = getFeaturedAmenities(amenities);
   const categoryStyle = CATEGORY_STYLES[chain.category] || CATEGORY_STYLES.Standard;
 
-  // Get hero image (first image or placeholder)
-  const heroImage = images[0]?.url || "/hotel-placeholder.jpg";
+  // Get hero image from random pool based on hotel code
+  const heroImage = getHotelImage(slug, "hero");
   const galleryImages = images.slice(0, 6);
 
   return (

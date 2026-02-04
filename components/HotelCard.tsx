@@ -1,8 +1,9 @@
 import React from "react";
-import { UiHotel, getHotelDisplayImage } from "@/mappers/mapSabreHotelsToUi";
+import { UiHotel } from "@/mappers/mapSabreHotelsToUi";
 import { Star, MapPin, Building2, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { getHotelImage } from "@/lib/hotelImages";
 
 type HotelCardProps = {
   hotel: UiHotel;
@@ -16,8 +17,31 @@ const CATEGORY_STYLES: Record<string, string> = {
   Standard: "bg-slate-500/90 text-white",
 };
 
+// Hotel card images pool (hotel exteriors/interiors without people)
+// const HOTEL_CARD_IMAGES = [
+//   "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80",
+//   "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80",
+//   "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800&q=80",
+//   "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80",
+//   "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80",
+//   "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80",
+//   "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
+//   "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80",
+// ];
+
+// // Get consistent random image based on hotel code
+// function getHotelCardImage(hotelCode: string): string {
+//   let hash = 0;
+//   for (let i = 0; i < hotelCode.length; i++) {
+//     hash = (hash << 5) - hash + hotelCode.charCodeAt(i);
+//     hash |= 0;
+//   }
+//   const index = Math.abs(hash) % HOTEL_CARD_IMAGES.length;
+//   return HOTEL_CARD_IMAGES[index];
+// }
+
 const HotelCard = ({ hotel, isImageLoading = false }: HotelCardProps) => {
-  const displayImage = getHotelDisplayImage(hotel);
+  const displayImage = getHotelImage(hotel.id, "card");
 
   const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating);
@@ -39,7 +63,7 @@ const HotelCard = ({ hotel, isImageLoading = false }: HotelCardProps) => {
     <div className="bg-white border border-slate-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-[var(--brand-primary)]/30 transition-all duration-300 overflow-hidden group">
       {/* Image Section */}
       <div className="relative w-full h-48 overflow-hidden">
-        {isImageLoading || hotel.image === null ? (
+        {isImageLoading ? (
           <div className="absolute inset-0 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 animate-pulse flex items-center justify-center">
             <Building2 className="w-12 h-12 text-slate-300" />
           </div>
@@ -119,7 +143,7 @@ const HotelCard = ({ hotel, isImageLoading = false }: HotelCardProps) => {
           className="w-full shadow-lg shadow-[var(--brand-primary)]/20 active:scale-[0.98]"
         >
           <Link href={`/hotels/${hotel.id}`}>
-            Voir les chambres
+            Voir les détails
             <ArrowRight className="w-4 h-4" />
           </Link>
         </Button>

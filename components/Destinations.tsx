@@ -40,7 +40,7 @@ const destinationsRow1 = [
     name: "Doha",
     country: "Qatar",
     price: "À partir de 349€",
-    image: "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80",
+    image: "https://image2url.com/r2/default/images/1770220542875-1022e9f8-f6dd-4402-9d28-718bed9a49dc.jpg",
   },
   {
     name: "Casablanca",

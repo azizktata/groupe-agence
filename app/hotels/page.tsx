@@ -58,7 +58,7 @@ function applyHotelFilters(
 
 export default function HotelsPage() {
   // Using mock data directly for testing
-  const hotels = mapSabreHotelsToUi(MOCK_SABRE_HOTELS_LIST);
+  const hotels = mapSabreHotelsToUi(MOCK_SABRE_HOTELS_LIST as any);
   const filterOptions = extractHotelFilterOptions(hotels);
 
   const [filters, setFilters] = useState<HotelFiltersState>({
@@ -80,7 +80,7 @@ export default function HotelsPage() {
         {/* 1. HERO BANNER SECTION */}
         <div className="relative w-full overflow-hidden">
           <img
-            src="/airplane-background.png"
+            src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1600&q=80"
             alt="Bannière voyage"
             className="absolute inset-0 w-full h-full object-cover"
           />
