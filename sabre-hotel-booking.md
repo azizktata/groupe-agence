@@ -186,64 +186,7 @@ You can batch up to  **300 HotelCodes** . For a search result page, we recommend
 
 **Example Response:
 JSON**
-`{
-  "GetHotelImageRS": {
-    "version": "1.0.0",
-    "ApplicationResults": {
-      "status": "COMPLETE",
-      "Success": [
-        {
-          "timeStamp": "2024-05-20T10:15:30.000-05:00",
-          "type": "APPLICATION"
-        }
-      ]
-    },
-    "HotelImageInfos": {
-      "HotelImageInfo": [
-        {
-          "HotelInfo": {
-            "HotelCode": "100005094",
-            "CodeContext": "GLOBAL",
-            "ChainCode": "HY",
-            "Logo": "https://images.sabre.com/logos/chains/HY_logo.png"
-          },
-          "ImageItem": {
-            "Id": "img_992831",
-            "Ordinal": 1,
-            "Format": "JPG",
-            "LastModifedDate": "2023-12-01T08:00:00",
-            "Image": {
-              "Url": "https://images.sabre.com/hotels/100005094/ext_view_large.jpg",
-              "Type": "LARGE",
-              "Height": 800,
-              "Width": 1200
-            },
-            "Category": {
-              "CategoryCode": 1,
-              "Description": {
-                "Text": [
-                  { "content": "Hotel Exterior", "Language": "EN" },
-                  { "content": "Extérieur de l'hôtel", "Language": "FR" }
-                ]
-              }
-            },
-            "AdditionalInfo": {
-              "Info": [
-                {
-                  "Type": "CAPTION",
-                  "Description": {
-                    "Text": [{ "content": "Main entrance and facade at sunset", "Language": "EN" }]
-                  }
-                }
-              ]
-            }
-          }
-        }
-      ]
-    }
-  }
-}`
-
+`{   "GetHotelImageRS": {     "version": "1.0.0",     "ApplicationResults": {       "status": "COMPLETE",       "Success": [         {           "timeStamp": "2024-05-20T10:15:30.000-05:00",           "type": "APPLICATION"         }       ]     },     "HotelImageInfos": {       "HotelImageInfo": [         {           "HotelInfo": {             "HotelCode": "100005094",             "CodeContext": "GLOBAL",             "ChainCode": "HY",             "Logo": "https://images.sabre.com/logos/chains/HY_logo.png"           },           "ImageItem": {             "Id": "img_992831",             "Ordinal": 1,             "Format": "JPG",             "LastModifedDate": "2023-12-01T08:00:00",             "Image": {               "Url": "https://images.sabre.com/hotels/100005094/ext_view_large.jpg",               "Type": "LARGE",               "Height": 800,               "Width": 1200             },             "Category": {               "CategoryCode": 1,               "Description": {                 "Text": [                   { "content": "Hotel Exterior", "Language": "EN" },                   { "content": "Extérieur de l'hôtel", "Language": "FR" }                 ]               }             },             "AdditionalInfo": {               "Info": [                 {                   "Type": "CAPTION",                   "Description": {                     "Text": [{ "content": "Main entrance and facade at sunset", "Language": "EN" }]                   }                 }               ]             }           }         }       ]     }   } }`
 
 ## 💰 2. Get Hotel Availability API
 
@@ -267,26 +210,74 @@ To transition from a "List" to "Available Prices," you pass the `HotelCode` from
 
 ---
 
-## 🔍 3. Get Hotel Details API
+## 🔍 3. Hotel Content & Details (v4)
 
-**Purpose:** Retrieves **every single available room and rate** for a specific property. While "Availability" shows you the hotel is open, "Details" shows you every Room Type (King, Twin, Suite) and every Rate Plan (Refundable, Member Rate, Breakfast Included).
+The `GetHotelContent` API is used when a user clicks a hotel card to view the full details. It merges static descriptive text with all available media (Images, 360 Panoramas, and Videos).
 
-### API Details
+## 📋 1. API Overview
 
-* **Endpoint:** `POST /v5/get/hoteldetails`
-* **Key Feature:** Returns detailed policy text (Cancellation/Guarantee) for each individual rate.
+* **Purpose** : Orchestrates location info, amenities, payment forms, and rich media into a single response.
+* **Key Benefit** : No need to call separate APIs for images and descriptions once you are on the property page.
+* **Limit** : Single property search per request.
 
-### Detailed Rate Mapping
+## 🛠️ 2. Request Configuration (Hotel Details)
 
-When a user selects a hotel, you must extract these specific items from the `Get Hotel Details` response for your "Review" page:
+To get a complete UI, you must set specific flags to `true`.
 
-| **UI Component**   | **Data Source in Response**                 |
-| ------------------------ | ------------------------------------------------- |
-| **Room Name**      | `RoomSet[].RoomDescription.Name`                |
-| **Full Breakdown** | `RateInfo.NightlyRates[]`(Price for each night) |
-| **Cancellation**   | `RateInfo.CancellationPolicy.Description`       |
-| **Total Price**    | `RateInfo.AmountAfterTax`                       |
-| **Booking Key**    | `RateKey`(Critical for the final Booking step)  |
+### Essential Description Types:
+
+| **Type**                 | **Description**                 | **UI Section**      |
+| ------------------------------ | ------------------------------------- | ------------------------- |
+| **`ShortDescription`** | High-level summary of the property.   | Top "About" section.      |
+| **`Dining`**           | On-site restaurants and meal plans.   | Dining tab/section.       |
+| **`Facilities`**       | Meeting rooms, business centers, etc. | "What this place offers". |
+| **`Policies`**         | Check-in/out times, Pet policies.     | Sidebar/Footer info.      |
+| **`SafetyInfo`**       | Security and fire law compliance.     | Trust/Safety badge.       |
+| **`Attractions`**      | Nearby landmarks and distances.       | Location/Map section.     |
+
+### Media Preferences:
+
+Request `ORIGINAL` for high-quality galleries and `HD360` for interactive panoramic views.
+
+### Sample Request (Minimal Details)
+
+**JSON**
+
+```
+{
+  "GetHotelContentRQ": {
+    "version": "4.0.0",
+    "SearchCriteria": {
+      "HotelRefs": { "HotelRef": { "HotelCode": "100005424" } },
+      "DescriptiveInfoRef": {
+        "PropertyInfo": true,
+        "LocationInfo": true,
+        "Amenities": true,
+        "Descriptions": 
+           { "Description": [{ "Type": "ShortDescription" }, { "Type": "Dining" }] }
+      },
+      "MediaRef": 
+{ "MaxItems": "ALL", "MediaTypes": { "Images": { "Image": [{ "Type": "ORIGINAL" }] }}}
+    }
+  }
+}
+```
+
+### Data Mapping Table: API to UI
+
+| **UI Section**      | **JSON Path (GetHotelContentRS.HotelContentInfos.HotelContentInfo)**   | **Logic / Transformation**                      |
+| ------------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------- |
+| **Hero Title**      | `HotelInfo.HotelName`                                                      | Render as `<h1>`.                                   |
+| **Trust Badges**    | `HotelInfo.SabreRating`                                                    | Convert "3.0" to Star icons.                          |
+| **Hero Gallery**    | `HotelMediaInfo.MediaItems.MediaItem[]`                                    | Map `ImageItems.Image[0].Url`. Sort by `Ordinal`. |
+| **Quick Summary**   | `HotelDescriptiveInfo.PropertyInfo.PropertyTypeInfo`                       | Join descriptions (e.g., "All suite, Extended stay"). |
+| **Check-in/Out**    | `HotelDescriptiveInfo.PropertyInfo.Policies.Policy`                        | Filter by `Type="CheckIn"`and `Type="CheckOut"`.  |
+| **Amenities Grid**  | `HotelDescriptiveInfo.Amenities.Amenity[]`                                 | Map `Description`to an icon list.                   |
+| **About Section**   | `HotelDescriptiveInfo.Descriptions.Description[Type="ShortDescription"]`   | Clean whitespace from `Text.value`.                 |
+| **Dining Details**  | `HotelDescriptiveInfo.Descriptions.Description[Type="Dining"]`             | Render as "Dining & Restaurants" text block.          |
+| **Nearby List**     | `HotelDescriptiveInfo.Descriptions.Description[Type="Attractions"]`        | Parse distances (e.g., "1 MI E") from the string.     |
+| **Safety/Security** | `HotelDescriptiveInfo.SecurityFeatures.SecurityFeature[]`                  | List `Description`for "Safety & Security" section.  |
+| **Policy Details**  | `HotelDescriptiveInfo.Descriptions.Description[Type="CancellationPolicy"]` | Use for "Cancellation Rules" fine print.              |
 
 ---
 

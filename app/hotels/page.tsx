@@ -87,7 +87,7 @@ export default function HotelsPage() {
           {/* Dark Overlay for text readability */}
           <div className="absolute inset-0 bg-slate-900/50"></div>
 
-          <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-16 ">
+          <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-16">
             {/* Breadcrumbs */}
             <nav className="flex items-center gap-2 text-white/80 text-sm mb-6">
               <Link href="/" className="hover:text-white transition-colors">
