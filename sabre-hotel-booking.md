@@ -14,17 +14,11 @@ Use this when you don't have Hotel IDs yet. Note that `HotelPref` becomes **mand
 
 **Request Example:**
 
-**JSON**
+**JSON** 
 
 ```
 {
   "GetHotelListRQ": {
-    "POS": {
-      "Source": {
-        "PseudoCityCode": "TM61"
-      }
-    },
-    "CorporateNumber": "DK44391RC",
     "HotelPref": {
       "ChainCodes": { "ChainCode": ["HY"] },
       "SabreRating": { "Min": "4.5", "Max": "5.0" },
@@ -55,6 +49,13 @@ Use this when you don't have Hotel IDs yet. Note that `HotelPref` becomes **mand
           16
         ]
       },
+    "HotelInfoRef": {
+      "Amenities": true,
+      "LocationInfo": true,
+      "PropertyTypeInfo": true,
+      "PropertyQualityInfo": true,
+      "SecurityFeatures": true
+    }
       "HotelName": "Resort"
     }
   }
