@@ -11,68 +11,90 @@ npm run start    # Start production server
 npm run lint     # Run ESLint
 ```
 
+No test framework is configured.
+
 ## Tech Stack
 
 - **Next.js 16** with App Router and React 19
 - **TypeScript** with strict mode enabled
 - **Tailwind CSS 4** with CSS variables for theming
-- **shadcn/ui** (new-york style) - add components with `npx shadcn@latest add <component>`
-- **Lucide** for icons
-- **Embla Carousel** for carousels
+- **shadcn/ui** (new-york style) — add components with `npx shadcn@latest add <component>`
+- **Lucide** for icons, **Embla Carousel** for carousels, **Vaul** for drawers
 
 ## Architecture
 
-### Sabre GDS Integration
+### Overview
 
-The app integrates with Sabre travel platform APIs for flights and hotels. See `sabre-air-booking.md` and `sabre-hotel-booking.md` for detailed API documentation.
+Travel agency web app ("Groupe L'Agence") integrating with Sabre GDS APIs for flights and hotels. The UI is in French. See `sabre-air-booking.md` and `sabre-hotel-booking.md` for detailed Sabre API documentation.
 
-#### Flight Booking Flow
+### Data Flow Pattern
 
-1. **BFM (Bargain Finder Max)** - Search for flights via `POST /v5/offers/shop/`
-2. **Revalidate** - Verify price/availability before booking via `POST /v5/shop/flights/revalidate/`
-3. **Create Booking** - Reserve the flight and generate PNR
+All Sabre integrations follow the same pattern:
 
-#### Mappers (`mappers/`)
+1. **API Routes** (`app/api/`) — Server-side proxies to Sabre APIs, handling auth and request building
+2. **Mappers** (`mappers/`) — Transform raw Sabre responses into normalized UI types
+3. **Pages** — Consume mapped data, apply client-side filtering
 
-Transform Sabre API responses into UI-friendly types:
+Currently, flight pages use **mock data directly** (imported from `mocks/`) bypassing API routes. Hotel search calls the real API via `/api/hotels/list`. Hotel detail page also uses mocks.
 
-- `mapSabreBfmToUi.ts` - BFM responses → `UiFlightOffer[]` with `RevalidationKey` for step 2
-- `mapSabreRevalidateToUi.ts` - Revalidation responses → `UiReviewData` (verified pricing, baggage, taxes)
-- `mapSabreHotelsToUi.ts` - Hotel list responses → UI hotel objects
+### Sabre Authentication
 
-#### Key Types
+Two different auth flows exist:
+- **Client credentials** (`app/api/token/route.ts`) — Used by `getToken()`, exported and reused by hotel list API. Uses `API_CLIENT_ID` + `API_CLIENT_SECRET` with `grant_type=client_credentials`.
+- **Password grant** (`app/api/hotels/images/route.ts`) — Local `getToken()` using `API_CLIENT_USERNAME` + `API_CLIENT_PASSWORD` with `grant_type=password`. Currently bypassed with a mock token.
 
-- `UiFlightOffer` - Normalized flight offer with outbound/inbound legs and pricing
-- `RevalidationKey` - Data needed to construct a revalidation request (extracted from BFM)
-- `UiReviewData` - Verified flight details with status: `CONFIRMED | PRICE_CHANGED | SOLD_OUT`
-- `BfmFilterOptions` / `FlightFiltersState` - Flight filtering (stops, airlines, price, cabins, times)
+Base URL: `API_SABRE_BASE_URL` env var, defaults to `https://api.cert.platform.sabre.com`.
 
-#### Mocks (`mocks/`)
+### Flight Booking Flow
 
-Mock Sabre responses for development:
-- `mocks/air/` - Flight mocks (BFM, revalidation)
-- `mocks/hotel/` - Hotel mocks
+1. **BFM (Bargain Finder Max)** — `POST /v5/offers/shop/` → `mapSabreBfmToUi()` → `UiFlightOffer[]`
+2. **Revalidate** — `POST /v5/shop/flights/revalidate/` → `mapSabreRevalidateToUi()` → `UiReviewData`
+3. **Create Booking** — Not yet implemented
 
-### Environment Variables
+Each `UiFlightOffer` carries a `RevalidationKey` containing segments, passenger type, and count — everything needed to construct the revalidation request.
 
-Copy `.env.local.example` to `.env.local` and configure:
-- `API_CLIENT_ID`, `API_CLIENT_SECRET` - Sabre API credentials
-- `API_CLIENT_USERNAME`, `API_CLIENT_PASSWORD` - Sabre user credentials
-- `API_TOKEN_URL` - Token endpoint (defaults to Sabre production)
+### Hotel Booking Flow
+
+1. **Hotel List** — `POST /v4.1.0/get/hotellist` via `/api/hotels/list` → `mapSabreHotelsToUi()` → `UiHotel[]`
+2. **Hotel Images** — `POST /v1.0.0/shop/hotels/image` via `/api/hotels/images` → `mapSabreImagesToMap()` → merge with hotels (currently commented out)
+3. **Hotel Content** — `mapSabreHotelContentToUi()` → `UiHotelDetails` (for detail pages, uses `mabSabreHotelSampleToUi.ts`)
+
+Hotels use a two-step loading pattern: list first, then images merged in asynchronously.
+
+### Key Mappers
+
+| File | Input | Output | Used By |
+|------|-------|--------|---------|
+| `mapSabreBfmToUi.ts` | BFM response | `UiFlightOffer[]` + `BfmFilterOptions` | `/vols` |
+| `mapSabreRevalidateToUi.ts` | Revalidate response | `UiReviewData` | `/vols/[slug]` |
+| `mapSabreHotelsToUi.ts` | Hotel list response | `UiHotel[]` + image merging utils | `/hotels` |
+| `mabSabreHotelSampleToUi.ts` | Hotel content response | `UiHotelDetails` | `/hotels/[slug]` |
+
+### Client-Side Filtering
+
+Flight filtering is in `lib/utils.ts` (`applyFlightFilters`). Filter options are extracted from BFM results via `extractBfmFilterOptions()`. Hotel filtering logic lives directly in `app/hotels/page.tsx`.
+
+### Theming
+
+Brand colors defined as CSS custom properties in `globals.css` and used throughout via `var(--brand-primary)`, `var(--brand-accent)`, `var(--brand-dark)`, `var(--brand-teal)`. Tailwind theme colors are also configured alongside shadcn/ui variables.
+
+Fonts: **Poppins** (headings + body default) and **Inter** (body alternate), loaded via `next/font/google`.
 
 ### Page Structure
 
-- `/` - Landing page with marketing sections (Hero, Services, Destinations, etc.)
-- `/vols` - Flight search results with filtering
-- `/vols/[slug]` - Flight review page (revalidated pricing)
-- `/hotels` - Hotel search (in development)
+- `/` — Landing page with marketing sections
+- `/vols` — Flight search results with filtering (client component, uses mocks)
+- `/vols/[slug]` — Flight review page with revalidated pricing (server component, uses mocks)
+- `/hotels` — Hotel search with live API (client component)
+- `/hotels/[slug]` — Hotel detail page (server component, uses mocks)
 
-### Components
+### API Routes
 
-- `components/` - Page-level components (Header, Hero, Footer, etc.)
-- `components/ui/` - shadcn/ui base components
-- `components/extra/` - Feature-specific marketing components
-- `components/filters/` - Flight filter components (stops, price, airlines, cabins, departure times)
+- `POST /api/token` — Sabre OAuth token (client credentials)
+- `POST /api/hotels/list` — Hotel list search proxy
+- `POST /api/hotels/images` — Hotel images proxy (partially implemented)
+
+No flight API routes exist yet — flights currently use mock data directly.
 
 ## Path Aliases
 

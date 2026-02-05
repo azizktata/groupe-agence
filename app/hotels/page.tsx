@@ -1,13 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { ChevronRight, Home } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
+import { ChevronRight, Home, AlertCircle } from "lucide-react";
 import { Header } from "@/components/Header";
 import Link from "next/link";
 import { mapSabreHotelsToUi, UiHotel } from "@/mappers/mapSabreHotelsToUi";
-import { MOCK_SABRE_HOTELS_LIST } from "@/mocks/hotel/sabre-hotel-list";
 import HotelCard from "@/components/HotelCard";
-import HotelSearchForm from "@/components/HotelSearchForm";
+import HotelSearchForm, { HotelSearchFilters } from "@/components/HotelSearchForm";
 import {
   HotelFiltersBar,
   HotelFiltersState,
@@ -57,8 +56,11 @@ function applyHotelFilters(
 }
 
 export default function HotelsPage() {
-  // Using mock data directly for testing
-  const hotels = mapSabreHotelsToUi(MOCK_SABRE_HOTELS_LIST as any);
+  const [hotels, setHotels] = useState<UiHotel[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [hasSearched, setHasSearched] = useState(false);
+
   const filterOptions = extractHotelFilterOptions(hotels);
 
   const [filters, setFilters] = useState<HotelFiltersState>({
@@ -71,6 +73,44 @@ export default function HotelsPage() {
     () => applyHotelFilters(hotels, filters),
     [hotels, filters]
   );
+
+  const handleSearch = useCallback(async (searchFilters: HotelSearchFilters) => {
+    setIsSearching(true);
+    setError(null);
+    setHotels([]);
+    setHasSearched(true);
+    console.log("Search filters:", searchFilters);
+    try {
+      const listResponse = await fetch("/api/hotels/list", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          hotelName: searchFilters.hotelName || undefined,
+          chainCode: searchFilters.chainCode || undefined,
+          minRating: searchFilters.minRating,
+          // amenityCodes: searchFilters.amenityCodes.length > 0 ? searchFilters.amenityCodes : undefined,
+          securityFeatureCodes: searchFilters.securityFeatureCodes.length > 0 ? searchFilters.securityFeatureCodes : undefined,
+          propertyTypeCodes: searchFilters.propertyTypeCodes.length > 0 ? searchFilters.propertyTypeCodes : undefined,
+          propertyQualityCodes: searchFilters.propertyQualityCodes.length > 0 ? searchFilters.propertyQualityCodes : undefined,
+        }),
+      });
+
+      if (!listResponse.ok) {
+        const errorData = await listResponse.json();
+        console.error("Hotel list API error:", errorData);
+        throw new Error(errorData.details || "Failed to fetch hotels");
+      }
+
+      const listData = await listResponse.json();
+      console.log("Raw Sabre response:", listData);
+      const mappedHotels = mapSabreHotelsToUi(listData);
+      setHotels(mappedHotels);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setIsSearching(false);
+    }
+  }, []);
 
   return (
     <>
@@ -107,11 +147,16 @@ export default function HotelsPage() {
             <div className="max-w-4xl">
               <HotelSearchForm
                 compact
+                onSearch={handleSearch}
+                isLoading={isSearching}
                 defaultValues={{
                   hotelName: "",
                   chainCode: "",
                   minRating: "3.0",
                   amenityCodes: [],
+                  securityFeatureCodes: [],
+                  propertyTypeCodes: [],
+                  propertyQualityCodes: [],
                 }}
               />
             </div>
@@ -119,26 +164,56 @@ export default function HotelsPage() {
         </div>
 
         {/* 2. FILTER BAR (Sticky) */}
-        <HotelFiltersBar
-          filters={filters}
-          filterOptions={filterOptions}
-          resultsCount={filteredHotels.length}
-          onChange={setFilters}
-        />
+        {hotels.length > 0 && (
+          <HotelFiltersBar
+            filters={filters}
+            filterOptions={filterOptions}
+            resultsCount={filteredHotels.length}
+            onChange={setFilters}
+          />
+        )}
 
-        {/* 3. RESULTS GRID */}
+        {/* 3. RESULTS / STATES */}
         <div className="max-w-6xl mx-auto px-6 py-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredHotels.map((hotel) => (
-              <HotelCard key={hotel.id} hotel={hotel} />
-            ))}
-          </div>
+          {/* Error state */}
+          {error && (
+            <div className="flex items-center gap-3 bg-red-50 border border-red-200 text-red-700 rounded-2xl p-6 mb-6">
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <p className="text-sm font-medium">{error}</p>
+            </div>
+          )}
 
-          {/* Empty state */}
-          {filteredHotels.length === 0 && (
+          {/* Loading state */}
+          {isSearching && (
+            <div className="text-center py-16">
+              <div className="w-8 h-8 border-4 border-[var(--brand-primary)] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-slate-500 text-lg">Recherche en cours...</p>
+            </div>
+          )}
+
+          {/* Results grid */}
+          {!isSearching && filteredHotels.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredHotels.map((hotel) => (
+                <HotelCard key={hotel.id} hotel={hotel} />
+              ))}
+            </div>
+          )}
+
+          {/* Empty results after search */}
+          {!isSearching && hasSearched && hotels.length === 0 && !error && (
             <div className="text-center py-16">
               <p className="text-slate-500 text-lg">
                 Aucun hôtel ne correspond à vos critères.
+              </p>
+            </div>
+          )}
+
+          {/* Empty after filtering */}
+          {!isSearching && hotels.length > 0 && filteredHotels.length === 0 && (
+            <div className="text-center py-16">
+              <p className="text-slate-500 text-lg">
+                Aucun hôtel ne correspond à vos filtres.
               </p>
               <button
                 onClick={() =>
@@ -150,97 +225,17 @@ export default function HotelsPage() {
               </button>
             </div>
           )}
+
+          {/* Initial state - no search yet */}
+          {!isSearching && !hasSearched && (
+            <div className="text-center py-16">
+              <p className="text-slate-500 text-lg">
+                Lancez une recherche pour trouver des hôtels.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>
   );
 }
-
-/* TODO: Uncomment when ready to implement full search functionality
-
-import { useState, useCallback } from "react";
-import { AlertCircle } from "lucide-react";
-import {
-  mapSabreImagesToMap,
-  mergeHotelImages,
-  extractHotelCodes,
-  UiHotel,
-} from "@/mappers/mapSabreHotelsToUi";
-import HotelSearchForm, { HotelSearchFilters } from "@/components/HotelSearchForm";
-
-// State management
-const [hotels, setHotels] = useState<UiHotel[]>([]);
-const [isSearching, setIsSearching] = useState(false);
-const [isLoadingImages, setIsLoadingImages] = useState(false);
-const [error, setError] = useState<string | null>(null);
-const [hasSearched, setHasSearched] = useState(false);
-
-const handleSearch = useCallback(async (filters: HotelSearchFilters) => {
-  setIsSearching(true);
-  setIsLoadingImages(true);
-  setError(null);
-  setHotels([]);
-  setHasSearched(true);
-
-  try {
-    // Step 1: Fetch hotel list
-    const listResponse = await fetch("/api/hotels/list", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        hotelName: filters.hotelName || undefined,
-        chainCode: filters.chainCode || undefined,
-        minRating: filters.minRating,
-        amenityCodes: filters.amenityCodes.length > 0 ? filters.amenityCodes : undefined,
-      }),
-    });
-
-    if (!listResponse.ok) {
-      const errorData = await listResponse.json();
-      throw new Error(errorData.details || "Failed to fetch hotels");
-    }
-
-    const listData = await listResponse.json();
-    const mappedHotels = mapSabreHotelsToUi(listData);
-
-    if (mappedHotels.length === 0) {
-      setHotels([]);
-      setIsSearching(false);
-      setIsLoadingImages(false);
-      return;
-    }
-
-    setHotels(mappedHotels);
-    setIsSearching(false);
-
-    // Step 2: Fetch images in parallel
-    const hotelCodes = extractHotelCodes(listData);
-
-    try {
-      const imagesResponse = await fetch("/api/hotels/images", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          hotelCodes,
-          imageType: "LARGE",
-        }),
-      });
-
-      if (imagesResponse.ok) {
-        const imagesData = await imagesResponse.json();
-        const imageMap = mapSabreImagesToMap(imagesData);
-        setHotels((currentHotels) => mergeHotelImages(currentHotels, imageMap));
-      }
-    } catch (imageError) {
-      console.error("Failed to load hotel images:", imageError);
-    } finally {
-      setIsLoadingImages(false);
-    }
-  } catch (err) {
-    setError(err instanceof Error ? err.message : "An error occurred");
-    setIsSearching(false);
-    setIsLoadingImages(false);
-  }
-}, []);
-
-*/

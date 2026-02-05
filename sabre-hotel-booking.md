@@ -20,6 +20,13 @@ Use this when you don't have Hotel IDs yet. Note that `HotelPref` becomes **mand
 {
   "GetHotelListRQ": {
     "HotelPref": {
+       "HotelName": "Resort",
+      "BrandCodes": {
+        "BrandCode": [
+          "10008",
+          "10009"
+        ]
+      },
       "ChainCodes": { "ChainCode": ["HY"] },
       "SabreRating": { "Min": "4.5", "Max": "5.0" },
       "AmenityCodes": {
@@ -56,7 +63,7 @@ Use this when you don't have Hotel IDs yet. Note that `HotelPref` becomes **mand
       "PropertyQualityInfo": true,
       "SecurityFeatures": true
     }
-      "HotelName": "Resort"
+   
     }
   }
 }

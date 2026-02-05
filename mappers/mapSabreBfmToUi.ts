@@ -121,7 +121,9 @@ function findBaggageAllowance(
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function mapSabreBfmToUi(response: { groupedItineraryResponse: any }): UiFlightOffer[] {
   const data = response.groupedItineraryResponse;
-
+  if (data.statistics.itineraryCount === 0) {
+    return [];
+  }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return data.itineraryGroups.flatMap((group: any) =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
