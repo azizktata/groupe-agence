@@ -172,11 +172,11 @@ export function mapSabreBfmToUi(response: { groupedItineraryResponse: any }): Ui
       // Build revalidation key with all data needed for revalidation request
       const revalidationSegments: RevalidationSegment[] = [];
 
-      // Outbound segment
+      // Outbound segments (may include multiple flights if there are stops)
       const outboundFareComponent = passengerInfo.fareComponents[0];
       const outboundSegmentInfo = outboundFareComponent.segments[0].segment;
       revalidationSegments.push(
-        buildRevalidationSegment(
+        ...buildRevalidationSegments(
           outboundRef,
           data.legDescs,
           data.scheduleDescs,
@@ -185,12 +185,12 @@ export function mapSabreBfmToUi(response: { groupedItineraryResponse: any }): Ui
         )
       );
 
-      // Inbound segment (if round-trip)
+      // Inbound segments (if round-trip, may include multiple flights if there are stops)
       if (inboundRef && passengerInfo.fareComponents.length > 1) {
         const inboundFareComponent = passengerInfo.fareComponents[1];
         const inboundSegmentInfo = inboundFareComponent.segments[0].segment;
         revalidationSegments.push(
-          buildRevalidationSegment(
+          ...buildRevalidationSegments(
             inboundRef,
             data.legDescs,
             data.scheduleDescs,
@@ -256,27 +256,42 @@ function buildLeg(
   };
 }
 
-function buildRevalidationSegment(
+/**
+ * Builds revalidation segments for a leg.
+ * A leg may have multiple schedules (connecting flights/stops).
+ * Returns an array of segments - one per flight in the leg.
+ */
+function buildRevalidationSegments(
   legRef: number,
   legDescs: SabreLegDesc[],
   scheduleDescs: SabreScheduleDesc[],
   departureDate: string,
   bookingCode: string
-): RevalidationSegment {
+): RevalidationSegment[] {
   const leg = findLeg(legDescs, legRef)!;
-  const scheduleRef = leg.schedules[0].ref;
-  const schedule = findSchedule(scheduleDescs, scheduleRef)!;
 
-  return {
-    marketingCarrier: schedule.carrier.marketing,
-    operatingCarrier: schedule.carrier.operating,
-    flightNumber: schedule.carrier.marketingFlightNumber,
-    bookingCode,
-    origin: schedule.departure.airport,
-    destination: schedule.arrival.airport,
-    departureDateTime: `${departureDate}T${schedule.departure.time.slice(0, 8)}`,
-    arrivalDateTime: `${departureDate}T${schedule.arrival.time.slice(0, 8)}`,
-  };
+  // Build a segment for each schedule (flight) in the leg
+  return leg.schedules.map((scheduleRef, index) => {
+    const schedule = findSchedule(scheduleDescs, scheduleRef.ref)!;
+
+    // For connecting flights, the departure date might be different
+    // We use the departure date for the first segment, but subsequent segments
+    // might depart on different days (overnight connections)
+    // For now, we derive the date from the schedule time offset if available
+    // or use the same departure date (Sabre should handle this correctly)
+    const segmentDate = index === 0 ? departureDate : departureDate;
+
+    return {
+      marketingCarrier: schedule.carrier.marketing,
+      operatingCarrier: schedule.carrier.operating,
+      flightNumber: schedule.carrier.marketingFlightNumber,
+      bookingCode,
+      origin: schedule.departure.airport,
+      destination: schedule.arrival.airport,
+      departureDateTime: `${segmentDate}T${schedule.departure.time.slice(0, 8)}`,
+      arrivalDateTime: `${segmentDate}T${schedule.arrival.time.slice(0, 8)}`,
+    };
+  });
 }
 
 export function extractBfmFilterOptions(

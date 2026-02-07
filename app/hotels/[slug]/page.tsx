@@ -24,6 +24,8 @@ import {
   Sparkles,
   BedDouble,
   Layers,
+  MapPin,
+  Phone,
 } from "lucide-react";
 import Link from "next/link";
 import { Header } from "@/components/Header";
@@ -32,11 +34,39 @@ import { ExpandableText } from "@/components/ExpandableText";
 import {
   mapSabreHotelContentToUi,
   getFeaturedAmenities,
+  UiHotelDetails,
 } from "@/mappers/mabSabreHotelSampleToUi";
 import { mapSabreHotelsToUi } from "@/mappers/mapSabreHotelsToUi";
 import { MOCK_SABRE_HOTEL_SAMPLE } from "@/mocks/hotel/sabre-hotel-sample";
 import { MOCK_SABRE_HOTELS_LIST } from "@/mocks/hotel/sabre-hotel-list";
 import { getHotelImage } from "@/lib/hotelImages";
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+
+async function fetchHotelContent(hotelCode: string): Promise<UiHotelDetails | null> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/hotels/content`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ hotelCode }),
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      console.error("Hotel content API failed:", response.status);
+      return null;
+    }
+
+    const data = await response.json();
+    if (!data || !data.GetHotelContentRS || !data.GetHotelContentRS.HotelContent) {
+      console.error("Invalid hotel content response:", data);
+      return null;
+    }
+    return mapSabreHotelContentToUi(data);
+  } catch (error) {
+    console.error("Error fetching hotel content:", error);
+    return null;
+  }
+}
 
 // Icon mapping for amenities
 const AMENITY_ICON_MAP: Record<number, React.ComponentType<{ className?: string }>> = {
@@ -83,26 +113,7 @@ const CATEGORY_STYLES: Record<string, string> = {
   Standard: "bg-slate-500 text-white",
 };
 
-// Hero images pool (hotel exteriors/interiors without people)
-// const HERO_IMAGES = [
-//   "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1600&q=80", // Hotel exterior
-//   "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1600&q=80", // Beach resort
-//   "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=1600&q=80", // Hotel room view
-//   "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1600&q=80", // Hotel bedroom
-//   "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1600&q=80", // Resort exterior
-//   "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1600&q=80", // Hotel lobby
-// ];
 
-// // Get consistent random image based on hotel code
-// function getHeroImage(hotelCode: string): string {
-//   let hash = 0;
-//   for (let i = 0; i < hotelCode.length; i++) {
-//     hash = (hash << 5) - hash + hotelCode.charCodeAt(i);
-//     hash |= 0;
-//   }
-//   const index = Math.abs(hash) % HERO_IMAGES.length;
-//   return HERO_IMAGES[index];
-// }
 
 export default async function HotelDetailPage({
   params,
@@ -113,19 +124,22 @@ export default async function HotelDetailPage({
 
   // Get basic hotel info from the hotel list using HotelCode (slug)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const hotelsList = mapSabreHotelsToUi(MOCK_SABRE_HOTELS_LIST as any);
-  const hotelBasicInfo = hotelsList.find((h) => h.id === slug);
+  // const hotelsList = mapSabreHotelsToUi(MOCK_SABRE_HOTELS_LIST as any);
+  // const hotelBasicInfo = hotelsList.find((h) => h.id === slug);
 
-  // Get detailed content (in production, fetch by HotelCode)
-  const hotelDetails = mapSabreHotelContentToUi(MOCK_SABRE_HOTEL_SAMPLE);
+  // Fetch hotel content from API, fallback to mock if API fails
+  const apiHotelDetails = await fetchHotelContent(slug);
+  const hotelDetails = apiHotelDetails || mapSabreHotelContentToUi(MOCK_SABRE_HOTEL_SAMPLE);
+  // || mapSabreHotelContentToUi(MOCK_SABRE_HOTEL_SAMPLE);
 
   // Use basic info from list if found, otherwise fallback to details
-  const name = hotelBasicInfo?.name || hotelDetails.name;
-  const chain = hotelBasicInfo?.chain || hotelDetails.chain;
-  const rating = hotelBasicInfo?.rating || hotelDetails.rating;
+  const name =  hotelDetails.name;
+  const chain =  hotelDetails.chain;
+  const rating = hotelDetails.rating;
 
   const {
     propertyInfo,
+    location,
     images,
     amenities,
     securityFeatures,
@@ -137,8 +151,8 @@ export default async function HotelDetailPage({
   const categoryStyle = CATEGORY_STYLES[chain.category] || CATEGORY_STYLES.Standard;
 
   // Get hero image from random pool based on hotel code
-  const heroImage = getHotelImage(slug, "hero");
   const galleryImages = images.slice(0, 6);
+  const heroImage = galleryImages.length > 0 ? galleryImages[0].url : getHotelImage(slug, "hero");
 
   return (
     <>
@@ -465,6 +479,71 @@ export default async function HotelDetailPage({
                     maxLines={3}
                     className="text-xs"
                   />
+                </div>
+              )}
+
+              {/* Location & Contact */}
+              {(location.address.line1 || location.contact.phone) && (
+                <div className="bg-white rounded-2xl border border-slate-200 p-6">
+                  <h4 className="font-bold text-sm text-slate-900 mb-4 flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-[var(--brand-primary)]" />
+                    Adresse & Contact
+                  </h4>
+
+                  {/* Address */}
+                  {location.address.line1 && (
+                    <div className="space-y-1 mb-4">
+                      <p className="text-sm text-slate-700">{location.address.line1}</p>
+                      {location.address.line2 && (
+                        <p className="text-sm text-slate-600">{location.address.line2}</p>
+                      )}
+                      <p className="text-sm text-slate-600">
+                        {[
+                          location.address.postalCode,
+                          location.address.city,
+                          location.address.country,
+                        ]
+                          .filter(Boolean)
+                          .join(", ")}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Contact */}
+                  {(location.contact.phone || location.contact.fax) && (
+                    <div className="border-t border-slate-100 pt-3 space-y-2">
+                      {location.contact.phone && (
+                        <div className="flex items-center gap-2 text-sm">
+                          <Phone className="w-4 h-4 text-slate-400" />
+                          <a
+                            href={`tel:${location.contact.phone.replace(/\s/g, "")}`}
+                            className="text-[var(--brand-primary)] hover:underline"
+                          >
+                            {location.contact.phone}
+                          </a>
+                        </div>
+                      )}
+                      {location.contact.fax && (
+                        <div className="flex items-center gap-2 text-sm text-slate-500">
+                          <span className="text-xs font-medium">Fax:</span>
+                          {location.contact.fax}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Map Link */}
+                  {location.latitude && location.longitude && (
+                    <a
+                      href={`https://www.google.com/maps?q=${location.latitude},${location.longitude}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 flex items-center justify-center gap-2 w-full py-2 px-4 bg-slate-100 hover:bg-slate-200 rounded-lg text-sm font-medium text-slate-700 transition-colors"
+                    >
+                      <MapPin className="w-4 h-4" />
+                      Voir sur la carte
+                    </a>
+                  )}
                 </div>
               )}
             </div>

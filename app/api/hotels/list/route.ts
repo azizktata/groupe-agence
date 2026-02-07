@@ -68,10 +68,16 @@ function buildHotelListRequest(params: HotelListRequest) {
 
   return {
     GetHotelListRQ: {
+      HotelRefs: {
+        HotelRef: [{
+          HotelCode: "100123982", 
+          CodeContext: "GLOBAL",
+        }],
+      },
       HotelPref: hotelPref,
       HotelInfoRef: {
-        Amenities: false,
-        LocationInfo: false,
+        Amenities: true,
+        LocationInfo: true,
         PropertyTypeInfo: true,
         PropertyQualityInfo: true,
         SecurityFeatures: true,

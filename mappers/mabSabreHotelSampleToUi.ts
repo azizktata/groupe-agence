@@ -34,6 +34,24 @@ export type UiHotelDescription = {
   transportation: string | null;
 };
 
+export type UiHotelLocation = {
+  latitude: number | null;
+  longitude: number | null;
+  address: {
+    line1: string | null;
+    line2: string | null;
+    city: string | null;
+    cityCode: string | null;
+    postalCode: string | null;
+    country: string | null;
+    countryCode: string | null;
+  };
+  contact: {
+    phone: string | null;
+    fax: string | null;
+  };
+};
+
 export type UiHotelDetails = {
   id: string;
   name: string;
@@ -50,6 +68,7 @@ export type UiHotelDetails = {
     types: string[];
     quality: string | null;
   };
+  location: UiHotelLocation;
   images: UiHotelImage[];
   amenities: UiHotelAmenity[];
   securityFeatures: string[];
@@ -92,6 +111,28 @@ type SabreSecurityFeature = {
 
 type SabreDescription = {
   Text: SabreText;
+};
+
+type SabreLocationInfo = {
+  Latitude?: number;
+  Longitude?: number;
+  Address?: {
+    AddressLine1?: string;
+    AddressLine2?: string;
+    CityName?: {
+      CityCode?: string;
+      value?: string;
+    };
+    PostalCode?: string;
+    CountryName?: {
+      Code?: string;
+      value?: string;
+    };
+  };
+  Contact?: {
+    Phone?: string;
+    Fax?: string;
+  };
 };
 
 type SabreImageCategory = {
@@ -160,6 +201,7 @@ type SabreHotelContentResponse = {
               PropertyQuality: SabrePropertyQuality[];
             };
           };
+          LocationInfo?: SabreLocationInfo;
           Amenities?: {
             Amenity: SabreAmenity[];
           };
@@ -273,6 +315,26 @@ export function mapSabreHotelContentToUi(
     descriptive.PropertyInfo?.PropertyQualityInfo?.PropertyQuality?.[0]
       ?.Description || null;
 
+  // Map location info
+  const locationInfo = descriptive.LocationInfo;
+  const location: UiHotelLocation = {
+    latitude: locationInfo?.Latitude ?? null,
+    longitude: locationInfo?.Longitude ?? null,
+    address: {
+      line1: locationInfo?.Address?.AddressLine1 ?? null,
+      line2: locationInfo?.Address?.AddressLine2 ?? null,
+      city: locationInfo?.Address?.CityName?.value ?? null,
+      cityCode: locationInfo?.Address?.CityName?.CityCode ?? null,
+      postalCode: locationInfo?.Address?.PostalCode ?? null,
+      country: locationInfo?.Address?.CountryName?.value ?? null,
+      countryCode: locationInfo?.Address?.CountryName?.Code ?? null,
+    },
+    contact: {
+      phone: locationInfo?.Contact?.Phone ?? null,
+      fax: locationInfo?.Contact?.Fax ?? null,
+    },
+  };
+
   return {
     id: info.HotelCode,
     name: info.HotelName,
@@ -289,6 +351,7 @@ export function mapSabreHotelContentToUi(
       types: propertyTypes,
       quality: propertyQuality,
     },
+    location,
     images,
     amenities,
     securityFeatures,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ChevronRight, Home, AlertCircle } from "lucide-react";
 import { Header } from "@/components/Header";
 import Link from "next/link";
@@ -12,6 +12,8 @@ import {
   HotelFiltersState,
   HotelFilterOptions,
 } from "@/components/HotelFiltersBar";
+import { MOCK_SABRE_HOTEL_SAMPLE } from "@/mocks/hotel/sabre-hotel-sample";
+import { MOCK_SABRE_HOTELS_LIST } from "@/mocks/hotel/sabre-hotel-list";
 
 // Extract filter options from hotel list
 function extractHotelFilterOptions(hotels: UiHotel[]): HotelFilterOptions {
@@ -103,7 +105,8 @@ export default function HotelsPage() {
 
       const listData = await listResponse.json();
       console.log("Raw Sabre response:", listData);
-      const mappedHotels = mapSabreHotelsToUi(listData);
+      const mockResponse = MOCK_SABRE_HOTELS_LIST;
+      const mappedHotels = mapSabreHotelsToUi(listData, mockResponse);
       setHotels(mappedHotels);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -111,6 +114,19 @@ export default function HotelsPage() {
       setIsSearching(false);
     }
   }, []);
+
+  useEffect(() => {
+    // Auto-trigger a search on mount with default filters (optional)
+    handleSearch({
+      hotelName: "",
+      chainCode: "",
+      minRating: "3.0",
+      amenityCodes: [],
+      securityFeatureCodes: [],
+      propertyTypeCodes: [],
+      propertyQualityCodes: [],
+    });
+  }, [handleSearch]);
 
   return (
     <>

@@ -30,7 +30,7 @@ const HotelSearchForm = ({
   const [filters, setFilters] = useState<HotelSearchFilters>({
     hotelName: defaultValues?.hotelName || "",
     chainCode: defaultValues?.chainCode || "",
-    minRating: defaultValues?.minRating || "3.0",
+    minRating: defaultValues?.minRating || "1.0",
     amenityCodes: defaultValues?.amenityCodes || [],
     securityFeatureCodes: defaultValues?.securityFeatureCodes || [],
     propertyTypeCodes: defaultValues?.propertyTypeCodes || [],
@@ -153,6 +153,8 @@ const HotelSearchForm = ({
               onChange={(e) => setFilters({ ...filters, minRating: e.target.value })}
               disabled={isLoading}
             >
+              <option value="1.0">1 étoile et +</option>
+              <option value="2.0">2 étoiles et +</option>
               <option value="3.0">3 étoiles et +</option>
               <option value="4.0">4 étoiles et +</option>
               <option value="4.5">4.5 étoiles et +</option>

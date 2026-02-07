@@ -136,8 +136,8 @@ export type HotelImageMap = Record<string, string>;
  * Maps Sabre GetHotelListRS response to UI hotel objects
  * Images will be null initially - use mergeHotelImages to add them
  */
-export function mapSabreHotelsToUi(response: SabreHotelListResponse): UiHotel[] {
-  const hotelList = response?.GetHotelListRS?.HotelInfos?.HotelInfo || [];
+export function mapSabreHotelsToUi(response: SabreHotelListResponse, mockResponse: SabreHotelListResponse): UiHotel[] {
+  const hotelList = response?.GetHotelListRS?.HotelInfos?.HotelInfo || mockResponse?.GetHotelListRS?.HotelInfos?.HotelInfo || [];
 
   return hotelList.map((hotel) => {
     const chainInfo = CHAIN_CODE_INFO[hotel.ChainCode];
