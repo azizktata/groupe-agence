@@ -28,6 +28,15 @@ export function Hero() {
     { name: "Affaires", code: "C" },
     { name: "Première Classe", code: "F" },
   ];
+
+  const DEFAULT = {
+    origin: "WAW",
+    destination: "SPU",
+    departureDate: "2026-09-11",
+    returnDate: "2026-09-18",
+    airline: "",
+    cabin: "Y",
+  }
   return (
     <section
       className="relative min-h-screen flex items-center pt-20"
@@ -87,6 +96,7 @@ export function Hero() {
                     <input
                       type="text"
                       placeholder="e.g. WAW"
+                      value={DEFAULT.origin}
                       className="w-full bg-transparent text-gray-900 placeholder:text-gray-400 focus:outline-none text-sm font-medium uppercase"
                     />
                   </div>
@@ -99,6 +109,7 @@ export function Hero() {
                     <input
                       type="text"
                       placeholder="e.g. SPU"
+                      value={DEFAULT.destination}
                       className="w-full bg-transparent text-gray-900 placeholder:text-gray-400 focus:outline-none text-sm font-medium uppercase"
                     />
                   </div>
@@ -112,6 +123,7 @@ export function Hero() {
                     </label>
                     <input
                       type="date"
+                      value={DEFAULT.departureDate}
                       className="w-full bg-transparent text-gray-900 focus:outline-none text-sm font-medium"
                     />
                   </div>
@@ -122,6 +134,7 @@ export function Hero() {
                     </label>
                     <input
                       type="date"
+                      value={DEFAULT.returnDate}
                       className="w-full bg-transparent text-gray-900 focus:outline-none text-sm font-medium"
                     />
                   </div>
@@ -148,7 +161,7 @@ export function Hero() {
                     <label className="text-gray-500 text-xs font-medium flex items-center gap-1.5 mb-0.5">
                       <ShieldCheck className="w-3.5 h-3.5" /> Airline
                     </label>
-                    <select className="w-full bg-transparent text-gray-900 focus:outline-none text-sm font-medium">
+                    <select className="w-full bg-transparent text-gray-900 focus:outline-none text-sm font-medium" value={DEFAULT.airline}>
                       {AIRLINES.map((al) => (
                         <option key={al.code} value={al.code}>
                           {al.name}
@@ -160,7 +173,7 @@ export function Hero() {
                     <label className="text-gray-500 text-xs font-medium flex items-center gap-1.5 mb-0.5">
                       <Briefcase className="w-3.5 h-3.5" /> Cabine
                     </label>
-                    <select className="w-full bg-transparent text-gray-900 focus:outline-none text-sm font-medium">
+                    <select className="w-full bg-transparent text-gray-900 focus:outline-none text-sm font-medium" value={DEFAULT.cabin}>
                       {CABINS.map((c) => (
                         <option key={c.code} value={c.code}>
                           {c.name}

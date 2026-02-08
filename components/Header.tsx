@@ -12,7 +12,7 @@ const navItems = [
   // { label: "Disponibilités", href: "/hotels/available" },
   // { label: "À propos", href: "#about" },
   // { label: "Services", href: "#services" },
-  { label: "Destinations", href: "/#destinations" },
+  // { label: "Destinations", href: "/#destinations" },
   { label: "Contact", href: "/#contact" },
 ];
 

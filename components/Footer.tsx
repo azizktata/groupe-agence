@@ -2,6 +2,16 @@ import { Plane, MapPin, Phone, Mail, Facebook, Instagram, Twitter, Linkedin } fr
 import Link from "next/link";
 
 export function Footer() {
+  const navItems = [
+  { label: "Accueil", href: "/" },
+  { label: "Vols", href: "/vols" },
+  { label: "Hotels", href: "/hotels" },
+  // { label: "Disponibilités", href: "/hotels/available" },
+  // { label: "À propos", href: "#about" },
+  // { label: "Services", href: "#services" },
+  // { label: "Destinations", href: "/#destinations" },
+  { label: "Contact", href: "/#contact" },
+];
   return (
     <footer className="bg-[var(--brand-dark)] text-white">
       {/* Main Footer */}
@@ -49,31 +59,13 @@ export function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-6">Liens rapides</h4>
             <ul className="space-y-3">
-              <li>
-                <Link href="#" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <Link href="#about" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  À propos
-                </Link>
-              </li>
-              <li>
-                <Link href="#services" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  Nos services
-                </Link>
-              </li>
-              <li>
-                <Link href="#destinations" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  Destinations
-                </Link>
-              </li>
-              <li>
-                <Link href="#contact" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  Contact
-                </Link>
-              </li>
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

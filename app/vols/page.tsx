@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Plane,
   Luggage,
@@ -18,6 +18,7 @@ import Link from "next/link";
 import { extractBfmFilterOptions, FlightFiltersState, mapSabreBfmToUi, UiFlightOffer } from "@/mappers/mapSabreBfmToUi";
 import { applyFlightFilters, minutesToReadable } from "@/lib/utils";
 import { FiltersBar } from "@/components/FilterBar";
+import { MOCK_SABRE_BFM_RESPONSE } from "@/mocks/air/sabre-bfm-original.mock";
 
 // Helper to format date in French
 function formatDateFr(dateStr: string): string {
@@ -129,6 +130,12 @@ export default function Index() {
       const data = await response.json();
       console.log("Raw BFM response:", data);
       const mappedOffers = mapSabreBfmToUi(data);
+      if (mappedOffers.length === 0) {
+        const mockResponse = MOCK_SABRE_BFM_RESPONSE; // Replace with actual mock data
+        const mockMappedOffers = mapSabreBfmToUi(mockResponse);
+        updateOffers(mockMappedOffers);
+        return;
+      }
       updateOffers(mappedOffers);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -136,6 +143,21 @@ export default function Index() {
       setIsSearching(false);
     }
   }, []);
+
+  useEffect(() => {
+      // Auto-trigger a search on mount with default filters (optional)
+      handleSearch({
+        from: "WAW",
+        to: "SPU",
+        departureDate: "2026-09-11",
+        returnDate: "2026-09-18",
+        passengers: 1,
+        cabin: "Y",
+        airline: "",
+        maxStops: "",
+      });
+    }, [handleSearch]);
+
 
   return (
     <>
