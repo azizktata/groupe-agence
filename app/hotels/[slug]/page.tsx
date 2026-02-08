@@ -40,6 +40,7 @@ import { mapSabreHotelsToUi } from "@/mappers/mapSabreHotelsToUi";
 import { MOCK_SABRE_HOTEL_SAMPLE } from "@/mocks/hotel/sabre-hotel-sample";
 import { MOCK_SABRE_HOTELS_LIST } from "@/mocks/hotel/sabre-hotel-list";
 import { getHotelImage } from "@/lib/hotelImages";
+import CheckAvailabilityDialog from "@/components/CheckAvailabilityDialog";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
 
@@ -57,7 +58,7 @@ async function fetchHotelContent(hotelCode: string): Promise<UiHotelDetails | nu
     }
 
     const data = await response.json();
-    if (!data || !data.GetHotelContentRS || !data.GetHotelContentRS.HotelContent) {
+    if (!data || !data.GetHotelContentRS || !data.GetHotelContentRS.HotelContentInfos) {
       console.error("Invalid hotel content response:", data);
       return null;
     }
@@ -387,12 +388,13 @@ export default async function HotelDetailPage({
                   </ul>
                 </div>
               )}
+
             </div>
 
             {/* RIGHT: Sidebar */}
             <div className="space-y-6">
               {/* Booking Card */}
-              <div className="bg-white z-90 rounded-3xl border border-slate-200 shadow-xl p-8 sticky top-6">
+              <div className="bg-white z-30 rounded-3xl border border-slate-200 shadow-xl p-8 sticky top-6">
                 <h3 className="text-lg font-black text-slate-900 mb-6">
                   Réserver une chambre
                 </h3>
@@ -424,14 +426,7 @@ export default async function HotelDetailPage({
                 </div>
 
                 <div className="border-t border-slate-100 pt-6 space-y-3">
-                  <Button
-                    size="lg"
-                    rounded="xl"
-                    className="w-full shadow-lg shadow-[var(--brand-primary)]/20 active:scale-[0.98]"
-                  >
-                    Voir les disponibilités
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
+                  <CheckAvailabilityDialog hotelId={slug} />
                   <p className="text-[10px] text-center text-slate-400 font-medium px-4">
                     Tarifs et disponibilités selon les dates sélectionnées
                   </p>
