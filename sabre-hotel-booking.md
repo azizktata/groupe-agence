@@ -14,7 +14,7 @@ Use this when you don't have Hotel IDs yet. Note that `HotelPref` becomes **mand
 
 **Request Example:**
 
-**JSON** 
+**JSON**
 
 ```
 {
@@ -198,23 +198,126 @@ JSON**
 
 ## 💰 2. Get Hotel Availability API
 
-**Purpose:** The primary search engine. It finds available properties for a **specific date range** and returns the **Lead Rate** (cheapest price) for each.
 
-### API Details
+### 🗓️ Get Hotel Availability API (Transactional Search)
 
-* **Endpoint:** `POST /v5/get/hotelavail`
-* **Logic:** Orchestrates Geo-Search + Live Pricing.
+The `Get Hotel Avail` API is the engine for real-time commerce. Unlike the Discovery API, this endpoint validates  **live inventory** , calculates  **actual pricing** , and allows for **location-based** searches (Geo-search).
 
-### Mapping: Linking List to Availability
+#### 1. Core Purpose
 
-To transition from a "List" to "Available Prices," you pass the `HotelCode` from Step 1 into the `HotelRef` of this request.
+* **Price Discovery:** Retrieves the "Lead Rate" (lowest available price) for properties.
+* **Transactional Search:** Filters results based on specific stay dates and occupancy.
+* **Geo-Optimization:** Internally leverages the Geo Search API to find hotels by coordinates, airport codes, or physical addresses.
 
-| **Request Parameter** | **Description**             | **Example Value**                            |
-| --------------------------- | --------------------------------- | -------------------------------------------------- |
-| `StayDateRange`           | The check-in and check-out dates. | `2026-05-10`to `2026-05-15`                    |
-| `RoomRequests`            | Guest count and age details.      | `Adults: 2, Children: 0`                         |
-| `GeoSearch`               | Search radius around a location.  | `AirportCode: "LHR", Radius: 10`                 |
-| **`RateKey`**       | **(In Response)**           | Use this unique key to get full details in Step 3. |
+---
+
+#### 2. Request Payload Schema
+
+The `GetHotelAvailRQ` is divided into two logical halves: **Where** you are looking (`GeoSearch` or `HotelRefs`) and **How** you want the rates (`RateInfoRef`).
+
+#### 1. Search Criteria Headers
+
+* **`Offset`** : (Optional) Used for pagination.
+* **`PageSize`** : (Optional) `1–200`.
+* **`SortBy`** : `DistanceFrom`, `SabreRating`, `AverageNightlyRate`, `AverageNightlyRateBeforeTax`.
+* **`ShopKey`** : If used, all other parameters except `Offset` are ignored.
+
+#### 2. The Geographical Anchor (`GeoSearch`)
+
+* **`GeoRef`** :
+* `Radius`: (Integer) Distance value.
+* `UOM`: `KM` or `MI`.
+* **One of the following:**
+  * `GeoCode`: `{ "Latitude": float, "Longitude": float }`
+  * `RefPoint`: `{ "Value": string, "ValueContext": "CODE"|"NAME", "RefPointType": "6"|"7"|"11"|"16"|"37" }`
+  * `AddressRef`: `{ "CountryCode": "US", "City": "New York", ... }`
+
+#### 3. Rate & Room Configuration (`RateInfoRef`)
+
+This section defines the stay period and who is staying.
+
+* **`BestOnly`** :
+* `1`: Global lowest rate.
+* `2`: Lowest rate per source (GDS vs Aggregator).
+* **`StayDateTimeRange`** : `{ "StartDate": "YYYY-MM-DD", "EndDate": "YYYY-MM-DD" }`
+* **`Rooms`** : Contains an array of `Room` objects.
+* **`Index`** : (Mandatory) Must be sequential (`1`, `2`, `3`).
+* **`Adults`** : (Mandatory) Number of adults.
+* **`Children`** : (Optional) Total count of children.
+* **`ChildAges`** : (Required if Children > 0) String of ages separated by commas (e.g., `"5,12"`).
+
+---
+
+#### 3. Rate Filtering & Business Logic
+
+This API allows you to control the "quality" of financial results returned to the user:
+
+* **Commission Filter:** Exclude non-commissionable rates (`Value="NC"`) to ensure agency profitability.
+* **Rate Types:** Filter for specific categories like `Government`, `AAA`, or `Senior` rates.
+* **Negotiated Rates:** Use `RatePlanCandidate` to fetch private/contracted rates for corporate clients (e.g., IBM or AMX codes).
+
+
+### Request Example
+
+**JSON**
+
+```
+{
+  "GetHotelAvailRQ": {
+    "version": "5.0.0",
+    "SearchCriteria": {
+      "OffSet": 1,
+      "PageSize": 50,
+      "SortBy": "AverageNightlyRate",
+      "SortOrder": "DESC",
+      "GeoSearch": {
+        "GeoRef": {
+          "Radius": 10,
+          "UOM": "MI",
+          "GeoCode": {
+            "Latitude": 34.0522,
+            "Longitude": -118.2437
+          }
+        }
+      },
+      "RateInfoRef": {
+        "CurrencyCode": "USD",
+        "BestOnly": "1",
+        "StayDateTimeRange": {
+          "StartDate": "2026-05-15",
+          "EndDate": "2026-05-20"
+        },
+        "Rooms": {
+          "Room": [
+            {
+              "Index": 1,
+              "Adults": 2,
+              "Children": 1,
+              "ChildAges": "8"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+```
+
+### ⚠️ Integration Rules for your System
+
+1. **Sequential Indexing** : If a user selects "3 Rooms" in your UI, your code must generate three objects in the `Room` array with `Index: 1`, `Index: 2`, and `Index: 3`.
+2. **Child Ages** : If your search form has a child selector, you **must** collect their ages. Aggregators (like Expedia or Booking.com content inside Sabre) will fail the request if ages are missing.
+3. **Maximum Distance** : Ensure your UI limits the `Radius` to **200 Miles** or  **320 Kilometers** , as the API will throw an error beyond this.
+
+---
+
+#### 4. The Response Payload (Lead Rates)
+
+The orchestrated response returns a hybrid of static and dynamic data:
+
+* **Hotel Summary:** Basic metadata and the  **Leading Image** .
+* **Price Point:** The lowest available `AverageNightlyRate` for the stay period.
+* **Distance:** Precise distance from the search center point.
 
 ---
 
