@@ -105,8 +105,14 @@ export default function HotelsPage() {
 
       const listData = await listResponse.json();
       console.log("Raw Sabre response:", listData);
-      const mockResponse = MOCK_SABRE_HOTELS_LIST;
-      const mappedHotels = mapSabreHotelsToUi(listData, mockResponse);
+      const mappedHotels = mapSabreHotelsToUi(listData);
+      if (mappedHotels.length === 0) {
+        console.warn("No hotels mapped from Sabre response");
+        const mockResponse = MOCK_SABRE_HOTELS_LIST;
+        const mockHotels = mapSabreHotelsToUi(mockResponse as any);
+        setHotels(mockHotels);
+        return;
+      }
       setHotels(mappedHotels);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
