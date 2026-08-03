@@ -5,8 +5,10 @@ import { Plane, Hotel, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function CTAFinal() {
+  // The solid bg below is a fallback: Tailwind emits `in oklab` gradients, which
+  // older iOS Safari (< 16.4) drops entirely, leaving white text on white.
   return (
-    <section className="relative py-20 md:py-28 overflow-hidden">
+    <section className="relative py-20 md:py-28 overflow-hidden bg-[var(--brand-dark)]">
       {/* Dark gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-dark)] via-[#012a36] to-[var(--brand-dark)]" />
 

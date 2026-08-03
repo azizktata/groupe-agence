@@ -149,8 +149,10 @@ function TicketCard({ ticket, animationClass = "" }: { ticket: (typeof tickets)[
 }
 
 export function Trust() {
+  // The solid bg below is a fallback: Tailwind emits `in oklab` gradients, which
+  // older iOS Safari (< 16.4) drops entirely, leaving white text on white.
   return (
-    <section className="relative py-20 md:py-28 overflow-hidden px-6">
+    <section className="relative py-20 md:py-28 overflow-hidden px-6 bg-[var(--brand-dark)]">
       {/* Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-dark)] via-[var(--brand-teal)] to-[var(--brand-dark)]" />
 

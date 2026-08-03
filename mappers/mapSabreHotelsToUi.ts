@@ -80,7 +80,14 @@ type SabreHotelInfo = {
   BrandCode?: string;
   BrandName?: string;
   SabreRating: string;
-  SabreHotelCode: string;
+  // Not returned for every property, depending on the HotelInfoRef flags sent.
+  SabreHotelCode?: string;
+  Amenities?: {
+    Amenity: { Code: number; Description: string }[];
+  };
+  SecurityFeatures?: {
+    SecurityFeature: { Code: number; Description: string }[];
+  };
 };
 
 type SabreHotelListResponse = {
@@ -155,7 +162,7 @@ export function mapSabreHotelsToUi(response: SabreHotelListResponse): UiHotel[] 
       location,
       rating: parseFloat(hotel.SabreRating) || 0,
       image: null, // Images loaded separately
-      sabreCode: hotel.SabreHotelCode,
+      sabreCode: hotel.SabreHotelCode ?? hotel.HotelCode,
     };
   });
 }

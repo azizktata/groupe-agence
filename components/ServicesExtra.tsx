@@ -72,8 +72,10 @@ function ServiceCard({
 }
 
 export function ServicesExtra() {
+  // The solid bg below is a fallback: Tailwind emits `in oklab` gradients, which
+  // older iOS Safari (< 16.4) drops entirely, leaving white text on white.
   return (
-    <section className="relative py-20 md:py-28 overflow-hidden">
+    <section className="relative py-20 md:py-28 overflow-hidden bg-[var(--brand-dark)]">
       {/* Gradient background - matching Trust section */}
       <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-dark)] via-[var(--brand-teal)] to-[var(--brand-dark)]" />
 

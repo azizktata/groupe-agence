@@ -58,7 +58,7 @@ function applyHotelFilters(
 
 export default function HotelsPage() {
   // Using mock data directly for testing
-  const hotels = mapSabreHotelsToUi(MOCK_SABRE_HOTELS_LIST as any);
+  const hotels = mapSabreHotelsToUi(MOCK_SABRE_HOTELS_LIST);
   const filterOptions = extractHotelFilterOptions(hotels);
 
   const [filters, setFilters] = useState<HotelFiltersState>({
