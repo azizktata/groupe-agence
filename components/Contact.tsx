@@ -35,7 +35,8 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="text-white/60 text-sm">Téléphone</p>
-                  <p className="text-white font-medium">0702845719</p>
+                  <p className="text-white font-medium">(+225) 07 02 84 57 19 - (+225) 27 21 53 39 90</p>
+                 
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -44,7 +45,7 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="text-white/60 text-sm">Email</p>
-                  <p className="text-white font-medium">contact@groupelagence.com</p>
+                  <p className="text-white font-medium">info@thagencygroup.ci</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">

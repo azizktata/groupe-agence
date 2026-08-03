@@ -111,20 +111,26 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[var(--brand-accent)] flex-shrink-0 mt-0.5" />
                 <span className="text-white/60 text-sm">
-                  123 Avenue des Voyages<br />
-                  75001 Paris, France
+                  Rue Paul Langevin Le Mall Z4- 7eme Étage Boîte <br /> 6.24 Marcory 26 BP 353 Abidjan 26
+                 
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[var(--brand-accent)] flex-shrink-0" />
-                <a href="tel:+33702845719" className="text-white/60 hover:text-white transition-colors text-sm">
-                  0702845719
+                <a href="tel:+2250702845719" className="text-white/60 hover:text-white transition-colors text-sm">
+                  (+225) 07 02 84 57 19
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="w-5 h-5 text-[var(--brand-accent)] flex-shrink-0" />
+                <a href="tel:+2252721533990" className="text-white/60 hover:text-white transition-colors text-sm">
+                  (+225) 27 21 53 39 90
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[var(--brand-accent)] flex-shrink-0" />
-                <a href="mailto:contact@groupelagence.com" className="text-white/60 hover:text-white transition-colors text-sm">
-                  contact@groupelagence.com
+                <a href="mailto:info@thagencygroup.ci" className="text-white/60 hover:text-white transition-colors text-sm">
+                  info@thagencygroup.ci
                 </a>
               </li>
             </ul>
