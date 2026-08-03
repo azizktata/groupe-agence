@@ -20,8 +20,8 @@ const ReservationsSection = () => {
               Réservations Aériennes
             </h2>
             <p className="text-lg text-primary-foreground/70 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0">
-              Groupe LAgence vous donne accès à des vols exclusifs avec des compagnies 
-              de renom à des tarifs préférentiels. Réservez en quelques clics et voyagez l'esprit léger.
+              Groupe L&apos;Agence vous donne accès à des vols exclusifs avec des compagnies
+              de renom à des tarifs préférentiels. Réservez en quelques clics et voyagez l&apos;esprit léger.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button className="btn-gold text-base">
