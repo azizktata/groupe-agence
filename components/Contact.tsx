@@ -37,7 +37,17 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="text-white/60 text-sm">Téléphone</p>
-                  <p className="text-white font-medium">(+225) 07 02 84 57 19 / (+225) 27 21 53 39 90</p>
+                  <p className="text-white font-medium">(+225) 07 02 84 57 19</p>
+                 
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center">
+                  <Phone className="w-5 h-5 text-[var(--brand-accent)]" />
+                </div>
+                <div>
+                  <p className="text-white/60 text-sm">Téléphone</p>
+                  <p className="text-white font-medium">(+225) 27 21 53 39 90</p>
                  
                 </div>
               </div>
