@@ -111,7 +111,7 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[var(--brand-accent)] flex-shrink-0 mt-0.5" />
                 <span className="text-white/60 text-sm">
-                  Rue Paul Langevin Le Mall Z4- 7eme Étage Boîte <br /> 6.24 Marcory 26 BP 353 Abidjan 26
+                  Rue Paul Langevin Le Mall Z4- 7eme Étage Boîte 6.24 Marcory 26 BP 353 Abidjan 26
                  
                 </span>
               </li>

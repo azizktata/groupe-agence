@@ -4,8 +4,10 @@ import { User, Mail, Phone, MessageSquare, Send, Clock } from "lucide-react";
 import Image from "next/image";
 
 export function Contact() {
+  // The solid bg below is a fallback: Tailwind emits `in oklab` gradients, which
+  // older iOS Safari (< 16.4) drops entirely, leaving white text on white.
   return (
-    <section id="contact" className="relative py-20 md:py-28 bg-gradient-to-br from-[#2D91E0] via-[#4AA3E4] to-[#68B4E8] overflow-hidden">
+    <section id="contact" className="relative py-20 md:py-28 bg-[#2D91E0] bg-gradient-to-br from-[#2D91E0] via-[#4AA3E4] to-[#68B4E8] overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
@@ -35,7 +37,7 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="text-white/60 text-sm">Téléphone</p>
-                  <p className="text-white font-medium">(+225) 07 02 84 57 19 - (+225) 27 21 53 39 90</p>
+                  <p className="text-white font-medium">(+225) 07 02 84 57 19 / (+225) 27 21 53 39 90</p>
                  
                 </div>
               </div>
@@ -48,7 +50,7 @@ export function Contact() {
                   <p className="text-white font-medium">info@thagencygroup.ci</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
+              {/* <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center">
                   <Clock className="w-5 h-5 text-[var(--brand-accent)]" />
                 </div>
@@ -56,7 +58,7 @@ export function Contact() {
                   <p className="text-white/60 text-sm">Temps de travail</p>
                   <p className="text-white font-medium">Lun - Ven, 9h - 18h</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
