@@ -9,6 +9,7 @@ import {
   Briefcase,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 export function Hero() {
   const AIRLINES = [
     { name: "Peu importe", code: "" },
@@ -29,14 +30,20 @@ export function Hero() {
     { name: "Première Classe", code: "F" },
   ];
   return (
-    <section
-      className="relative min-h-screen flex items-center pt-20"
-      style={{
-        backgroundImage: "url('/airplane-background.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
+    <section className="relative min-h-screen flex items-center pt-20 bg-[var(--brand-dark)]">
+      {/* Background image - rendered via next/image so it is preloaded and
+          served as WebP/AVIF. The solid section background above paints
+          immediately, preventing a white flash before the image arrives. */}
+      <Image
+        src="/airplane-background.png"
+        alt=""
+        aria-hidden="true"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-center"
+      />
+
       {/* Overlay */}
       <div className="absolute inset-0 bg-[var(--brand-dark)]/30" />
 

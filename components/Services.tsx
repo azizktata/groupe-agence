@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, Users, Plane, Hotel } from "lucide-react";
+import { ArrowRight, Users, Plane, Hotel, Car } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -46,6 +46,20 @@ const services = [
     icon: Hotel,
     image:
       "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80",
+  },
+  {
+    id: 4,
+    subtitle: "Mobilité sur place",
+    title: "Location de voitures",
+    description:
+      "Déplacez-vous en toute liberté grâce à notre large choix de véhicules, économiques ou haut de gamme.",
+    description2:
+      "Des tarifs transparents, une prise en charge simplifiée et un service disponible à l'aéroport comme en ville pour tous vos trajets.",
+    href: "/voitures",
+    cta: "Réserver un véhicule",
+    icon: Car,
+    image:
+      "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&q=80",
   },
 ];
 

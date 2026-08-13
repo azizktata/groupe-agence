@@ -1,6 +1,6 @@
 "use client";
 
-import { CreditCard, ShieldCheck, FileText } from "lucide-react";
+import { CreditCard, ShieldCheck, FileText, Car } from "lucide-react";
 
 const extraServices = [
   {
@@ -20,6 +20,12 @@ const extraServices = [
     title: "Visas & documents",
     description:
       "Accédez à une assistance dédiée pour toutes les démarches de visa, simplifiant ainsi la préparation de votre voyage.",
+  },
+  {
+    icon: Car,
+    title: "Location de voitures",
+    description:
+      "Louez le véhicule adapté à votre séjour, avec ou sans chauffeur, disponible à l’aéroport ou en ville.",
   },
 ];
 
@@ -111,7 +117,7 @@ export function ServicesExtra() {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {extraServices.map((service, index) => (
             <ServiceCard key={index} service={service} index={index} />
           ))}

@@ -202,6 +202,45 @@
   animation-delay: 2s;
 }
 
+/* Drive animation - subtle forward/backward motion */
+@keyframes drive {
+  0%,
+  100% {
+    transform: translateX(-14px);
+  }
+  50% {
+    transform: translateX(14px);
+  }
+}
+
+.animate-drive {
+  animation: drive 5s ease-in-out infinite;
+}
+
+/* Soft pulsing glow for the CTA halo */
+@keyframes halo-pulse {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+}
+
+.animate-halo-pulse {
+  animation: halo-pulse 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drive,
+  .animate-halo-pulse {
+    animation: none;
+  }
+}
+
 /* Fade in animation */
 @keyframes fade-in {
   from {

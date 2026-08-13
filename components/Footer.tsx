@@ -92,6 +92,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/voitures" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                  Location de voitures
+                </Link>
+              </li>
+              <li>
                 <Link href="#services-extra" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
                   Assurance voyage
                 </Link>
