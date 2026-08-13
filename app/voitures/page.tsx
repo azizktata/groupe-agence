@@ -219,15 +219,20 @@ export default function VoituresPage() {
       <Header />
 
       {/* 1. HERO */}
-      <section
-        className="relative flex items-center pt-40 pb-24 md:pt-48 md:pb-32 bg-[var(--brand-dark)]"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1502877338535-766e1452684a?w=1600&q=80')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
+      <section className="relative flex items-center pt-40 pb-24 md:pt-48 md:pb-32 bg-[var(--brand-dark)] overflow-hidden">
+        {/* Background image - rendered via next/image so it is preloaded and
+            served as WebP/AVIF. The solid section background above paints
+            immediately, preventing a flash before the image arrives. */}
+        <Image
+          src="https://images.unsplash.com/photo-1502877338535-766e1452684a?w=1600&q=80"
+          alt=""
+          aria-hidden="true"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+
         {/* Overlay */}
         <div className="absolute inset-0 bg-[var(--brand-dark)]/70" />
 

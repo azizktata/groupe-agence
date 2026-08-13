@@ -50,27 +50,27 @@ export function Footer() {
             <h4 className="text-lg font-semibold mb-6">Liens rapides</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="#" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                <Link href="/#" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
                   Accueil
                 </Link>
               </li>
               <li>
-                <Link href="#about" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                <Link href="/#about" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
                   À propos
                 </Link>
               </li>
               <li>
-                <Link href="#services" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                <Link href="/#services" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
                   Nos services
                 </Link>
               </li>
               <li>
-                <Link href="#destinations" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                <Link href="/#destinations" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
                   Destinations
                 </Link>
               </li>
               <li>
-                <Link href="#contact" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                <Link href="/#contact" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
                   Contact
                 </Link>
               </li>
@@ -82,12 +82,12 @@ export function Footer() {
             <h4 className="text-lg font-semibold mb-6">Nos services</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="#services" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                <Link href="/vols" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
                   Réservation de vols
                 </Link>
               </li>
               <li>
-                <Link href="#services" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                <Link href="/hotels" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
                   Hôtels & Hébergements
                 </Link>
               </li>
@@ -97,12 +97,12 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#services-extra" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                <Link href="/#services-extra" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
                   Assurance voyage
                 </Link>
               </li>
               <li>
-                <Link href="#services-extra" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
+                <Link href="/#services-extra" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
                   Visa & Formalités
                 </Link>
               </li>
