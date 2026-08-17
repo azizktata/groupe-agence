@@ -18,6 +18,7 @@ import {
 import { CabinsFilter } from "./filters/CabinsFilter";
 import { TripTypesFilter } from "./filters/TripTypesFilter";
 import { DepartureTimeRangesFilter } from "./filters/DepartureTimeRangesFilter";
+import { useTranslations } from "next-intl";
 
 type FiltersBarProps = {
   filters: FlightFiltersState;
@@ -34,6 +35,7 @@ export function FiltersBar({
 }: FiltersBarProps) {
   // console.log('FiltersBar render with filters:', filters);
   console.log("Available filter options:", filterOptions);
+  const t = useTranslations("filters");
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
   return (
@@ -43,7 +45,7 @@ export function FiltersBar({
           {/* Tous les filtres */}
           <FilterPill
             label={
-              showAdvancedFilters ? "Masquer les filtres" : "Tous les filtres"
+              showAdvancedFilters ? t("hide") : t("allFilters")
             }
             primary
             active={showAdvancedFilters}
@@ -53,7 +55,7 @@ export function FiltersBar({
           {/* Escales */}
           <Popover>
             <PopoverTrigger asChild>
-              <FilterPill label="Escales" active={filters.stops.length > 0} />
+              <FilterPill label={t("stops")} active={filters.stops.length > 0} />
             </PopoverTrigger>
 
             <PopoverContent align="start" sideOffset={8} className="w-64">
@@ -69,7 +71,7 @@ export function FiltersBar({
           <Popover>
             <PopoverTrigger asChild>
               <FilterPill
-                label="Compagnies"
+                label={t("airlines")}
                 active={filters.airlines.length > 0}
               />
             </PopoverTrigger>
@@ -85,7 +87,7 @@ export function FiltersBar({
           {/* Cabines */}
           <Popover>
             <PopoverTrigger asChild>
-              <FilterPill label="Cabines" active={filters.cabins.length > 0} />
+              <FilterPill label={t("cabins")} active={filters.cabins.length > 0} />
             </PopoverTrigger>
 
             <PopoverContent align="start" sideOffset={8} className="w-72">
@@ -103,7 +105,7 @@ export function FiltersBar({
               <Popover>
                 <PopoverTrigger asChild>
                   <FilterPill
-                    label="Heure de départ"
+                    label={t("departureTime")}
                     active={
                       filters.departureTimeRanges.morning ||
                       filters.departureTimeRanges.afternoon ||
@@ -127,7 +129,7 @@ export function FiltersBar({
               <Popover>
                 <PopoverTrigger asChild>
                   <FilterPill
-                    label="Type de voyage"
+                    label={t("tripType")}
                     active={filters.tripType !== "any"}
                   />
                 </PopoverTrigger>
@@ -155,7 +157,7 @@ export function FiltersBar({
               <Popover>
                 <PopoverTrigger asChild>
                   <FilterPill
-                    label="Prix"
+                    label={t("price")}
                     active={
                       filters.priceRange[0] !== filterOptions.priceRange.min ||
                       filters.priceRange[1] !== filterOptions.priceRange.max

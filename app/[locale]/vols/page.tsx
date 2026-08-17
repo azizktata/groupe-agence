@@ -20,29 +20,16 @@ import { extractBfmFilterOptions, FlightFiltersState, mapSabreBfmToUi } from "@/
 import { MOCK_SABRE_BFM_RESPONSE } from "@/mocks/air/sabre-bfm-original.mock";
 import { applyFlightFilters, minutesToReadable } from "@/lib/utils";
 import { FiltersBar } from "@/components/FilterBar";
-
-// Helper to format date in French
-function formatDateFr(dateStr: string): string {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString("fr-FR", {
-    day: "numeric",
-    month: "short",
-  });
-}
-
-// Cabin type translations
-const CABIN_LABELS: Record<string, string> = {
-  Economy: "Économique",
-  "Premium Economy": "Économique Premium",
-  Business: "Affaires",
-  "First Class": "Première Classe",
-  Y: "Économique",
-  S: "Éco Premium",
-  C: "Affaires",
-  F: "Première",
-};
+import { useTranslations, useFormatter } from "next-intl";
 
 export default function Index() {
+  const t = useTranslations("vols");
+  const tc = useTranslations("common");
+  const tcab = useTranslations("cabins");
+  const format = useFormatter();
+  const formatDateFr = (dateStr: string) =>
+    format.dateTime(new Date(dateStr), { day: "numeric", month: "short" });
+
   const offers = mapSabreBfmToUi(MOCK_SABRE_BFM_RESPONSE);
   const filterOptions  = extractBfmFilterOptions(offers);
    const [filters, setFilters] = useState<FlightFiltersState>({
@@ -90,13 +77,13 @@ export default function Index() {
                 <Home className="w-4 h-4" />
               </Link>
               <ChevronRight className="w-3 h-3" />
-              <span>Recherche</span>
+              <span>{tc("breadcrumbSearch")}</span>
               <ChevronRight className="w-3 h-3" />
-              <span className="text-white font-medium">Résultats</span>
+              <span className="text-white font-medium">{t("breadcrumbResults")}</span>
             </nav>
 
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-8">
-              Trouvez votre vol idéal
+              {t("title")}
             </h1>
 
             {/* Search Form */}
@@ -139,11 +126,11 @@ export default function Index() {
                   <div className="flex items-center gap-2">
                     <span className="inline-flex items-center gap-1.5 bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] px-3 py-1 rounded-full text-xs font-bold">
                       <Briefcase className="w-3 h-3" />
-                      {CABIN_LABELS[flight.cabin] || flight.cabin}
+                      {tcab(flight.cabin)}
                     </span>
                     {flight.inbound && (
                       <span className="inline-flex items-center gap-1 bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full text-xs font-medium">
-                        Aller-retour
+                        {t("roundTrip")}
                       </span>
                     )}
                   </div>
@@ -255,7 +242,7 @@ export default function Index() {
                   <div className="lg:border-l border-slate-100 lg:pl-8 flex flex-col items-center justify-center min-w-[180px]">
                     <div className="mb-4 text-center">
                       <div className="text-[10px] text-slate-400 font-bold uppercase mb-1">
-                        Prix total / pers.
+                        {t("totalPricePerPerson")}
                       </div>
                       <p className="text-3xl font-black text-slate-900">
                         <span className="text-base font-bold text-slate-400 mr-0.5">
@@ -266,7 +253,7 @@ export default function Index() {
                       <p className="text-[10px] text-slate-500 font-medium flex items-center justify-center gap-1 mt-1">
                         <Luggage className="w-3 h-3 text-emerald-500" />
                         {flight.baggage === "No checked bag"
-                          ? "Bagage cabine"
+                          ? t("cabinBaggage")
                           : flight.baggage}
                       </p>
                     </div>
@@ -277,7 +264,7 @@ export default function Index() {
                       className="w-full shadow-lg shadow-[var(--brand-primary)]/20 active:scale-[0.98]"
                     >
                       <Link href={`/vols/${flight.id}`}>
-                        Sélectionner
+                        {t("select")}
                         <ArrowRight className="w-4 h-4" />
                       </Link>
                     </Button>

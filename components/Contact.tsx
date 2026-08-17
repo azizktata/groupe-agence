@@ -2,8 +2,11 @@
 
 import { User, Mail, Phone, MessageSquare, Send, Clock } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export function Contact() {
+  const t = useTranslations("contact");
+
   // The solid bg below is a fallback: Tailwind emits `in oklab` gradients, which
   // older iOS Safari (< 16.4) drops entirely, leaving white text on white.
   return (
@@ -19,14 +22,16 @@ export function Contact() {
           {/* Left Side - Content */}
           <div className="text-white">
             <span className="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white/90 mb-6">
-              Contactez-nous
+              {t("badge")}
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6 max-w-lg">
-              Planifions ensemble{" "}
-              <span className="text-[var(--brand-accent)]">votre voyage</span>
+              {t("heading")}{" "}
+              <span className="text-[var(--brand-accent)]">
+                {t("headingAccent")}
+              </span>
             </h2>
             <p className="text-md sm:text-lg text-white/90 mb-8 max-w-lg">
-              Notre équipe d&apos;experts est à votre disposition pour répondre à toutes vos questions et vous aider à organiser le voyage de vos rêves.
+              {t("description")}
             </p>
 
             {/* Contact Info */}
@@ -36,7 +41,7 @@ export function Contact() {
                   <Phone className="w-5 h-5 text-[var(--brand-accent)]" />
                 </div>
                 <div>
-                  <p className="text-white/60 text-sm">Téléphone</p>
+                  <p className="text-white/60 text-sm">{t("phone")}</p>
                   <p className="text-white font-medium">(+225) 07 02 84 57 19</p>
                  
                 </div>
@@ -46,7 +51,7 @@ export function Contact() {
                   <Phone className="w-5 h-5 text-[var(--brand-accent)]" />
                 </div>
                 <div>
-                  <p className="text-white/60 text-sm">Téléphone</p>
+                  <p className="text-white/60 text-sm">{t("phone")}</p>
                   <p className="text-white font-medium">(+225) 27 21 53 39 90</p>
                  
                 </div>
@@ -56,7 +61,7 @@ export function Contact() {
                   <Mail className="w-5 h-5 text-[var(--brand-accent)]" />
                 </div>
                 <div>
-                  <p className="text-white/60 text-sm">Email</p>
+                  <p className="text-white/60 text-sm">{t("email")}</p>
                   <p className="text-white font-medium">info@thagencygroup.ci</p>
                 </div>
               </div>
@@ -65,8 +70,8 @@ export function Contact() {
                   <Clock className="w-5 h-5 text-[var(--brand-accent)]" />
                 </div>
                 <div>
-                  <p className="text-white/60 text-sm">Temps de travail</p>
-                  <p className="text-white font-medium">Lun - Ven, 9h - 18h</p>
+                  <p className="text-white/60 text-sm">{t("workingHours")}</p>
+                  <p className="text-white font-medium">{t("workingHoursValue")}</p>
                 </div>
               </div> */}
             </div>
@@ -91,18 +96,18 @@ export function Contact() {
 
             {/* Glassmorphism Card - Same style as Search Card */}
             <div className="w-full max-w-md bg-white/15 backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl">
-              <h3 className="text-white text-xl font-semibold mb-6">Envoyez-nous un message</h3>
+              <h3 className="text-white text-xl font-semibold mb-6">{t("formTitle")}</h3>
 
               <form className="space-y-3">
                 {/* Name Field */}
                 <div className="bg-white rounded-xl px-4 py-3">
                   <label className="text-gray-500 text-xs font-medium flex items-center gap-1.5 mb-1">
                     <User className="w-3.5 h-3.5" />
-                    Nom complet
+                    {t("fullName")}
                   </label>
                   <input
                     type="text"
-                    placeholder="Votre nom"
+                    placeholder={t("fullNamePlaceholder")}
                     className="w-full bg-transparent text-gray-900 placeholder:text-gray-400 focus:outline-none text-sm font-medium"
                   />
                 </div>
@@ -111,11 +116,11 @@ export function Contact() {
                 <div className="bg-white rounded-xl px-4 py-3">
                   <label className="text-gray-500 text-xs font-medium flex items-center gap-1.5 mb-1">
                     <Mail className="w-3.5 h-3.5" />
-                    Email
+                    {t("email")}
                   </label>
                   <input
                     type="email"
-                    placeholder="votre@email.com"
+                    placeholder={t("emailPlaceholder")}
                     className="w-full bg-transparent text-gray-900 placeholder:text-gray-400 focus:outline-none text-sm font-medium"
                   />
                 </div>
@@ -124,7 +129,7 @@ export function Contact() {
                 <div className="bg-white rounded-xl px-4 py-3">
                   <label className="text-gray-500 text-xs font-medium flex items-center gap-1.5 mb-1">
                     <Phone className="w-3.5 h-3.5" />
-                    Téléphone
+                    {t("phone")}
                   </label>
                   <input
                     type="tel"
@@ -137,10 +142,10 @@ export function Contact() {
                 <div className="bg-white rounded-xl px-4 py-3">
                   <label className="text-gray-500 text-xs font-medium flex items-center gap-1.5 mb-1">
                     <MessageSquare className="w-3.5 h-3.5" />
-                    Message
+                    {t("message")}
                   </label>
                   <textarea
-                    placeholder="Décrivez votre projet de voyage..."
+                    placeholder={t("messagePlaceholder")}
                     rows={3}
                     className="w-full bg-transparent text-gray-900 placeholder:text-gray-400 focus:outline-none text-sm font-medium resize-none"
                   />
@@ -152,7 +157,7 @@ export function Contact() {
                   className="w-full flex items-center justify-center gap-2 bg-[#2D91E0] hover:bg-[#1a7bc9] text-white font-semibold py-4 rounded-xl transition-all mt-2"
                 >
                   <Send className="w-5 h-5" />
-                  Envoyer le message
+                  {t("submit")}
                 </button>
               </form>
             </div>

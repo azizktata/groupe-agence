@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { FilterPill } from "./filters/FilterPill";
 import { useState } from "react";
 import {
@@ -42,6 +44,7 @@ export function HotelFiltersBar({
   resultsCount,
   onChange,
 }: HotelFiltersBarProps) {
+  const t = useTranslations("hotelFilters");
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
   const renderStars = (count: number) => {
@@ -57,7 +60,7 @@ export function HotelFiltersBar({
           {/* All filters toggle */}
           <FilterPill
             label={
-              showAdvancedFilters ? "Masquer les filtres" : "Tous les filtres"
+              showAdvancedFilters ? t("hide") : t("allFilters")
             }
             primary
             active={showAdvancedFilters}
@@ -67,12 +70,12 @@ export function HotelFiltersBar({
           {/* Chain filter */}
           <Popover>
             <PopoverTrigger asChild>
-              <FilterPill label="Chaîne" active={filters.chains.length > 0} />
+              <FilterPill label={t("chain")} active={filters.chains.length > 0} />
             </PopoverTrigger>
 
             <PopoverContent align="start" sideOffset={8} className="w-64">
               <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-slate-900">Chaîne hôtelière</h4>
+                <h4 className="text-sm font-semibold text-slate-900">{t("chainFull")}</h4>
                 <div className="space-y-2">
                   {filterOptions.chains.map((chain) => (
                     <label
@@ -106,12 +109,12 @@ export function HotelFiltersBar({
           {/* Rating filter */}
           <Popover>
             <PopoverTrigger asChild>
-              <FilterPill label="Étoiles" active={filters.minRating > 0} />
+              <FilterPill label={t("stars")} active={filters.minRating > 0} />
             </PopoverTrigger>
 
             <PopoverContent align="start" sideOffset={8} className="w-64">
               <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-slate-900">Classement minimum</h4>
+                <h4 className="text-sm font-semibold text-slate-900">{t("minRating")}</h4>
                 <div className="space-y-2">
                   {[5, 4, 3].map((rating) => (
                     <label
@@ -139,7 +142,7 @@ export function HotelFiltersBar({
                       onChange={() => onChange({ ...filters, minRating: 0 })}
                       className="w-4 h-4 border-slate-300 text-[var(--brand-primary)] focus:ring-[var(--brand-primary)]"
                     />
-                    <span className="text-sm text-slate-700">Tous les classements</span>
+                    <span className="text-sm text-slate-700">{t("allRatings")}</span>
                   </label>
                 </div>
               </div>
@@ -152,14 +155,14 @@ export function HotelFiltersBar({
               <Popover>
                 <PopoverTrigger asChild>
                   <FilterPill
-                    label="Équipements"
+                    label={t("amenities")}
                     active={filters.amenities.length > 0}
                   />
                 </PopoverTrigger>
 
                 <PopoverContent align="start" sideOffset={8} className="w-64">
                   <div className="space-y-3">
-                    <h4 className="text-sm font-semibold text-slate-900">Équipements</h4>
+                    <h4 className="text-sm font-semibold text-slate-900">{t("amenities")}</h4>
                     <div className="space-y-2">
                       {filterOptions.amenities.map((amenity) => (
                         <label

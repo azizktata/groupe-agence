@@ -22,9 +22,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useTranslations, useFormatter } from "next-intl";
 
-const AIRLINES = [
-  { name: "Toutes les compagnies", code: "" },
+// Airline names are proper nouns and stay in code; only the "any" option and
+// the cabin/stop labels are translated.
+const AIRLINE_NAMES: Array<{ name: string; code: string }> = [
   { name: "Air Côte d'Ivoire", code: "HF" },
   { name: "Emirates", code: "EK" },
   { name: "Qatar Airways", code: "QR" },
@@ -36,18 +38,12 @@ const AIRLINES = [
   { name: "LOT Polish Airlines", code: "LO" },
 ];
 
-const CABINS = [
-  { name: "Économique", code: "Y" },
-  { name: "Éco Premium", code: "S" },
-  { name: "Affaires", code: "C" },
-  { name: "Première", code: "F" },
-];
-
-const STOPS = [
-  { name: "Peu importe", code: "" },
-  { name: "Vol direct", code: "0" },
-  { name: "1 escale max", code: "1" },
-  { name: "2 escales max", code: "2" },
+const CABIN_CODES = ["Y", "S", "C", "F"];
+const STOP_OPTIONS = [
+  { code: "", key: "any" },
+  { code: "0", key: "nonstop" },
+  { code: "1", key: "one" },
+  { code: "2", key: "twoPlus" },
 ];
 
 interface FlightSearchFormProps {
@@ -74,6 +70,14 @@ function SearchFormContent({
   tripType: "roundtrip" | "oneway";
   setTripType: (type: "roundtrip" | "oneway") => void;
 }) {
+  const t = useTranslations("flightSearch");
+  const tc = useTranslations("common");
+  const tcab = useTranslations("cabins");
+  const tstop = useTranslations("stops");
+  const AIRLINES = [{ name: t("anyAirline"), code: "" }, ...AIRLINE_NAMES];
+  const CABINS = CABIN_CODES.map((code) => ({ name: tcab(code), code }));
+  const STOPS = STOP_OPTIONS.map((s) => ({ name: tstop(s.key), code: s.code }));
+
   return (
     <form className="space-y-4">
       {/* Trip Type Toggle */}
@@ -87,7 +91,7 @@ function SearchFormContent({
               : "bg-slate-100 text-slate-600 hover:bg-slate-200"
           }`}
         >
-          Aller-retour
+          {t("roundTrip")}
         </button>
         <button
           type="button"
@@ -98,7 +102,7 @@ function SearchFormContent({
               : "bg-slate-100 text-slate-600 hover:bg-slate-200"
           }`}
         >
-          Aller simple
+          {t("oneWay")}
         </button>
       </div>
 
@@ -107,7 +111,7 @@ function SearchFormContent({
         <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 focus-within:border-[var(--brand-primary)] focus-within:ring-2 focus-within:ring-[var(--brand-primary)]/10 transition-all">
           <label className="text-slate-500 text-xs font-medium flex items-center gap-1.5 mb-1">
             <PlaneTakeoff className="w-3.5 h-3.5" />
-            Départ
+            {tc("departure")}
           </label>
           <input
             type="text"
@@ -164,7 +168,7 @@ function SearchFormContent({
         <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 focus-within:border-[var(--brand-primary)] focus-within:ring-2 focus-within:ring-[var(--brand-primary)]/10 transition-all">
           <label className="text-slate-500 text-xs font-medium flex items-center gap-1.5 mb-1">
             <Users className="w-3.5 h-3.5" />
-            Passagers
+            {t("passengers")}
           </label>
           <input
             type="number"
@@ -178,7 +182,7 @@ function SearchFormContent({
         <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 focus-within:border-[var(--brand-primary)] focus-within:ring-2 focus-within:ring-[var(--brand-primary)]/10 transition-all">
           <label className="text-slate-500 text-xs font-medium flex items-center gap-1.5 mb-1">
             <Briefcase className="w-3.5 h-3.5" />
-            Cabine
+            {tc("cabin")}
           </label>
           <select
             defaultValue={defaultValues?.cabin}
@@ -195,7 +199,7 @@ function SearchFormContent({
         <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 focus-within:border-[var(--brand-primary)] focus-within:ring-2 focus-within:ring-[var(--brand-primary)]/10 transition-all col-span-2 md:col-span-1">
           <label className="text-slate-500 text-xs font-medium flex items-center gap-1.5 mb-1">
             <Plane className="w-3.5 h-3.5" />
-            Compagnie
+            {t("airline")}
           </label>
           <select
             defaultValue={defaultValues?.airline}
@@ -215,7 +219,7 @@ function SearchFormContent({
         <div className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100 focus-within:border-[var(--brand-primary)] focus-within:ring-2 focus-within:ring-[var(--brand-primary)]/10 transition-all">
           <label className="text-slate-500 text-xs font-medium flex items-center gap-1.5 mb-1">
             <ArrowLeftRight className="w-3.5 h-3.5" />
-            Escales
+            {t("stops")}
           </label>
           <select
             defaultValue={defaultValues?.maxStops}
@@ -251,7 +255,7 @@ function SearchFormContent({
         className="w-full mt-2 shadow-lg shadow-[var(--brand-primary)]/20"
       >
         <Search className="w-5 h-5" />
-        Rechercher des vols
+        {t("submit")}
       </Button>
     </form>
   );
@@ -270,15 +274,20 @@ export function FlightSearchForm({
   },
   compact = false,
 }: FlightSearchFormProps) {
+  const t = useTranslations("flightSearch");
+  const tcab = useTranslations("cabins");
+  const format = useFormatter();
   const [tripType, setTripType] = useState<"roundtrip" | "oneway">(
     defaultValues.returnDate ? "roundtrip" : "oneway"
   );
 
-  // Format date for display in French
+  // Formatted with next-intl so the date follows the active locale.
   const formatDate = (dateStr?: string) => {
     if (!dateStr) return "";
-    const date = new Date(dateStr);
-    return date.toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
+    return format.dateTime(new Date(dateStr), {
+      day: "numeric",
+      month: "short",
+    });
   };
 
   if (compact) {
@@ -300,7 +309,7 @@ export function FlightSearchForm({
                 {formatDate(defaultValues.departureDate)}
                 {defaultValues.returnDate
                   ? ` - ${formatDate(defaultValues.returnDate)}`
-                  : " (Aller simple)"}
+                  : ` (${t("oneWay")})`}
               </p>
             </div>
           </div>
@@ -313,8 +322,7 @@ export function FlightSearchForm({
           <div className="hidden md:flex items-center gap-2 text-sm text-slate-600">
             <Briefcase className="w-4 h-4" />
             <span>
-              {CABINS.find((c) => c.code === defaultValues.cabin)?.name ||
-                "Économique"}
+              {defaultValues.cabin ? tcab(defaultValues.cabin) : tcab("Y")}
             </span>
           </div>
 

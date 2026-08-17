@@ -142,6 +142,10 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    /* Clears the fixed header so #anchor targets are not hidden behind it. */
+    scroll-padding-top: 6rem;
+  }
   body {
     @apply bg-background text-foreground;
     font-family: 'Poppins', sans-serif;

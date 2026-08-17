@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Header } from "@/components/Header";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 import { ExpandableText } from "@/components/ExpandableText";
 import {
@@ -107,9 +108,14 @@ const CATEGORY_STYLES: Record<string, string> = {
 export default async function HotelDetailPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
+
+  // Required before any next-intl call, or static rendering degrades.
+  setRequestLocale(locale);
+  const t = await getTranslations("hotelDetail");
+  const th = await getTranslations("hotels");
 
   // Get basic hotel info from the hotel list using HotelCode (slug)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -162,7 +168,7 @@ export default async function HotelDetailPage({
               </Link>
               <ChevronRight className="w-3 h-3" />
               <Link href="/hotels" className="hover:text-white transition-colors">
-                Hôtels
+                {th("breadcrumb")}
               </Link>
               <ChevronRight className="w-3 h-3" />
               <span className="text-white font-medium truncate max-w-[200px]">
@@ -225,7 +231,7 @@ export default async function HotelDetailPage({
               {/* Image Gallery */}
               {galleryImages.length > 1 && (
                 <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
-                  <h2 className="text-lg font-bold text-slate-900 mb-4">Galerie</h2>
+                  <h2 className="text-lg font-bold text-slate-900 mb-4">{t("gallery")}</h2>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {galleryImages.map((image, index) => (
                       <div
@@ -254,7 +260,7 @@ export default async function HotelDetailPage({
               {descriptions.short && (
                 <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
                   <h2 className="text-lg font-bold text-slate-900 mb-4">
-                    À propos de cet hôtel
+                    {t("about")}
                   </h2>
                   <ExpandableText text={descriptions.short} maxLines={5} />
                 </div>
@@ -277,7 +283,7 @@ export default async function HotelDetailPage({
               {/* Amenities */}
               <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
                 <h2 className="text-lg font-bold text-slate-900 mb-4">
-                  Équipements & Services
+                  {t("amenities")}
                 </h2>
 
                 {/* Featured Amenities */}
@@ -299,7 +305,7 @@ export default async function HotelDetailPage({
                             </p>
                             {amenity.isComplimentary && (
                               <p className="text-xs text-emerald-600 font-medium">
-                                Gratuit
+                                {t("free")}
                               </p>
                             )}
                           </div>
@@ -312,7 +318,7 @@ export default async function HotelDetailPage({
                 {/* All Amenities List */}
                 <div className="border-t border-slate-100 pt-4">
                   <h3 className="text-sm font-semibold text-slate-700 mb-3">
-                    Tous les équipements
+                    {t("allAmenities")}
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {amenities.map((amenity) => (
@@ -337,7 +343,7 @@ export default async function HotelDetailPage({
                 <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
                   <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
                     <UtensilsCrossed className="w-5 h-5 text-[var(--brand-primary)]" />
-                    Restauration
+                    {t("dining")}
                   </h2>
                   <ExpandableText text={descriptions.dining} maxLines={4} />
                 </div>
@@ -347,7 +353,7 @@ export default async function HotelDetailPage({
               {descriptions.facilities && (
                 <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
                   <h2 className="text-lg font-bold text-slate-900 mb-4">
-                    Installations
+                    {t("facilities")}
                   </h2>
                   <ExpandableText text={descriptions.facilities} maxLines={4} />
                 </div>
@@ -380,7 +386,7 @@ export default async function HotelDetailPage({
               {/* Booking Card */}
               <div className="bg-white z-90 rounded-3xl border border-slate-200 shadow-xl p-8 sticky top-6">
                 <h3 className="text-lg font-black text-slate-900 mb-6">
-                  Réserver une chambre
+                  {t("bookRoom")}
                 </h3>
 
                 {/* Check-in/Check-out Times */}
@@ -389,10 +395,10 @@ export default async function HotelDetailPage({
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-slate-500 flex items-center gap-2">
                         <Clock className="w-4 h-4" />
-                        Arrivée
+                        {t("checkIn")}
                       </span>
                       <span className="font-bold text-slate-900">
-                        À partir de {policies.checkIn}
+                        {t("checkInFrom", { time: policies.checkIn })}
                       </span>
                     </div>
                   )}
@@ -400,10 +406,10 @@ export default async function HotelDetailPage({
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-slate-500 flex items-center gap-2">
                         <Clock className="w-4 h-4" />
-                        Départ
+                        {t("checkOut")}
                       </span>
                       <span className="font-bold text-slate-900">
-                        Avant {policies.checkOut}
+                        {t("checkOutBefore", { time: policies.checkOut })}
                       </span>
                     </div>
                   )}
@@ -415,11 +421,11 @@ export default async function HotelDetailPage({
                     rounded="xl"
                     className="w-full shadow-lg shadow-[var(--brand-primary)]/20 active:scale-[0.98]"
                   >
-                    Voir les disponibilités
+                    {t("checkAvailability")}
                     <ArrowRight className="w-4 h-4" />
                   </Button>
                   <p className="text-[10px] text-center text-slate-400 font-medium px-4">
-                    Tarifs et disponibilités selon les dates sélectionnées
+                    {t("ratesNote")}
                   </p>
                 </div>
               </div>
@@ -429,7 +435,7 @@ export default async function HotelDetailPage({
                 <div className="bg-[var(--brand-primary)]/5 border border-[var(--brand-primary)]/10 rounded-2xl p-6">
                   <h4 className="text-[var(--brand-dark)] font-bold text-sm mb-3 flex items-center gap-2">
                     <Info className="w-4 h-4 text-[var(--brand-primary)]" />
-                    Conditions
+                    {t("conditions")}
                   </h4>
                   <div className="space-y-3">
                     {policies.cancellation && (
@@ -458,7 +464,7 @@ export default async function HotelDetailPage({
                 <div className="bg-white rounded-2xl border border-slate-200 p-6">
                   <h4 className="font-bold text-sm text-slate-900 mb-3 flex items-center gap-2">
                     <Plane className="w-4 h-4 text-[var(--brand-primary)]" />
-                    Transport
+                    {t("transport")}
                   </h4>
                   <ExpandableText
                     text={descriptions.transportation}

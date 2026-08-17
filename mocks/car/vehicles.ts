@@ -53,7 +53,7 @@ export const MOCK_VEHICLES: UiVehicle[] = [
   },
   {
     id: "veh-4",
-    name: "Berline avec chauffeur",
+    name: "Mercedes Classe E",
     type: "SEDAN",
     typeLabel: "Berline",
     seats: 4,
@@ -89,7 +89,7 @@ export const MOCK_VEHICLES: UiVehicle[] = [
   },
   {
     id: "veh-7",
-    name: "Minibus 9 places",
+    name: "Volkswagen Transporter",
     type: "MINIBUS",
     typeLabel: "Minibus",
     seats: 9,

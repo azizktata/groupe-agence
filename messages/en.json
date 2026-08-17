@@ -1,0 +1,452 @@
+{
+  "metadata": {
+    "title": "Groupe L'Agence",
+    "description": "Welcome to the official website of Groupe L'Agence, your trusted partner for unforgettable journeys."
+  },
+  "nav": {
+    "home": "Home",
+    "flights": "Flights",
+    "hotels": "Hotels",
+    "cars": "Cars",
+    "contact": "Contact",
+    "brand": "Groupe L'Agence",
+    "language": "Language"
+  },
+  "common": {
+    "search": "Search",
+    "loading": "Searching...",
+    "book": "Book",
+    "breadcrumbSearch": "Search",
+    "from": "From",
+    "to": "To",
+    "departure": "Departure",
+    "return": "Return",
+    "airline": "Airline",
+    "cabin": "Cabin"
+  },
+  "hero": {
+    "title": "Travel, Book,",
+    "titleAccent": "Save.",
+    "subtitle": "Access the best flight and hotel deals, gathered in one place so you can book simply and at the best price.",
+    "proofSearch": "One single search",
+    "proofFlights": "560,000+ flights",
+    "proofHotels": "21,000+ hotels",
+    "proofCountries": "120 countries",
+    "placeholderFrom": "e.g. WAW",
+    "placeholderTo": "e.g. SPU"
+  },
+  "about": {
+    "eyebrow": "Your journey starts here",
+    "title": "Groupe L'Agence",
+    "description": "Groupe L'Agence supports you with complete tourism and ticketing solutions, bringing together tickets, hotels and essential services for stress-free travel.",
+    "badgeCountriesValue": "120+",
+    "badgeCountriesLabel": "Countries covered",
+    "badgeIataValue": "IATA Certified",
+    "badgeIataLabel": "Accredited agency",
+    "items": [
+      {
+        "title": "International air ticketing",
+        "description": "Save time by comparing all flights in one place."
+      },
+      {
+        "title": "3 & 4 star hotel bookings",
+        "description": "Enjoy comfortable stays at the best price."
+      },
+      {
+        "title": "Personalised travel assistance",
+        "description": "Simplify your travel preparation."
+      }
+    ]
+  },
+  "trust": {
+    "badge": "IATA Certified",
+    "heading": "Access the best deals on",
+    "headingAccent": "flights and hotels",
+    "description": "We give you access to thousands of flights and accommodations at the best rates, with complete transparency. Flights and hotels together to save you time, save you money and give you a seamless experience.",
+    "cta": "Discover our offers",
+    "points": [
+      "Direct access to airlines",
+      "Competitive, up-to-date fares",
+      "Fast and secure bookings"
+    ]
+  },
+  "services": {
+    "eyebrow": "Our Services",
+    "heading": "Travel with",
+    "headingAccent": "peace of mind",
+    "description": "Carefully managed organisation for comfortable and secure journeys.",
+    "premiumBadge": "Premium service",
+    "items": [
+      {
+        "subtitle": "Our partners",
+        "title": "Trusted partners",
+        "description": "We work with airlines and hotel groups to guarantee the best deals and a worry-free journey.",
+        "description2": "Thanks to our partners, easily find the ideal options for your trip.",
+        "cta": "Discover our partners"
+      },
+      {
+        "subtitle": "Air ticketing",
+        "title": "Flight bookings",
+        "description": "Access a wide choice of domestic and international flights at the best rates on the market.",
+        "description2": "Compare all available flights and choose the one that suits you best.",
+        "cta": "Book a flight"
+      },
+      {
+        "subtitle": "Selected accommodation",
+        "title": "Hotel bookings",
+        "description": "Enjoy 3 and 4 star hotels selected for comfort, location and value for money.",
+        "description2": "Each place offers the right balance between quality, ideal location and price.",
+        "cta": "Find a hotel"
+      },
+      {
+        "subtitle": "Mobility on site",
+        "title": "Car rental",
+        "description": "Move freely thanks to our wide choice of vehicles, from economy to premium.",
+        "description2": "Transparent rates, simplified pick-up and a service available at the airport as well as in the city for all your journeys.",
+        "cta": "Book a vehicle"
+      }
+    ]
+  },
+  "servicesExtra": {
+    "heading": "Our best",
+    "headingAccent": "services",
+    "description": "Additional solutions to simplify every aspect of your journey.",
+    "items": [
+      {
+        "title": "Secure transactions",
+        "description": "Cards, mobile money or cash. Pay however you like, in complete security."
+      },
+      {
+        "title": "Travel insurance",
+        "description": "In partnership with a trusted insurance provider, enjoy cover tailored to your needs."
+      },
+      {
+        "title": "Visas & documents",
+        "description": "Get dedicated assistance with all visa formalities, simplifying your travel preparation."
+      },
+      {
+        "title": "Car rental",
+        "description": "Rent the vehicle suited to your stay, with or without a driver, available at the airport or in the city."
+      }
+    ]
+  },
+  "destinations": {
+    "eyebrow": "Popular destinations",
+    "heading": "Get inspired by our",
+    "headingAccent": "destinations",
+    "priceFrom": "From {price}",
+    "items": {
+      "marrakech": {
+        "name": "Marrakesh",
+        "country": "Morocco"
+      },
+      "dubai": {
+        "name": "Dubai",
+        "country": "United Arab Emirates"
+      },
+      "abidjan": {
+        "name": "Abidjan",
+        "country": "Ivory Coast"
+      },
+      "cairo": {
+        "name": "Cairo",
+        "country": "Egypt"
+      },
+      "doha": {
+        "name": "Doha",
+        "country": "Qatar"
+      },
+      "casablanca": {
+        "name": "Casablanca",
+        "country": "Morocco"
+      }
+    }
+  },
+  "ctaFinal": {
+    "heading": "Ready to plan your",
+    "headingAccent": "next journey?",
+    "description": "Tickets, hotels and complementary services brought together so you can fully enjoy every step.",
+    "ctaTrip": "Book your trip",
+    "ctaHotel": "Find your hotel"
+  },
+  "engagement": {
+    "eyebrow": "Our commitment",
+    "heading": "Every journey deserves to be",
+    "headingAccent": "well prepared",
+    "description": "Flights, hotels and car rental: we bring together the essentials of your journey with a single point of contact. Our team supports you at every step, from the first quote until your return."
+  },
+  "contact": {
+    "badge": "Contact us",
+    "heading": "Let's plan",
+    "headingAccent": "your journey together",
+    "description": "Our team of experts is at your disposal to answer all your questions and help you organise the trip of your dreams.",
+    "phone": "Phone",
+    "email": "Email",
+    "workingHours": "Working hours",
+    "workingHoursValue": "Mon - Fri, 9am - 6pm",
+    "formTitle": "Send us a message",
+    "fullName": "Full name",
+    "fullNamePlaceholder": "Your name",
+    "emailPlaceholder": "your@email.com",
+    "phonePlaceholder": "+33 6 00 00 00 00",
+    "message": "Message",
+    "messagePlaceholder": "Describe your travel plans...",
+    "submit": "Send message"
+  },
+  "footer": {
+    "tagline": "Your trusted partner for all your journeys.",
+    "quickLinks": "Quick links",
+    "home": "Home",
+    "about": "About",
+    "ourServices": "Our services",
+    "destinations": "Destinations",
+    "contact": "Contact",
+    "servicesTitle": "Our services",
+    "flightBooking": "Flight booking",
+    "hotelBooking": "Hotels & Accommodation",
+    "carRental": "Car rental",
+    "travelInsurance": "Travel insurance",
+    "visa": "Visa & Formalities",
+    "contactTitle": "Contact",
+    "rights": "All rights reserved.",
+    "developedBy": "Developed by"
+  },
+  "vols": {
+    "breadcrumbResults": "Results",
+    "title": "Find your ideal flight",
+    "roundTrip": "Round trip",
+    "totalPricePerPerson": "Total price / person",
+    "cabinBaggage": "Cabin baggage",
+    "select": "Select",
+    "review": {
+      "title": "Review your flight",
+      "subtitle": "Please check the details before proceeding to payment",
+      "flightNumber": "Flight {number}",
+      "bookingClass": "Class {code}",
+      "baggageIncluded": "{count, plural, =1 {# bag included} other {# bags included}}",
+      "refundable": "Refundable fare",
+      "fareConditions": "Fare conditions",
+      "conditionPrivate": "Private agency fare: Subject to specific ticketing rules.",
+      "conditionTicketing": "The ticket must be issued before",
+      "conditionChanges": "Changes and cancellations possible (see full conditions).",
+      "summary": "Summary",
+      "baseFare": "1 Adult (base fare)",
+      "taxes": "Taxes & fees",
+      "totalPrice": "Total price",
+      "bookNow": "Book now",
+      "terms": "By clicking Book, you accept the airline's conditions of carriage.",
+      "statusConfirmed": "Price verified & available",
+      "statusPriceChanged": "Price changed",
+      "statusSoldOut": "No longer available",
+      "terminal": "Terminal {terminal}"
+    }
+  },
+  "flightSearch": {
+    "roundTrip": "Round trip",
+    "oneWay": "One way",
+    "departure": "Departure",
+    "return": "Return",
+    "passengers": "Passengers",
+    "cabin": "Cabin",
+    "airline": "Airline",
+    "stops": "Stops",
+    "edit": "Edit",
+    "submit": "Search flights",
+    "anyAirline": "Any"
+  },
+  "cabins": {
+    "Y": "Economy",
+    "S": "Premium Economy",
+    "C": "Business",
+    "F": "First",
+    "M": "Economy",
+    "W": "Premium Economy",
+    "J": "Business",
+    "Economy": "Economy",
+    "PremiumEconomy": "Premium Economy",
+    "Business": "Business",
+    "FirstClass": "First Class"
+  },
+  "stops": {
+    "any": "Any",
+    "nonstop": "Non-stop",
+    "one": "1 stop",
+    "twoPlus": "2+ stops"
+  },
+  "hotels": {
+    "breadcrumb": "Hotels",
+    "title": "Find your ideal hotel",
+    "empty": "No hotel matches your criteria.",
+    "resetFilters": "Reset filters",
+    "viewDetails": "View details",
+    "dreamDestination": "Dream destination"
+  },
+  "hotelSearch": {
+    "propertyName": "Property name",
+    "propertyNamePlaceholder": "e.g. Resort, Spa, Marriott...",
+    "chain": "Hotel chain",
+    "allChains": "All chains",
+    "minRating": "Minimum rating",
+    "rating3": "3 stars and up",
+    "rating4": "4 stars and up",
+    "rating45": "4.5 stars and up",
+    "amenities": "Desired amenities",
+    "wifi": "WiFi",
+    "pool": "Pool",
+    "freeParking": "Free parking"
+  },
+  "carSearch": {
+    "pickupLocation": "Pick-up location",
+    "pickupLocationPlaceholder": "e.g. Abidjan, FHB Airport...",
+    "pickupDate": "Pick-up date",
+    "returnDate": "Return date",
+    "vehicleType": "Vehicle type"
+  },
+  "vehicleTypes": {
+    "ANY": "Any",
+    "ECONOMY": "Economy",
+    "SEDAN": "Sedan",
+    "SUV": "SUV",
+    "MINIBUS": "Minibus",
+    "LUXURY": "Luxury"
+  },
+  "vehicleCard": {
+    "seats": "{count} seats",
+    "transmissionManual": "Manual",
+    "transmissionAutomatic": "Automatic",
+    "luggage": "{count} bags",
+    "withDriver": "With driver",
+    "book": "Book"
+  },
+  "voitures": {
+    "hero": {
+      "title": "Travel, Drive,",
+      "titleAccent": "Explore.",
+      "subtitle": "Find the ideal vehicle for your stay, book in a few clicks at the best price.",
+      "proofVehicles": "500+ vehicles",
+      "proofCities": "50+ cities",
+      "proofDriver": "With or without a driver"
+    },
+    "results": {
+      "count": "{count, plural, =1 {# vehicle available} other {# vehicles available}}",
+      "hide": "Hide results",
+      "empty": "No vehicle matches your criteria.",
+      "showAll": "View all vehicles"
+    },
+    "intro": {
+      "eyebrow": "Your journey starts here",
+      "heading": "Car",
+      "headingAccent": "rental",
+      "description": "Groupe L'Agence offers a complete range of vehicles for all your travel, with flexible solutions tailored to your needs, whether solo, as a family or in a group.",
+      "items": [
+        {
+          "title": "Wide choice of vehicles",
+          "description": "From economical city cars to premium vehicles, find the model that suits you."
+        },
+        {
+          "title": "With or without a driver",
+          "description": "Choose the freedom of driving yourself or enjoy a professional driver."
+        },
+        {
+          "title": "Flexible pick-up",
+          "description": "Collect your vehicle at the airport, in the city or at the address of your choice."
+        }
+      ]
+    },
+    "advantages": {
+      "heading": "Rent with peace of",
+      "headingAccent": "mind",
+      "description": "Our advantages for a stress-free rental, from departure to return.",
+      "items": [
+        {
+          "title": "Insurance included",
+          "description": "All our vehicles are covered by comprehensive insurance for your peace of mind."
+        },
+        {
+          "title": "24/7 assistance",
+          "description": "A team available at any time should you need it during your rental."
+        },
+        {
+          "title": "Flexible cancellation",
+          "description": "Change or cancel your booking with no hidden fees."
+        }
+      ]
+    },
+    "categories": {
+      "eyebrow": "Our vehicle categories",
+      "heading": "Find the vehicle that",
+      "headingAccent": "suits you",
+      "items": [
+        {
+          "name": "Economy",
+          "description": "Ideal for city journeys"
+        },
+        {
+          "name": "Sedan",
+          "description": "Comfort and elegance for your business travel"
+        },
+        {
+          "name": "SUV",
+          "description": "Space and durability for all your journeys"
+        },
+        {
+          "name": "Minibus",
+          "description": "Perfect for groups and families"
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Ready to hit the",
+      "headingAccent": "road?",
+      "subtitle": "Book your vehicle right now",
+      "description": "Our team will help you choose the ideal vehicle, with or without a driver, anywhere in Ivory Coast.",
+      "ctaBook": "Book a vehicle",
+      "ctaContact": "Contact us"
+    }
+  },
+  "filters": {
+    "allFilters": "All filters",
+    "hide": "Hide filters",
+    "airlines": "Airlines",
+    "stops": "Stops",
+    "cabins": "Cabins",
+    "tripType": "Trip type",
+    "departureTime": "Departure time",
+    "price": "Price",
+    "morning": "Morning",
+    "afternoon": "Afternoon",
+    "evening": "Evening",
+    "night": "Night",
+    "morningRange": "06:00 – 12:00",
+    "afternoonRange": "12:00 – 18:00",
+    "eveningRange": "18:00 – 22:00",
+    "nightRange": "22:00 – 06:00",
+    "stopsCount": "{count, plural, =0 {Non-stop} =1 {1 stop} other {# stops}}"
+  },
+  "hotelFilters": {
+    "allFilters": "All filters",
+    "hide": "Hide filters",
+    "chain": "Chain",
+    "chainFull": "Hotel chain",
+    "stars": "Stars",
+    "minRating": "Minimum rating",
+    "allRatings": "All ratings",
+    "amenities": "Amenities"
+  },
+  "hotelDetail": {
+    "gallery": "Gallery",
+    "free": "Free",
+    "allAmenities": "All amenities",
+    "dining": "Dining",
+    "facilities": "Facilities",
+    "transport": "Transport",
+    "conditions": "Conditions",
+    "bookRoom": "Book a room",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "checkInFrom": "From {time}",
+    "checkOutBefore": "Before {time}",
+    "checkAvailability": "Check availability",
+    "ratesNote": "Rates and availability depend on the selected dates"
+  }
+}

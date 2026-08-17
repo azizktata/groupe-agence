@@ -1,39 +1,22 @@
 "use client";
 
 import { CreditCard, ShieldCheck, FileText, Car } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-const extraServices = [
-  {
-    icon: CreditCard,
-    title: "Transactions sécurisées",
-    description:
-      "Cartes, mobile money ou espèces. Payez comme vous le souhaitez en toute sécurité.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Assurance voyage",
-    description:
-      "En collaboration avec un partenaire d'assurance de confiance, profitez d’une protection adaptée à vos besoins.",
-  },
-  {
-    icon: FileText,
-    title: "Visas & documents",
-    description:
-      "Accédez à une assistance dédiée pour toutes les démarches de visa, simplifiant ainsi la préparation de votre voyage.",
-  },
-  {
-    icon: Car,
-    title: "Location de voitures",
-    description:
-      "Louez le véhicule adapté à votre séjour, avec ou sans chauffeur, disponible à l’aéroport ou en ville.",
-  },
-];
+// Icons stay in code; the copy comes from the message catalog.
+const EXTRA_SERVICE_ICONS = [CreditCard, ShieldCheck, FileText, Car];
+
+type UiExtraService = {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+};
 
 function ServiceCard({
   service,
   index,
 }: {
-  service: (typeof extraServices)[0];
+  service: UiExtraService;
   index: number;
 }) {
   const Icon = service.icon;
@@ -78,6 +61,15 @@ function ServiceCard({
 }
 
 export function ServicesExtra() {
+  const t = useTranslations("servicesExtra");
+  const extraServices: UiExtraService[] = EXTRA_SERVICE_ICONS.map(
+    (icon, i) => ({
+      icon,
+      title: t(`items.${i}.title`),
+      description: t(`items.${i}.description`),
+    })
+  );
+
   // The solid bg below is a fallback: Tailwind emits `in oklab` gradients, which
   // older iOS Safari (< 16.4) drops entirely, leaving white text on white.
   return (
@@ -108,11 +100,13 @@ export function ServicesExtra() {
             Nos meilleurs services
           </span> */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-           Nos meilleurs {' '}
-            <span className="text-[var(--brand-primary)]">services</span>
+            {t("heading")}{" "}
+            <span className="text-[var(--brand-primary)]">
+              {t("headingAccent")}
+            </span>
           </h2>
           <p className="text-white/70 text-md sm:text-lg max-w-lg mx-auto">
-            Des solutions additionnelles pour simplifier chaque aspect de votre voyage.
+            {t("description")}
           </p>
         </div>
 

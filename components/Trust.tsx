@@ -10,7 +10,8 @@ import {
   BadgeCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 const tickets = [
   {
@@ -42,11 +43,6 @@ const tickets = [
   // },
 ];
 
-const trustPoints = [
-  "Accès direct aux compagnies aériennes",
-  "Tarifs compétitifs et actualisés",
-  "Réservations rapides et sécurisées",
-];
 
 function TicketCard({ ticket, animationClass = "" }: { ticket: (typeof tickets)[0]; animationClass?: string }) {
   return (
@@ -149,6 +145,9 @@ function TicketCard({ ticket, animationClass = "" }: { ticket: (typeof tickets)[
 }
 
 export function Trust() {
+  const t = useTranslations("trust");
+  const trustPoints = [t("points.0"), t("points.1"), t("points.2")];
+
   // The solid bg below is a fallback: Tailwind emits `in oklab` gradients, which
   // older iOS Safari (< 16.4) drops entirely, leaving white text on white.
   return (
@@ -316,7 +315,7 @@ export function Trust() {
             {/* CTA Button - Primary Color */}
             <Link href="/vols">
             <Button variant="primary" size="lg" rounded="sm" className="mt-8">
-              Découvrir nos offres
+              {t("cta")}
               <ArrowRight className="w-5 h-5" />
             </Button>
             </Link>
@@ -326,21 +325,18 @@ export function Trust() {
           <div className="order-1 lg:order-2">
              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white/90 mb-4">
               <Medal className="w-4 h-4 text-[var(--brand-accent)]" />
-              Certifié IATA
+              {t("badge")}
             </span>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-              Accédez aux meilleures offres de{" "}
+              {t("heading")}{" "}
               <span className="text-[var(--brand-accent)]">
-                vols et d&apos;hôtels
+                {t("headingAccent")}
               </span>
             </h2>
 
             <p className="text-white/90 text-md sm:text-lg leading-relaxed mb-8 max-w-xl">
-              Nous vous donnons accès à des milliers de vols et d’hébergements
-              aux meilleurs tarifs, en toute transparence. Billets d’avion et
-              hôtels réunis pour gagner du temps, économiser de l’argent et
-              profiter d’une expérience fluide.
+              {t("description")}
             </p>
 
             {/* Trust Points */}

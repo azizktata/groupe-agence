@@ -7,6 +7,7 @@ import Link from "next/link";
 import { mapSabreHotelsToUi, UiHotel } from "@/mappers/mapSabreHotelsToUi";
 import { MOCK_SABRE_HOTELS_LIST } from "@/mocks/hotel/sabre-hotel-list";
 import HotelCard from "@/components/HotelCard";
+import { useTranslations } from "next-intl";
 import HotelSearchForm from "@/components/HotelSearchForm";
 import {
   HotelFiltersBar,
@@ -15,7 +16,10 @@ import {
 } from "@/components/HotelFiltersBar";
 
 // Extract filter options from hotel list
-function extractHotelFilterOptions(hotels: UiHotel[]): HotelFilterOptions {
+function extractHotelFilterOptions(
+  hotels: UiHotel[],
+  amenityLabels: { wifi: string; pool: string; freeParking: string }
+): HotelFilterOptions {
   const chainsMap = new Map<string, string>();
   hotels.forEach((h) => chainsMap.set(h.chain.code, h.chain.name));
 
@@ -26,9 +30,9 @@ function extractHotelFilterOptions(hotels: UiHotel[]): HotelFilterOptions {
     })),
     ratings: [5, 4, 3],
     amenities: [
-      { code: 179, name: "WiFi" },
-      { code: 71, name: "Piscine" },
-      { code: 42, name: "Parking gratuit" },
+      { code: 179, name: amenityLabels.wifi },
+      { code: 71, name: amenityLabels.pool },
+      { code: 42, name: amenityLabels.freeParking },
     ],
   };
 }
@@ -57,9 +61,17 @@ function applyHotelFilters(
 }
 
 export default function HotelsPage() {
+  const t = useTranslations("hotels");
+  const tc = useTranslations("common");
+  const tf = useTranslations("hotelSearch");
+
   // Using mock data directly for testing
   const hotels = mapSabreHotelsToUi(MOCK_SABRE_HOTELS_LIST);
-  const filterOptions = extractHotelFilterOptions(hotels);
+  const filterOptions = extractHotelFilterOptions(hotels, {
+    wifi: tf("wifi"),
+    pool: tf("pool"),
+    freeParking: tf("freeParking"),
+  });
 
   const [filters, setFilters] = useState<HotelFiltersState>({
     chains: [],
@@ -94,13 +106,13 @@ export default function HotelsPage() {
                 <Home className="w-4 h-4" />
               </Link>
               <ChevronRight className="w-3 h-3" />
-              <span>Recherche</span>
+              <span>{tc("breadcrumbSearch")}</span>
               <ChevronRight className="w-3 h-3" />
-              <span className="text-white font-medium">Hôtels</span>
+              <span className="text-white font-medium">{t("breadcrumb")}</span>
             </nav>
 
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-8">
-              Trouvez votre hôtel idéal
+              {t("title")}
             </h1>
 
             {/* Search Form */}
@@ -138,7 +150,7 @@ export default function HotelsPage() {
           {filteredHotels.length === 0 && (
             <div className="text-center py-16">
               <p className="text-slate-500 text-lg">
-                Aucun hôtel ne correspond à vos critères.
+                {t("empty")}
               </p>
               <button
                 onClick={() =>
@@ -146,7 +158,7 @@ export default function HotelsPage() {
                 }
                 className="mt-4 text-[var(--brand-primary)] font-semibold hover:underline"
               >
-                Réinitialiser les filtres
+                {t("resetFilters")}
               </button>
             </div>
           )}

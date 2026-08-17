@@ -8,11 +8,16 @@ import {
   Search,
   Briefcase,
 } from "lucide-react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 export function Hero() {
+  const t = useTranslations("hero");
+  const tc = useTranslations("common");
+  const tf = useTranslations("flightSearch");
+  const tcab = useTranslations("cabins");
   const AIRLINES = [
-    { name: "Peu importe", code: "" },
+    { name: tf("anyAirline"), code: "" },
     { name: "Air Côte d'Ivoire", code: "HF" },
     { name: "Emirates", code: "EK" },
     { name: "Qatar Airways", code: "QR" },
@@ -24,10 +29,10 @@ export function Hero() {
   ];
 
   const CABINS = [
-    { name: "Économique", code: "Y" },
-    { name: "Économique Premium", code: "S" },
-    { name: "Affaires", code: "C" },
-    { name: "Première Classe", code: "F" },
+    { name: tcab("Y"), code: "Y" },
+    { name: tcab("S"), code: "S" },
+    { name: tcab("C"), code: "C" },
+    { name: tcab("F"), code: "F" },
   ];
   return (
     <section className="relative min-h-screen flex items-center pt-20 bg-[var(--brand-dark)]">
@@ -52,30 +57,31 @@ export function Hero() {
           {/* Left Side - Content */}
           <div className="text-white">
             <h1 className="text-5xl lg:text-6xl font-bold leading-tight tracking-wide mb-6">
-              Voyagez, Réservez{" "}
-              <span className="text-[var(--brand-accent)]">Économisez.</span>
+              {t("title")}{" "}
+              <span className="text-[var(--brand-accent)]">
+                {t("titleAccent")}
+              </span>
             </h1>
             <p className="text-md sm:text-lg text-white/90 mb-8 max-w-xl">
-              Accédez aux meilleures offres de vols et d&apos;hôtels, réunies en
-              un seul endroit pour réserver simplement et au meilleur prix.
+              {t("subtitle")}
             </p>
 
             {/* Proof Text */}
             <div className="flex flex-wrap items-center gap-4 text-sm text-white/90">
               <span className=" hidden sm:flex items-center gap-2 uppercase font-medium">
-                Une seule recherche
+                {t("proofSearch")}
               </span>
               <span className="text-xs sm:text-sm flex items-center gap-2 uppercase font-medium">
                 <span className="hidden sm:flex w-1.5 h-1.5 rounded-full bg-[var(--brand-accent)] animate-pulse" />
-                560 000+ vols
+                {t("proofFlights")}
               </span>
               <span className="text-xs sm:text-sm flex items-center gap-2 uppercase font-medium">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-accent)] animate-pulse" />
-                21 000+ hôtels
+                {t("proofHotels")}
               </span>
               <span className="text-xs sm:text-sm flex items-center gap-2 uppercase font-medium">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-accent)] animate-pulse" />
-                120 pays
+                {t("proofCountries")}
               </span>
             </div>
           </div>
@@ -89,11 +95,11 @@ export function Hero() {
                   <div className="bg-white rounded-xl px-4 py-3">
                     <label className="text-gray-500 text-xs font-medium flex items-center gap-1.5 mb-1">
                       <PlaneTakeoff className="w-3.5 h-3.5" />
-                      From
+                      {tc("from")}
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. WAW"
+                      placeholder={t("placeholderFrom")}
                       className="w-full bg-transparent text-gray-900 placeholder:text-gray-400 focus:outline-none text-sm font-medium uppercase"
                     />
                   </div>
@@ -101,11 +107,11 @@ export function Hero() {
                   <div className="bg-white rounded-xl px-4 py-3">
                     <label className="text-gray-500 text-xs font-medium flex items-center gap-1.5 mb-1">
                       <PlaneLanding className="w-3.5 h-3.5" />
-                      To
+                      {tc("to")}
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. SPU"
+                      placeholder={t("placeholderTo")}
                       className="w-full bg-transparent text-gray-900 placeholder:text-gray-400 focus:outline-none text-sm font-medium uppercase"
                     />
                   </div>
@@ -115,7 +121,7 @@ export function Hero() {
                   <div className="bg-white rounded-xl px-4 py-3">
                     <label className="text-gray-500 text-xs font-medium flex items-center gap-1.5 mb-1">
                       <Calendar className="w-3.5 h-3.5" />
-                      Départ
+                      {tc("departure")}
                     </label>
                     <input
                       type="date"
@@ -125,7 +131,7 @@ export function Hero() {
                   <div className="bg-white rounded-xl px-4 py-3">
                     <label className="text-gray-500 text-xs font-medium flex items-center gap-1.5 mb-1">
                       <Calendar className="w-3.5 h-3.5" />
-                      Retour
+                      {tc("return")}
                     </label>
                     <input
                       type="date"
@@ -153,7 +159,7 @@ export function Hero() {
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-white rounded-xl px-4 py-2">
                     <label className="text-gray-500 text-xs font-medium flex items-center gap-1.5 mb-0.5">
-                      <ShieldCheck className="w-3.5 h-3.5" /> Airline
+                      <ShieldCheck className="w-3.5 h-3.5" /> {tc("airline")}
                     </label>
                     <select className="w-full bg-transparent text-gray-900 focus:outline-none text-sm font-medium">
                       {AIRLINES.map((al) => (
@@ -165,7 +171,7 @@ export function Hero() {
                   </div>
                   <div className="bg-white rounded-xl px-4 py-2">
                     <label className="text-gray-500 text-xs font-medium flex items-center gap-1.5 mb-0.5">
-                      <Briefcase className="w-3.5 h-3.5" /> Cabine
+                      <Briefcase className="w-3.5 h-3.5" /> {tc("cabin")}
                     </label>
                     <select className="w-full bg-transparent text-gray-900 focus:outline-none text-sm font-medium">
                       {CABINS.map((c) => (
@@ -244,7 +250,7 @@ export function Hero() {
                   className="w-full text-sm sm:text-base flex items-center justify-center gap-2 bg-[var(--brand-primary)] hover:brightness-110 text-white font-semibold py-4 rounded-xl transition-all mt-4 shadow-lg shadow-black/10"
                 >
                   <Search className="w-5 h-5" />
-                  Rechercher
+                  {tc("search")}
                 </button>
                 </Link>
               </form>

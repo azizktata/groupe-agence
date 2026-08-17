@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Header } from "@/components/Header";
+import { getTranslations, getFormatter, setRequestLocale } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 import { mapSabreRevalidateToUi } from "@/mappers/mapSabreRevalidateToUi";
 import { MOCK_SABRE_REVALIDATE_RESPONSE } from "@/mocks/air/sabre-revalidate-original.mock";
@@ -34,33 +35,25 @@ function formatDuration(minutes: number): string {
   return hours > 0 ? `${hours}h${mins.toString().padStart(2, "0")}` : `${mins}min`;
 }
 
-function formatDateFr(dateStr: string): string {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString("fr-FR", {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
-}
-
-// Cabin type translations
-const CABIN_LABELS: Record<string, string> = {
-  Y: "Économique",
-  S: "Éco Premium",
-  C: "Affaires",
-  F: "Première",
-  M: "Économique",
-  W: "Éco Premium",
-  J: "Affaires",
-};
-
 export default async function ReviewPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
+
+  // Required before any next-intl call, or static rendering degrades.
+  setRequestLocale(locale);
+  const t = await getTranslations("vols.review");
+  const tcab = await getTranslations("cabins");
+  const format = await getFormatter();
+  const formatDateFr = (dateStr: string) =>
+    format.dateTime(new Date(dateStr), {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
 
   const mockResponse = getMockRevalidateResponse(slug);
   const reviewData = mapSabreRevalidateToUi(mockResponse);
@@ -74,21 +67,21 @@ export default async function ReviewPage({
       text: "text-emerald-700",
       border: "border-emerald-200",
       icon: ShieldCheck,
-      label: "Prix vérifié & disponible",
+      label: t("statusConfirmed"),
     },
     PRICE_CHANGED: {
       bg: "bg-amber-100",
       text: "text-amber-700",
       border: "border-amber-200",
       icon: AlertTriangle,
-      label: "Prix modifié",
+      label: t("statusPriceChanged"),
     },
     SOLD_OUT: {
       bg: "bg-red-100",
       text: "text-red-700",
       border: "border-red-200",
       icon: AlertTriangle,
-      label: "Plus disponible",
+      label: t("statusSoldOut"),
     },
   };
 
@@ -133,10 +126,10 @@ export default async function ReviewPage({
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                  Vérification de votre vol
+                  {t("title")}
                 </h1>
                 <p className="text-white/80">
-                  Veuillez vérifier les détails avant de procéder au paiement
+                  {t("subtitle")}
                 </p>
               </div>
               {/* <div
@@ -171,7 +164,7 @@ export default async function ReviewPage({
                         </div>
                         <div>
                           <p className="font-bold text-slate-900">
-                            Vol {flight.flightNumber}
+                            {t("flightNumber", { number: flight.flightNumber })}
                           </p>
                           <p className="text-xs text-slate-500">
                             {flight.marketingCarrier}
@@ -181,10 +174,10 @@ export default async function ReviewPage({
                       <div className="flex items-center gap-2">
                         <span className="inline-flex items-center gap-1.5 bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] px-3 py-1 rounded-full text-xs font-bold">
                           <Briefcase className="w-3 h-3" />
-                          {CABIN_LABELS[flight.cabinCode] || flight.cabinCode}
+                          {tcab(flight.cabinCode)}
                         </span>
                         <span className="bg-slate-100 text-slate-600 text-xs font-medium px-2.5 py-1 rounded-full">
-                          Classe {flight.bookingCode}
+                          {t("bookingClass", { code: flight.bookingCode })}
                         </span>
                       </div>
                     </div>
@@ -210,7 +203,7 @@ export default async function ReviewPage({
                         </p>
                         {flight.schedule.departure.terminal && (
                           <p className="text-xs text-slate-400 mt-1">
-                            Terminal {flight.schedule.departure.terminal}
+                            {t("terminal", { terminal: flight.schedule.departure.terminal })}
                           </p>
                         )}
                       </div>
@@ -234,7 +227,7 @@ export default async function ReviewPage({
                         </p>
                         {flight.schedule.arrival.terminal && (
                           <p className="text-xs text-slate-400 mt-1">
-                            Terminal {flight.schedule.arrival.terminal}
+                            {t("terminal", { terminal: flight.schedule.arrival.terminal })}
                           </p>
                         )}
                       </div>
@@ -245,13 +238,12 @@ export default async function ReviewPage({
                   <div className="bg-slate-50 border-t border-slate-100 px-8 py-4 flex flex-wrap gap-4">
                     <div className="flex items-center gap-2 text-xs font-bold text-slate-600">
                       <Luggage className="w-4 h-4 text-emerald-500" />
-                      {pricing.baggagePieces}{" "}
-                      {pricing.baggagePieces === 1 ? "bagage" : "bagages"} inclus
+                      {t("baggageIncluded", { count: pricing.baggagePieces })}
                     </div>
                     {pricing.refundable && (
                       <div className="flex items-center gap-2 text-xs font-bold text-slate-600">
                         <RotateCcw className="w-4 h-4 text-[var(--brand-primary)]" />
-                        Tarif remboursable
+                        {t("refundable")}
                       </div>
                     )}
                   </div>
@@ -262,15 +254,14 @@ export default async function ReviewPage({
               <div className="bg-[var(--brand-primary)]/5 border border-[var(--brand-primary)]/10 rounded-2xl p-6">
                 <h4 className="text-[var(--brand-dark)] font-bold text-sm mb-3 flex items-center gap-2">
                   <Info className="w-4 h-4 text-[var(--brand-primary)]" />
-                  Conditions tarifaires
+                  {t("fareConditions")}
                 </h4>
                 <ul className="text-xs text-slate-600 space-y-2 list-disc pl-4 font-medium">
                   <li>
-                    Tarif agence privé : Soumis à des règles d&apos;émission
-                    spécifiques.
+                    {t("conditionPrivate")}
                   </li>
                   <li>
-                    L&apos;émission du billet doit être effectuée avant le{" "}
+                    {t("conditionTicketing")}{" "}
                     <span className="font-bold">
                       {formatDateFr(pricing.lastTicketDateTime.split("T")[0])} à{" "}
                       {pricing.lastTicketDateTime.split("T")[1]}
@@ -278,8 +269,7 @@ export default async function ReviewPage({
                     .
                   </li>
                   <li>
-                    Modifications et annulations possibles (consulter les
-                    conditions complètes).
+                    {t("conditionChanges")}
                   </li>
                 </ul>
               </div>
@@ -290,25 +280,25 @@ export default async function ReviewPage({
               <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-8 sticky top-6">
                 <h3 className="text-lg font-black text-slate-900 mb-6 flex items-center gap-2">
                   <Receipt className="w-5 h-5 text-[var(--brand-primary)]" />
-                  Récapitulatif
+                  {t("summary")}
                 </h3>
 
                 <div className="space-y-4 mb-8">
                   <div className="flex justify-between text-sm font-medium text-slate-500">
-                    <span>1 Adulte (tarif de base)</span>
+                    <span>{t("baseFare")}</span>
                     <span>
                       {pricing.currency} {pricing.baseFare.toFixed(2)}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm font-medium text-slate-500">
-                    <span>Taxes & frais</span>
+                    <span>{t("taxes")}</span>
                     <span>
                       {pricing.currency} {pricing.taxes.total.toFixed(2)}
                     </span>
                   </div>
                   <div className="border-t border-slate-100 pt-4 flex justify-between items-center">
                     <span className="text-base font-bold text-slate-900">
-                      Prix total
+                      {t("totalPrice")}
                     </span>
                     <span className="text-3xl font-black text-[var(--brand-primary)]">
                       {pricing.currency} {pricing.total.toFixed(2)}
@@ -322,12 +312,11 @@ export default async function ReviewPage({
                     rounded="xl"
                     className="w-full shadow-lg shadow-[var(--brand-primary)]/20 active:scale-[0.98]"
                   >
-                    Réserver maintenant
+                    {t("bookNow")}
                     <ArrowRight className="w-4 h-4" />
                   </Button>
                   <p className="text-[10px] text-center text-slate-400 font-medium px-4">
-                    En cliquant sur Réserver, vous acceptez les conditions de
-                    transport de la compagnie.
+                    {t("terms")}
                   </p>
                 </div>
               </div>

@@ -2,29 +2,23 @@
 
 import Image from "next/image";
 import { Hotel, Globe, Shield, TicketsPlane, HandHeart } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-const services = [
-  {
-    icon: TicketsPlane,
-    title: "Billetterie aérienne internationale",
-    description: "Économisez du temps en comparant tous les vols au même endroit.",
-    color: "#8ECBDB"
-  },
-  {
-    icon: Hotel,
-    title: "Réservations hôtelières 3 & 4 étoiles",
-    description: "Profitez de séjours confortables au meilleur prix.",
-    color: "#42A8C3"
-  },
-  {
-    icon: HandHeart,
-    title: "Assistance voyage personnalisée",
-    description: "Simplifiez votre préparation de voyage.",
-    color: "#006380"
-  },
+// Icons and colors stay in code; the copy comes from the message catalog.
+const SERVICE_STYLES = [
+  { icon: TicketsPlane, color: "#8ECBDB" },
+  { icon: Hotel, color: "#42A8C3" },
+  { icon: HandHeart, color: "#006380" },
 ];
 
 export function About() {
+  const t = useTranslations("about");
+  const services = SERVICE_STYLES.map((style, i) => ({
+    ...style,
+    title: t(`items.${i}.title`),
+    description: t(`items.${i}.description`),
+  }));
+
   return (
     <section id="about" className="sm:pt-16 pb-26 overflow-hidden relative">
       {/* SVG Pattern Background - Curved wind lines */}
@@ -59,15 +53,13 @@ export function About() {
           {/* Left Side - Content */}
           <div>
             <span className="text-[var(--brand-primary)] text-sm font-black  tracking-wider">
-              Votre voyage commence ici
+              {t("eyebrow")}
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-[var(--brand-dark)] mt-3 mb-6">
-              Groupe L&apos;Agence
+              {t("title")}
             </h2>
             <p className="text-gray-600 text-md sm:text-lg max-w-lg leading-relaxed mb-10">
-              Groupe L&apos;Agence vous accompagne avec des solutions complètes
-              en tourisme et billetterie, réunissant billets, hôtels et services
-              essentiels pour des voyages sereins.
+              {t("description")}
             </p>
 
             {/* Services List */}
@@ -128,8 +120,12 @@ export function About() {
                     <Globe className="w-5 h-5 text-[var(--brand-primary)]" />
                   </div>
                   <div>
-                    <div className="text-sm font-bold text-[var(--brand-dark)]">120+</div>
-                    <div className="text-xs text-gray-500">Pays couverts</div>
+                    <div className="text-sm font-bold text-[var(--brand-dark)]">
+                      {t("badgeCountriesValue")}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {t("badgeCountriesLabel")}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -141,8 +137,12 @@ export function About() {
                     <Shield className="w-5 h-5 text-[var(--brand-accent)]" />
                   </div>
                   <div>
-                    <div className="text-sm font-bold text-[var(--brand-dark)]">Certifié IATA</div>
-                    <div className="text-xs text-gray-500">Agence agréée</div>
+                    <div className="text-sm font-bold text-[var(--brand-dark)]">
+                      {t("badgeIataValue")}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {t("badgeIataLabel")}
+                    </div>
                   </div>
                 </div>
               </div>

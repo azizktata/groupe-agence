@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 type StopsFilterProps = {
   availableStops: number[];
   selectedStops: number[];
@@ -9,6 +10,8 @@ export function StopsFilter({
   selectedStops,
   onChange,
 }: StopsFilterProps) {
+  const t = useTranslations("filters");
+
   function toggleStop(stop: number) {
     if (selectedStops.includes(stop)) {
       onChange(selectedStops.filter((s) => s !== stop));
@@ -18,15 +21,13 @@ export function StopsFilter({
   }
 
   function label(stop: number) {
-    if (stop === 0) return "Sans escale";
-    if (stop === 1) return "1 escale";
-    return `${stop} escales`;
+    return t("stopsCount", { count: stop });
   }
 
   return (
     <div className="space-y-2">
       <p className="text-xs font-semibold text-slate-500 uppercase">
-        Escales
+        {t("stops")}
       </p>
 
       {availableStops.map((stop) => (

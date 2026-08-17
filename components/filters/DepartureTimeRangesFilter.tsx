@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 type DepartureTimeRanges = {
   morning: boolean;
   afternoon: boolean;
@@ -11,16 +12,18 @@ type DepartureTimeRangesFilterProps = {
 };
 
 const TIME_RANGES = [
-  { key: "morning", label: "Matin", hours: "06:00 – 12:00" },
-  { key: "afternoon", label: "Après-midi", hours: "12:00 – 18:00" },
-  { key: "evening", label: "Soir", hours: "18:00 – 22:00" },
-  { key: "night", label: "Nuit", hours: "22:00 – 06:00" },
+  { key: "morning" },
+  { key: "afternoon" },
+  { key: "evening" },
+  { key: "night" },
 ] as const;
 
 export function DepartureTimeRangesFilter({
   value,
   onChange,
 }: DepartureTimeRangesFilterProps) {
+  const t = useTranslations("filters");
+
   function toggle(
     key: keyof DepartureTimeRanges
   ) {
@@ -33,7 +36,7 @@ export function DepartureTimeRangesFilter({
   return (
     <div className="space-y-2">
       <p className="text-xs font-semibold text-slate-500 uppercase">
-        Heure de départ
+        {t("departureTime")}
       </p>
 
       {TIME_RANGES.map((range) => (
@@ -48,11 +51,11 @@ export function DepartureTimeRangesFilter({
               onChange={() => toggle(range.key)}
               className="text-white"
             />
-            {range.label}
+            {t(range.key)}
           </div>
 
           <span className="text-xs text-slate-400">
-            {range.hours}
+            {t(`${range.key}Range`)}
           </span>
         </label>
       ))}

@@ -2,6 +2,7 @@ import React from "react";
 import { UiHotel } from "@/mappers/mapSabreHotelsToUi";
 import { Star, MapPin, Building2, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { getHotelImage } from "@/lib/hotelImages";
 
@@ -41,6 +42,7 @@ const CATEGORY_STYLES: Record<string, string> = {
 // }
 
 const HotelCard = ({ hotel, isImageLoading = false }: HotelCardProps) => {
+  const t = useTranslations("hotels");
   const displayImage = getHotelImage(hotel.id, "card");
 
   const renderStars = (rating: number) => {
@@ -131,7 +133,7 @@ const HotelCard = ({ hotel, isImageLoading = false }: HotelCardProps) => {
         {!hotel.location && (
           <div className="flex items-center gap-1.5 text-slate-400 text-sm mb-4">
             <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
-            <span className="truncate italic">Destination de rêve</span>
+            <span className="truncate italic">{t("dreamDestination")}</span>
           </div>
         )}
 
@@ -143,7 +145,7 @@ const HotelCard = ({ hotel, isImageLoading = false }: HotelCardProps) => {
           className="w-full shadow-lg shadow-[var(--brand-primary)]/20 active:scale-[0.98]"
         >
           <Link href={`/hotels/${hotel.id}`}>
-            Voir les détails
+            {t("viewDetails")}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </Button>

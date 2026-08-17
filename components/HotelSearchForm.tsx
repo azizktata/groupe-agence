@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Loader2, Search, Building2, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 export type HotelSearchFilters = {
   hotelName: string;
@@ -24,6 +25,8 @@ const HotelSearchForm = ({
   compact = false,
   defaultValues,
 }: HotelSearchFormProps) => {
+  const t = useTranslations("hotelSearch");
+  const tc = useTranslations("common");
   const [filters, setFilters] = useState<HotelSearchFilters>({
     hotelName: defaultValues?.hotelName || "",
     chainCode: defaultValues?.chainCode || "",
@@ -40,9 +43,9 @@ const HotelSearchForm = ({
   ];
 
   const amenityOptions = [
-    { code: 179, name: "WiFi" },
-    { code: 71, name: "Piscine" },
-    { code: 42, name: "Parking gratuit" },
+    { code: 179, name: t("wifi") },
+    { code: 71, name: t("pool") },
+    { code: 42, name: t("freeParking") },
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -68,13 +71,13 @@ const HotelSearchForm = ({
         {/* Property Name Input */}
         <div className="relative">
           <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-            Nom de l&apos;établissement
+            {t("propertyName")}
           </label>
           <div className="relative">
             <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
-              placeholder="ex: Resort, Spa, Marriott..."
+              placeholder={t("propertyNamePlaceholder")}
               className="w-full border border-slate-200 rounded-xl py-3 pl-10 pr-4 text-sm focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent outline-none transition-all"
               value={filters.hotelName}
               onChange={(e) => setFilters({ ...filters, hotelName: e.target.value })}
@@ -86,7 +89,7 @@ const HotelSearchForm = ({
         {/* Chain Selection */}
         <div>
           <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-            Chaîne hôtelière
+            {t("chain")}
           </label>
           <div className="relative">
             <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
@@ -96,7 +99,7 @@ const HotelSearchForm = ({
               onChange={(e) => setFilters({ ...filters, chainCode: e.target.value })}
               disabled={isLoading}
             >
-              <option value="">Toutes les chaînes</option>
+              <option value="">{t("allChains")}</option>
               {chainOptions.map((chain) => (
                 <option key={chain.code} value={chain.code}>
                   {chain.name}
@@ -109,7 +112,7 @@ const HotelSearchForm = ({
         {/* Rating Selection */}
         <div>
           <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-            Classement minimum
+            {t("minRating")}
           </label>
           <div className="relative">
             <Star className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
@@ -119,9 +122,9 @@ const HotelSearchForm = ({
               onChange={(e) => setFilters({ ...filters, minRating: e.target.value })}
               disabled={isLoading}
             >
-              <option value="3.0">3 étoiles et +</option>
-              <option value="4.0">4 étoiles et +</option>
-              <option value="4.5">4.5 étoiles et +</option>
+              <option value="3.0">{t("rating3")}</option>
+              <option value="4.0">{t("rating4")}</option>
+              <option value="4.5">{t("rating45")}</option>
             </select>
           </div>
         </div>
@@ -138,12 +141,12 @@ const HotelSearchForm = ({
             {isLoading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                Recherche...
+                {tc("loading")}
               </>
             ) : (
               <>
                 <Search className="w-4 h-4" />
-                Rechercher
+                {tc("search")}
               </>
             )}
           </Button>
@@ -154,7 +157,7 @@ const HotelSearchForm = ({
       {!compact && (
         <div className="mt-4 pt-4 border-t border-slate-100">
           <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-3">
-            Équipements souhaités
+            {t("amenities")}
           </label>
           <div className="flex gap-2 flex-wrap">
             {amenityOptions.map((amenity) => (

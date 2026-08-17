@@ -1,14 +1,8 @@
+import { useTranslations } from "next-intl";
 type CabinsFilterProps = {
   cabins: string[];
   selected: string[];
   onChange: (cabins: string[]) => void;
-};
-
-const CABIN_LABELS: Record<string, string> = {
-  Y: "Économique",
-  W: "Premium Éco",
-  J: "Business",
-  F: "Première",
 };
 
 export function CabinsFilter({
@@ -16,6 +10,9 @@ export function CabinsFilter({
   selected,
   onChange,
 }: CabinsFilterProps) {
+  const t = useTranslations("filters");
+  const tcab = useTranslations("cabins");
+
   function toggle(cabin: string) {
     if (selected.includes(cabin)) {
       onChange(selected.filter((c) => c !== cabin));
@@ -41,7 +38,7 @@ export function CabinsFilter({
             onChange={() => toggle(cabin)}
             className="text-white"
           />
-          {CABIN_LABELS[cabin] ?? cabin}
+          {tcab(cabin)}
         </label>
       ))}
     </div>

@@ -10,50 +10,54 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { useTranslations } from "next-intl";
 
-const destinationsRow1 = [
+// Images and prices stay in code; names/countries come from the
+// `destinations.items` catalog, keyed by `key`.
+const DESTINATION_META = [
   {
-    name: "Marrakech",
-    country: "Maroc",
-    price: "À partir de 149€",
+    key: "marrakech",
+    price: "149€",
     image: "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=600&q=80",
   },
   {
-    name: "Dubaï",
-    country: "Émirats Arabes Unis",
-    price: "À partir de 399€",
+    key: "dubai",
+    price: "399€",
     image: "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80",
   },
   {
-    name: "Abidjan",
-    country: "Côte d'Ivoire",
-    price: "À partir de 299€",
+    key: "abidjan",
+    price: "299€",
     image: "https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=600&q=80",
   },
   {
-    name: "Le Caire",
-    country: "Égypte",
-    price: "À partir de 249€",
+    key: "cairo",
+    price: "249€",
     image: "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?w=600&q=80",
   },
   {
-    name: "Doha",
-    country: "Qatar",
-    price: "À partir de 349€",
+    key: "doha",
+    price: "349€",
     image: "https://image2url.com/r2/default/images/1770220542875-1022e9f8-f6dd-4402-9d28-718bed9a49dc.jpg",
   },
   {
-    name: "Casablanca",
-    country: "Maroc",
-    price: "À partir de 129€",
+    key: "casablanca",
+    price: "129€",
     image: "https://images.unsplash.com/photo-1569383746724-6f1b882b8f46?w=600&q=80",
   },
 ];
 
+type UiDestination = {
+  name: string;
+  country: string;
+  price: string;
+  image: string;
+};
+
 function DestinationCard({
   destination,
 }: {
-  destination: (typeof destinationsRow1)[0];
+  destination: UiDestination;
 }) {
   return (
     <div id="destinations" className="group relative h-[380px] rounded-3xl overflow-hidden cursor-pointer">
@@ -105,6 +109,14 @@ function DestinationCard({
 }
 
 export function Destinations() {
+  const t = useTranslations("destinations");
+  const destinationsRow1: UiDestination[] = DESTINATION_META.map((meta) => ({
+    name: t(`items.${meta.key}.name`),
+    country: t(`items.${meta.key}.country`),
+    price: t("priceFrom", { price: meta.price }),
+    image: meta.image,
+  }));
+
   return (
     <section className="py-20 md:py-28 bg-gray-50 overflow-hidden">
       {/* Section Header */}
@@ -113,11 +125,13 @@ export function Destinations() {
           <div>
             <span className="inline-flex items-center gap-2 text-[var(--brand-primary)] text-sm font-semibold uppercase tracking-wider mb-4">
               <MapPin className="w-4 h-4" />
-              Destinations populaires
+              {t("eyebrow")}
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--brand-dark)]">
-              Inspirez-vous de nos{" "}
-              <span className="text-[var(--brand-primary)]">destinations</span>
+              {t("heading")}{" "}
+              <span className="text-[var(--brand-primary)]">
+                {t("headingAccent")}
+              </span>
             </h2>
           </div>
           {/* <Button variant="primary" rounded="lg" className="w-fit">

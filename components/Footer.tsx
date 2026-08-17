@@ -1,7 +1,10 @@
 import { Plane, MapPin, Phone, Mail, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export function Footer() {
+  const t = useTranslations("footer");
+
   return (
     <footer className="bg-[var(--brand-dark)] text-white">
       {/* Main Footer */}
@@ -14,7 +17,7 @@ export function Footer() {
               <span className="text-xl font-bold">Groupe L&apos;Agence</span>
             </Link>
             <p className="text-white/60 text-sm leading-relaxed mb-6">
-              Votre partenaire de confiance pour tous vos voyages.
+              {t("tagline")}
             </p>
             {/* Social Links */}
             <div className="flex items-center gap-3">
@@ -47,31 +50,31 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Liens rapides</h4>
+            <h4 className="text-lg font-semibold mb-6">{t("quickLinks")}</h4>
             <ul className="space-y-3">
               <li>
                 <Link href="/#" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  Accueil
+                  {t("home")}
                 </Link>
               </li>
               <li>
                 <Link href="/#about" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  À propos
+                  {t("about")}
                 </Link>
               </li>
               <li>
                 <Link href="/#services" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  Nos services
+                  {t("ourServices")}
                 </Link>
               </li>
               <li>
                 <Link href="/#destinations" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  Destinations
+                  {t("destinations")}
                 </Link>
               </li>
               <li>
                 <Link href="/#contact" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  Contact
+                  {t("contact")}
                 </Link>
               </li>
             </ul>
@@ -79,31 +82,31 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Nos services</h4>
+            <h4 className="text-lg font-semibold mb-6">{t("servicesTitle")}</h4>
             <ul className="space-y-3">
               <li>
                 <Link href="/vols" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  Réservation de vols
+                  {t("flightBooking")}
                 </Link>
               </li>
               <li>
                 <Link href="/hotels" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  Hôtels & Hébergements
+                  {t("hotelBooking")}
                 </Link>
               </li>
               <li>
                 <Link href="/voitures" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  Location de voitures
+                  {t("carRental")}
                 </Link>
               </li>
               <li>
                 <Link href="/#services-extra" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  Assurance voyage
+                  {t("travelInsurance")}
                 </Link>
               </li>
               <li>
                 <Link href="/#services-extra" className="text-white/60 hover:text-[var(--brand-accent)] transition-colors text-sm">
-                  Visa & Formalités
+                  {t("visa")}
                 </Link>
               </li>
             </ul>
@@ -111,7 +114,7 @@ export function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Contact</h4>
+            <h4 className="text-lg font-semibold mb-6">{t("contactTitle")}</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[var(--brand-accent)] flex-shrink-0 mt-0.5" />
@@ -148,10 +151,10 @@ export function Footer() {
         <div className="max-w-7xl mx-auto 2xl:max-w-8xl  px-6 xl:px-16 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-white/50 text-sm">
-              &copy; {new Date().getFullYear()} Groupe L&apos;Agence. Tous droits réservés.
+              &copy; {new Date().getFullYear()} Groupe L&apos;Agence. {t("rights")}
             </p>
             <div className="flex items-center gap-1 text-white/50 text-sm">
-              Développé par <a href="https://asis.tn" target="_blank" rel="noopener noreferrer" className="text-[var(--brand-accent)] ">Asis.tn</a>
+              {t("developedBy")} <a href="https://asis.tn" target="_blank" rel="noopener noreferrer" className="text-[var(--brand-accent)] ">Asis.tn</a>
             </div>
           </div>
         </div>

@@ -16,6 +16,7 @@ import {
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { useTranslations, useFormatter } from "next-intl";
 import { CarSearchForm, CarSearchFilters } from "@/components/CarSearchForm";
 import { VehicleCard } from "@/components/VehicleCard";
 import { MOCK_VEHICLES, UiVehicle } from "@/mocks/car/vehicles";
@@ -31,84 +32,26 @@ function applyVehicleFilters(
   );
 }
 
-function formatDateFr(dateStr: string): string {
-  if (!dateStr) return "";
-  return new Date(dateStr).toLocaleDateString("fr-FR", {
-    day: "numeric",
-    month: "short",
-  });
-}
+const HIGHLIGHT_ICONS = [Car, Users, MapPin];
 
-const highlights = [
-  {
-    icon: Car,
-    title: "Large choix de véhicules",
-    description:
-      "Des citadines économiques aux véhicules haut de gamme, trouvez le modèle qui vous convient.",
-  },
-  {
-    icon: Users,
-    title: "Avec ou sans chauffeur",
-    description:
-      "Optez pour la liberté de conduire vous-même ou profitez d’un chauffeur professionnel.",
-  },
-  {
-    icon: MapPin,
-    title: "Prise en charge flexible",
-    description:
-      "Récupérez votre véhicule à l’aéroport, en ville ou à l’adresse de votre choix.",
-  },
+const ADVANTAGE_ICONS = [ShieldCheck, Headphones, CalendarCheck];
+
+const CATEGORY_IMAGES = [
+  "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&q=80",
+  "https://images.unsplash.com/photo-1550355291-bbee04a92027?w=800&q=80",
+  "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&q=80",
+  "https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?w=800&q=80",
 ];
 
-const advantages = [
-  {
-    icon: ShieldCheck,
-    title: "Assurance incluse",
-    description:
-      "Tous nos véhicules sont couverts par une assurance complète pour votre tranquillité.",
-  },
-  {
-    icon: Headphones,
-    title: "Assistance 24h/24",
-    description:
-      "Une équipe disponible à tout moment en cas de besoin durant votre location.",
-  },
-  {
-    icon: CalendarCheck,
-    title: "Annulation flexible",
-    description:
-      "Modifiez ou annulez votre réservation sans frais cachés.",
-  },
-];
+type UiFeature = {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+};
 
-const categories = [
-  {
-    name: "Économique",
-    description: "Idéale pour les trajets en ville",
-    image:
-      "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&q=80",
-  },
-  {
-    name: "Berline",
-    description: "Confort et élégance pour vos déplacements professionnels",
-    image:
-      "https://images.unsplash.com/photo-1550355291-bbee04a92027?w=800&q=80",
-  },
-  {
-    name: "SUV",
-    description: "Espace et robustesse pour tous vos trajets",
-    image:
-      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&q=80",
-  },
-  {
-    name: "Minibus",
-    description: "Parfait pour les groupes et les familles",
-    image:
-      "https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?w=800&q=80",
-  },
-];
+type UiCategory = { name: string; description: string; image: string };
 
-function HighlightCard({ item }: { item: (typeof highlights)[0] }) {
+function HighlightCard({ item }: { item: UiFeature }) {
   const Icon = item.icon;
 
   return (
@@ -126,7 +69,7 @@ function HighlightCard({ item }: { item: (typeof highlights)[0] }) {
   );
 }
 
-function AdvantageCard({ item }: { item: (typeof advantages)[0] }) {
+function AdvantageCard({ item }: { item: UiFeature }) {
   const Icon = item.icon;
 
   return (
@@ -149,7 +92,7 @@ function AdvantageCard({ item }: { item: (typeof advantages)[0] }) {
   );
 }
 
-function CategoryCard({ category }: { category: (typeof categories)[0] }) {
+function CategoryCard({ category }: { category: UiCategory }) {
   return (
     <div className="group relative h-[380px] rounded-3xl overflow-hidden">
       {/* Background Image */}
@@ -182,6 +125,30 @@ function CategoryCard({ category }: { category: (typeof categories)[0] }) {
 }
 
 export default function VoituresPage() {
+  const t = useTranslations("voitures");
+  const format = useFormatter();
+
+  const highlights: UiFeature[] = HIGHLIGHT_ICONS.map((icon, i) => ({
+    icon,
+    title: t(`intro.items.${i}.title`),
+    description: t(`intro.items.${i}.description`),
+  }));
+  const advantages: UiFeature[] = ADVANTAGE_ICONS.map((icon, i) => ({
+    icon,
+    title: t(`advantages.items.${i}.title`),
+    description: t(`advantages.items.${i}.description`),
+  }));
+  const categories: UiCategory[] = CATEGORY_IMAGES.map((image, i) => ({
+    image,
+    name: t(`categories.items.${i}.name`),
+    description: t(`categories.items.${i}.description`),
+  }));
+
+  const formatDate = (dateStr: string) =>
+    dateStr
+      ? format.dateTime(new Date(dateStr), { day: "numeric", month: "short" })
+      : "";
+
   // null = no search performed yet, so the results section stays hidden.
   const [results, setResults] = useState<UiVehicle[] | null>(null);
   const [criteria, setCriteria] = useState<CarSearchFilters | null>(null);
@@ -206,7 +173,7 @@ export default function VoituresPage() {
   const criteriaSummary = criteria
     ? [
         criteria.pickupLocation,
-        [formatDateFr(criteria.pickupDate), formatDateFr(criteria.returnDate)]
+        [formatDate(criteria.pickupDate), formatDate(criteria.returnDate)]
           .filter(Boolean)
           .join(" → "),
       ]
@@ -239,27 +206,28 @@ export default function VoituresPage() {
         <div className="max-w-7xl mx-auto 2xl:max-w-8xl px-6 2xl:px-10 relative z-10 w-full">
           <div className="text-white mb-10">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-wide mb-6">
-              Voyagez, Roulez,{" "}
-              <span className="text-[var(--brand-accent)]">Explorez.</span>
+              {t("hero.title")}{" "}
+              <span className="text-[var(--brand-accent)]">
+                {t("hero.titleAccent")}
+              </span>
             </h1>
             <p className="text-md sm:text-lg text-white/90 mb-8 max-w-xl">
-              Trouvez le véhicule idéal pour votre séjour, réservez en quelques
-              clics au meilleur prix.
+              {t("hero.subtitle")}
             </p>
 
             {/* Proof Text */}
             <div className="flex flex-wrap items-center gap-4 text-sm text-white/90">
               <span className="text-xs sm:text-sm flex items-center gap-2 uppercase font-medium">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-accent)] animate-pulse" />
-                500+ véhicules
+                {t("hero.proofVehicles")}
               </span>
               <span className="text-xs sm:text-sm flex items-center gap-2 uppercase font-medium">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-accent)] animate-pulse" />
-                50+ villes
+                {t("hero.proofCities")}
               </span>
               <span className="text-xs sm:text-sm flex items-center gap-2 uppercase font-medium">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-accent)] animate-pulse" />
-                Avec ou sans chauffeur
+                {t("hero.proofDriver")}
               </span>
             </div>
           </div>
@@ -282,10 +250,7 @@ export default function VoituresPage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
               <div>
                 <h2 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)]">
-                  {results.length}{" "}
-                  {results.length === 1
-                    ? "véhicule disponible"
-                    : "véhicules disponibles"}
+                  {t("results.count", { count: results.length })}
                 </h2>
                 {criteriaSummary && (
                   <p className="text-gray-500 text-sm mt-1">
@@ -301,7 +266,7 @@ export default function VoituresPage() {
                 className="w-fit text-slate-500 hover:text-[var(--brand-dark)]"
               >
                 <X className="w-4 h-4" />
-                Masquer les résultats
+                {t("results.hide")}
               </Button>
             </div>
 
@@ -315,13 +280,13 @@ export default function VoituresPage() {
             ) : (
               <div className="text-center py-16">
                 <p className="text-slate-500 text-lg">
-                  Aucun véhicule ne correspond à vos critères.
+                  {t("results.empty")}
                 </p>
                 <button
                   onClick={() => setResults(MOCK_VEHICLES)}
                   className="mt-4 text-[var(--brand-primary)] font-semibold hover:underline"
                 >
-                  Voir tous les véhicules
+                  {t("results.showAll")}
                 </button>
               </div>
             )}
@@ -381,16 +346,16 @@ export default function VoituresPage() {
         <div className="relative z-10 max-w-7xl mx-auto 2xl:max-w-8xl px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="inline-block text-[var(--brand-primary)] text-sm font-semibold uppercase tracking-wider mb-4">
-              Votre trajet commence ici
+              {t("intro.eyebrow")}
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--brand-dark)] mb-4 tracking-wide">
-              Location de{" "}
-              <span className="text-[var(--brand-primary)]">voitures</span>
+              {t("intro.heading")}{" "}
+              <span className="text-[var(--brand-primary)]">
+                {t("intro.headingAccent")}
+              </span>
             </h2>
             <p className="text-gray-600 text-md sm:text-lg leading-relaxed">
-              Groupe L&apos;Agence vous propose une gamme complète de véhicules
-              pour tous vos déplacements, avec des solutions flexibles adaptées à
-              vos besoins, en solo, en famille ou en groupe.
+              {t("intro.description")}
             </p>
           </div>
 
@@ -436,11 +401,13 @@ export default function VoituresPage() {
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-              Louer l&apos;esprit{" "}
-              <span className="text-[var(--brand-primary)]">tranquille</span>
+              {t("advantages.heading")}{" "}
+              <span className="text-[var(--brand-primary)]">
+                {t("advantages.headingAccent")}
+              </span>
             </h2>
             <p className="text-white/70 text-md sm:text-lg max-w-lg mx-auto">
-              Nos avantages pour une location sereine, du départ au retour.
+              {t("advantages.description")}
             </p>
           </div>
 
@@ -475,11 +442,13 @@ export default function VoituresPage() {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
               <span className="inline-block text-[var(--brand-primary)] text-sm font-semibold uppercase tracking-wider mb-4">
-                Nos catégories de véhicules
+                {t("categories.eyebrow")}
               </span>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--brand-dark)]">
-                Trouvez le véhicule qui vous{" "}
-                <span className="text-[var(--brand-primary)]">correspond</span>
+                {t("categories.heading")}{" "}
+                <span className="text-[var(--brand-primary)]">
+                  {t("categories.headingAccent")}
+                </span>
               </h2>
             </div>
           </div>
@@ -510,31 +479,30 @@ export default function VoituresPage() {
             {/* Left Side - Content */}
             <div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-                Prêt à prendre la{" "}
+                {t("cta.heading")}{" "}
                 <span className="text-[var(--brand-accent)]">
-                  route&nbsp;?
+                  {t("cta.headingAccent")}
                 </span>
               </h2>
 
               <p className="text-white text-lg sm:text-xl font-semibold mb-6">
-                Réservez votre véhicule dès maintenant
+                {t("cta.subtitle")}
               </p>
 
               <p className="text-white/90 text-md sm:text-lg leading-relaxed mb-8 max-w-lg">
-                Notre équipe vous accompagne pour choisir le véhicule idéal, avec
-                ou sans chauffeur, partout en Côte d&apos;Ivoire.
+                {t("cta.description")}
               </p>
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button variant="primary" size="lg" rounded="lg">
                   <Car className="w-5 h-5" />
-                  Réserver un véhicule
+                  {t("cta.ctaBook")}
                 </Button>
                 <Button asChild variant="outline" size="lg" rounded="lg">
                   <Link href="/#contact">
                     <Phone className="w-5 h-5" />
-                    Nous contacter
+                    {t("cta.ctaContact")}
                   </Link>
                 </Button>
               </div>

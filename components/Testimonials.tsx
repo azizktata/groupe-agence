@@ -1,6 +1,9 @@
 import { Compass } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function Testimonials() {
+  const t = useTranslations("engagement");
+
   return (
     <section className="relative py-20 md:py-28 bg-gray-50 overflow-hidden">
       {/* Decorative dots */}
@@ -27,18 +30,18 @@ export function Testimonials() {
         <div className="text-center max-w-3xl mx-auto">
           <span className="inline-flex items-center gap-2 text-[var(--brand-primary)] text-sm font-semibold uppercase tracking-wider mb-4">
             <Compass className="w-4 h-4" />
-            Notre engagement
+            {t("eyebrow")}
           </span>
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--brand-dark)] mb-6 tracking-wide">
-            Chaque voyage mérite d&apos;être{" "}
-            <span className="text-[var(--brand-primary)]">bien préparé</span>
+            {t("heading")}{" "}
+            <span className="text-[var(--brand-primary)]">
+              {t("headingAccent")}
+            </span>
           </h2>
 
           <p className="text-gray-600 text-md sm:text-lg leading-relaxed">
-            Vols, hôtels et location de voitures : nous réunissons l&apos;essentiel
-            de votre voyage en un seul interlocuteur. Notre équipe vous accompagne
-            à chaque étape, du premier devis jusqu&apos;à votre retour.
+            {t("description")}
           </p>
         </div>
       </div>

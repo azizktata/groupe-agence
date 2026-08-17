@@ -3,8 +3,10 @@
 import Image from "next/image";
 import { Plane, Hotel, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 export function CTAFinal() {
+  const t = useTranslations("ctaFinal");
   // The solid bg below is a fallback: Tailwind emits `in oklab` gradients, which
   // older iOS Safari (< 16.4) drops entirely, leaving white text on white.
   return (
@@ -186,27 +188,25 @@ export function CTAFinal() {
           {/* Left Side - Content */}
           <div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-              Prêt à organiser votre{" "}
+              {t("heading")}{" "}
               <span className="text-[var(--brand-accent)]">
-                prochain voyage  ?
+                {t("headingAccent")}
               </span>{" "}
-             
             </h2>
 
             <p className="text-white/90 text-md sm:text-lg leading-relaxed mb-8 max-w-lg">
-              Billets, hôtels et services complémentaires réunis pour que vous
-              profitiez pleinement de chaque étape.
+              {t("description")}
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Button variant="primary" size="lg" rounded="lg">
                 <Plane className="w-5 h-5" />
-                Réservez votre voyage
+                {t("ctaTrip")}
               </Button>
               <Button variant="outline" size="lg" rounded="lg">
                 <Hotel className="w-5 h-5" />
-                Trouvez votre hôtel
+                {t("ctaHotel")}
               </Button>
             </div>
 

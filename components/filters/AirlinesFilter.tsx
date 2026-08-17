@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 type AirlinesFilterProps = {
   airlines: { code: string; name: string }[];
   selected: string[];
@@ -9,6 +10,8 @@ export function AirlinesFilter({
   selected,
   onChange,
 }: AirlinesFilterProps) {
+  const t = useTranslations("filters");
+
   function toggle(code: string) {
     if (selected.includes(code)) {
       onChange(selected.filter((c) => c !== code));
@@ -20,7 +23,7 @@ export function AirlinesFilter({
   return (
     <div className="space-y-2 max-h-64 overflow-y-auto">
       <p className="text-xs font-semibold text-slate-500 uppercase">
-        Compagnies
+        {t("airlines")}
       </p>
 
       {airlines.map((airline) => (

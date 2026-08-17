@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 type TripTypesFilterProps = {
   value: {
     oneWay: boolean;
@@ -20,10 +21,13 @@ export function TripTypesFilter({
     });
   }
 
+  const t = useTranslations("filters");
+  const tf = useTranslations("flightSearch");
+
   return (
     <div className="space-y-2">
       <p className="text-xs font-semibold text-slate-500 uppercase">
-        Type de voyage
+        {t("tripType")}
       </p>
 
       <label className="flex items-center gap-2 text-sm cursor-pointer">
@@ -33,7 +37,7 @@ export function TripTypesFilter({
           onChange={() => toggle("oneWay")}
          className="text-white"
         />
-        Aller simple
+        {tf("oneWay")}
       </label>
 
       <label className="flex items-center gap-2 text-sm cursor-pointer">
@@ -43,7 +47,7 @@ export function TripTypesFilter({
           onChange={() => toggle("roundTrip")}
           className="text-white"
         />
-        Aller-retour
+        {tf("roundTrip")}
       </label>
     </div>
   );

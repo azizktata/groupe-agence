@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Loader2, Search, MapPin, Calendar, Car } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 export type CarSearchFilters = {
   pickupLocation: string;
@@ -18,14 +19,8 @@ type CarSearchFormProps = {
   defaultValues?: Partial<CarSearchFilters>;
 };
 
-const VEHICLE_TYPES = [
-  { code: "", name: "Peu importe" },
-  { code: "ECONOMY", name: "Économique" },
-  { code: "SEDAN", name: "Berline" },
-  { code: "SUV", name: "SUV" },
-  { code: "MINIBUS", name: "Minibus" },
-  { code: "LUXURY", name: "Luxe" },
-];
+// Codes stay in code; labels come from the `vehicleTypes` catalog.
+const VEHICLE_TYPE_CODES = ["", "ECONOMY", "SEDAN", "SUV", "MINIBUS", "LUXURY"];
 
 export function CarSearchForm({
   onSearch,
@@ -33,6 +28,13 @@ export function CarSearchForm({
   compact = false,
   defaultValues,
 }: CarSearchFormProps) {
+  const t = useTranslations("carSearch");
+  const tc = useTranslations("common");
+  const tType = useTranslations("vehicleTypes");
+  const VEHICLE_TYPES = VEHICLE_TYPE_CODES.map((code) => ({
+    code,
+    name: tType(code === "" ? "ANY" : code),
+  }));
   const [filters, setFilters] = useState<CarSearchFilters>({
     pickupLocation: defaultValues?.pickupLocation || "",
     pickupDate: defaultValues?.pickupDate || "",
@@ -58,13 +60,13 @@ export function CarSearchForm({
         {/* Pickup Location */}
         <div>
           <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-            Lieu de prise en charge
+            {t("pickupLocation")}
           </label>
           <div className="relative">
             <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
-              placeholder="ex: Abidjan, Aéroport FHB..."
+              placeholder={t("pickupLocationPlaceholder")}
               className="w-full border border-slate-200 rounded-xl py-3 pl-10 pr-4 text-sm focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent outline-none transition-all"
               value={filters.pickupLocation}
               onChange={(e) =>
@@ -78,7 +80,7 @@ export function CarSearchForm({
         {/* Pickup Date */}
         <div>
           <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-            Date de prise en charge
+            {t("pickupDate")}
           </label>
           <div className="relative">
             <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
@@ -97,7 +99,7 @@ export function CarSearchForm({
         {/* Return Date */}
         <div>
           <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-            Date de retour
+            {t("returnDate")}
           </label>
           <div className="relative">
             <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
@@ -117,7 +119,7 @@ export function CarSearchForm({
         {/* Vehicle Type */}
         <div>
           <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-            Type de véhicule
+            {t("vehicleType")}
           </label>
           <div className="relative">
             <Car className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
@@ -150,12 +152,12 @@ export function CarSearchForm({
             {isLoading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                Recherche...
+                {tc("loading")}
               </>
             ) : (
               <>
                 <Search className="w-4 h-4" />
-                Rechercher
+                {tc("search")}
               </>
             )}
           </Button>

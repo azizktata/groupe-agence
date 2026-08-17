@@ -3,73 +3,60 @@
 import Image from "next/image";
 import { ArrowRight, Users, Plane, Hotel, Car } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
-const services = [
+// Icons, images and hrefs stay in code; the copy comes from the message catalog.
+const SERVICE_META = [
   {
     id: 1,
-    subtitle: "Nos partenaires",
-    title: "Partenaires de confiance",
-    description:
-      "Nous collaborons avec compagnies aériennes et groupes hôteliers pour garantir les meilleures offres et un voyage sans souci.",
-    description2:
-      "Grâce à nos partenaires, trouvez facilement les options idéales pour votre voyage.",
-    cta: "Découvrir nos partenaires",
     icon: Users,
     image:
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
   },
   {
     id: 2,
-    subtitle: "Billetterie aérienne",
-    title: "Réservations aériennes",
-    description:
-      "Accédez à un large choix de vols nationaux et internationaux aux meilleurs tarifs du marché.",
-    description2:
-      "Comparez tous les vols disponibles et choisissez celui qui vous convient le mieux.",
     href: "/vols",
-    cta: "Réserver un vol",
     icon: Plane,
     image:
       "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80",
   },
   {
     id: 3,
-    subtitle: "Hébergements sélectionnés",
-    title: "Réservations d'hôtels",
-    description:
-      "Profitez des hôtels 3 et 4 étoiles sélectionnés pour le confort, emplacement et rapport qualité-prix.",
-    description2:
-      "Chaque lieu offre le juste équilibre entre qualité, emplacement idéal et prix.",
     href: "/hotels",
-    cta: "Trouver un hôtel",
     icon: Hotel,
     image:
       "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80",
   },
   {
     id: 4,
-    subtitle: "Mobilité sur place",
-    title: "Location de voitures",
-    description:
-      "Déplacez-vous en toute liberté grâce à notre large choix de véhicules, économiques ou haut de gamme.",
-    description2:
-      "Des tarifs transparents, une prise en charge simplifiée et un service disponible à l'aéroport comme en ville pour tous vos trajets.",
     href: "/voitures",
-    cta: "Réserver un véhicule",
     icon: Car,
     image:
       "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&q=80",
   },
 ];
 
+export type UiService = {
+  id: number;
+  subtitle: string;
+  title: string;
+  description: string;
+  description2: string;
+  href?: string;
+  cta: string;
+  icon: React.ComponentType<{ className?: string }>;
+  image: string;
+};
+
 function ServiceItem({
   service,
   isReversed,
 }: {
-  service: (typeof services)[0];
+  service: UiService;
   isReversed: boolean;
 }) {
+  const t = useTranslations("services");
   const Icon = service.icon;
 
   return (
@@ -142,7 +129,7 @@ function ServiceItem({
               <div className="text-sm font-semibold text-[var(--brand-dark)]">
                 {service.subtitle}
               </div>
-              <div className="text-xs text-gray-500">Service premium</div>
+              <div className="text-xs text-gray-500">{t("premiumBadge")}</div>
             </div>
           </div>
         </div>
@@ -152,6 +139,16 @@ function ServiceItem({
 }
 
 export function Services() {
+  const t = useTranslations("services");
+  const services: UiService[] = SERVICE_META.map((meta, i) => ({
+    ...meta,
+    subtitle: t(`items.${i}.subtitle`),
+    title: t(`items.${i}.title`),
+    description: t(`items.${i}.description`),
+    description2: t(`items.${i}.description2`),
+    cta: t(`items.${i}.cta`),
+  }));
+
   return (
     <section
       id="services"
@@ -181,15 +178,16 @@ export function Services() {
           {/* Title Content */}
           <div className="relative z-10 max-w-3xl mx-auto">
             <span className="inline-block text-[var(--brand-primary)] text-sm font-semibold uppercase tracking-wider mb-4">
-              Nos Services
+              {t("eyebrow")}
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--brand-dark)] mb-4 tracking-wide">
-              Voyager l&apos;esprit{" "}
-              <span className="text-[var(--brand-primary)]">tranquille</span>
+              {t("heading")}{" "}
+              <span className="text-[var(--brand-primary)]">
+                {t("headingAccent")}
+              </span>
             </h2>
             <p className="text-gray-600 text-md sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Une organisation maîtrisée pour des voyages confortables et
-              sécurisés.
+              {t("description")}
             </p>
           </div>
         </div>

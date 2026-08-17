@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 type PriceFilterProps = {
   min: number;
   max: number;
@@ -11,12 +12,13 @@ export function PriceFilter({
   value,
   onChange,
 }: PriceFilterProps) {
+  const t = useTranslations("filters");
   const [from, to] = value;
 
   return (
     <div className="space-y-4">
       <p className="text-xs font-semibold text-slate-500 uppercase">
-        Prix
+        {t("price")}
       </p>
 
       <div className="flex items-center justify-between text-sm font-medium">
