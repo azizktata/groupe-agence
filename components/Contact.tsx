@@ -65,6 +65,15 @@ export function Contact() {
                   <p className="text-white font-medium">info@thagencygroup.ci</p>
                 </div>
               </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center">
+                  <Mail className="w-5 h-5 text-[var(--brand-accent)]" />
+                </div>
+                <div>
+                  <p className="text-white/60 text-sm">{t("email")}</p>
+                  <p className="text-white font-medium">Theagencygroupt@gmail.com</p>
+                </div>
+              </div>
               {/* <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center">
                   <Clock className="w-5 h-5 text-[var(--brand-accent)]" />

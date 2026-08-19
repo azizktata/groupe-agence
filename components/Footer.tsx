@@ -119,8 +119,8 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[var(--brand-accent)] flex-shrink-0 mt-0.5" />
                 <span className="text-white/60 text-sm">
-                  Rue Paul Langevin Le Mall Z4- 7eme Étage Boîte 6.24 Marcory 26 BP 353 Abidjan 26
-                 
+                 Rue Paul Langevin Le Mall Z4- 7eme Étage Boîte 7.26 Marcory 26 BP 353 Abidjan 26
+
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -139,6 +139,12 @@ export function Footer() {
                 <Mail className="w-5 h-5 text-[var(--brand-accent)] flex-shrink-0" />
                 <a href="mailto:info@thagencygroup.ci" className="text-white/60 hover:text-white transition-colors text-sm">
                   info@thagencygroup.ci
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="w-5 h-5 text-[var(--brand-accent)] flex-shrink-0" />
+                <a href="mailto:Theagencygroupt@gmail.com" className="text-white/60 hover:text-white transition-colors text-sm">
+                  Theagencygroupt@gmail.com
                 </a>
               </li>
             </ul>
