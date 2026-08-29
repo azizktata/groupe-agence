@@ -1,6 +1,6 @@
 "use client";
 
-import { User, Mail, Phone, MessageSquare, Send, Clock, LoaderCircle } from "lucide-react";
+import { User, Mail, Phone, MessageSquare, Send, LoaderCircle } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { toast } from 'sonner';
@@ -31,7 +31,6 @@ export function Contact() {
   // form submission handler
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form Data:", formData); // Log the form data for debugging
     setIsLoading(true);
     // Handle form submission logic here
     try {
@@ -54,7 +53,7 @@ export function Contact() {
       });
       toast.success("Message envoyé avec succès !");
     } catch (error) {
-      console.error("Error submitting form:", error);
+      // console.error("Error submitting form:", error);
       toast.error("Erreur lors de l'envoi du message. Veuillez réessayer.");
     } finally {
       setIsLoading(false);
