@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
 
     await transporter.sendMail({
       from: `"Groupe L'agence — Site Web" <${process.env.SMTP_USER}>`,
-      to: process.env.CONTACT_EMAIL,
+      to: `${process.env.CONTACT_EMAIL}, ${process.env.CONTACT_EMAIL2}`,
       replyTo: email,
       subject: `Nouvelle Message de contact de ${name} via le site web`,
       text: `
